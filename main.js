@@ -222,27 +222,38 @@ function upload2() {
                         console.log (elem.FechaInicio);
                     }
                 }
-                let drop = document.getElementById("drop");
+                fechasDisp.sort((a, b) => (a > b) ? 1 : -1);
+
+                let drop = document.getElementsByClassName("dropdown-item");
+                let dropIndex = 0;
+                let dropAr = [];
                 
                 for (const elem of fechasDisp){
-                    let node = document.createElement("li");
-                    let subNode = document.createElement("a");
-                    subNode.classList.add = "dropdown-item";
-                    //subNode.href = "#";
 
-                    let subSubNode;
-                    subSubNode = document.createTextNode(elem); 
-                    subNode.append(subSubNode);
-                    node.append(subNode);
-                    drop.appendChild(node);
+                    drop[dropIndex].innerText = elem;
+                    dropAr.push("drop"+dropIndex);
+                    dropIndex++;
+                    //console.log(dropAr);
                 }
+
+
+               
+
+                for (i=0;i<fechasDisp.length;i++) {
+                    document.getElementById(dropAr[i]).addEventListener("click", () => {Write(drop[i])});
+                }
+
+                function Write(a) {
+                    console.log(a);
+                }
+
 
 
                 let newArray10 = roa2.filter((elem) => elem.FechaInicio != elem.FechaFin);
 
                 let newArray11 = newArray10.filter((elem) => elem.kms > 15);
 
-                console.log(newArray11);
+                //console.log(newArray11);
 
                 roa2 = newArray10;
 
@@ -250,7 +261,7 @@ function upload2() {
 
 
 
-                console.log(roa2.length);
+                //console.log(roa2.length);
                 
                    /*  let roaCortos = roa2.filter((elem) => elem.Secciones < 8);
                     let roaLargos = roa2.filter((elem) => elem.Secciones > 8);
