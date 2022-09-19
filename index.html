@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.5/xlsx.min.js"></script>
+    <script defer src="main.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
+    <title>Document</title>
+</head>
+<body>
+    <h1>Control de Seccionamiento</h1>
+<input type="file" id="file_upload" />
+<button onclick="upload()">Upload</button>  
+<br><br>
+
+<div>
+    <table id = "tableP">
+        <tr>
+          <th>Interno</th>
+          <th>Ramal</th>
+          <th>Legajo</th>
+          <th>Kms</th>
+          <th>Secciones</th>
+          <th>Chofer</th>
+          <th>Diferencia</th>
+        </tr>
+        
+      </table>
+</div>
+
+<h1>Control de Seccionamiento Corrrido</h1>
+<input type="file" id="file_upload2" />
+<button onclick="upload2()">Upload</button> 
+<div class="dropdown">
+  <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Fecha
+  </button>
+  <ul id="drop" class="dropdown-menu">
+    <!-- <li><a class="dropdown-item" href="#"></a></li>
+    <li><a class="dropdown-item" href="#"></a></li>
+    <li><a class="dropdown-item" href="#"></a></li> -->
+  </ul>
+</div> 
+
+<br><br>
+
+
+
+<div>
+    <table id = "tableP2">
+        <tr>
+          <th>Interno</th>
+          <th>Ramal</th>
+          <th>Legajo</th>
+          <th>Kms</th>
+          <th>Secciones</th>
+          <th>Chofer</th>
+          <th>Diferencia</th>
+        </tr>
+        
+      </table>
+</div>
+</body>
+</html>
+
