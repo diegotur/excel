@@ -2,8 +2,8 @@
 function upload() {
     var files = document.getElementById('file_upload').files;
     if(files.length==0){
-      alert("Please choose any file...");
-      return;
+        alert("Please choose any file...");
+        return;
     }
     var filename = files[0].name;
     var extension = filename.substring(filename.lastIndexOf(".")).toUpperCase();
@@ -12,20 +12,20 @@ function upload() {
     }else{
         alert("Please select a valid excel file.");
     }
-  }
+}
 
-  let result = {};
-  let roa;
+let result = {};
+let roa;
 
-  let tableP = document.getElementById("tableP");
-   
+let tableP = document.getElementById("tableP");
+
   //Method to read excel file and convert it into JSON 
-  function excelFileToJSON(file){
-      try {
+function excelFileToJSON(file){
+    try {
         var reader = new FileReader();
         reader.readAsBinaryString(file);
         reader.onload = function(e) {
-   
+
             var data = e.target.result;
             var workbook = XLSX.read(data, {
                 type : 'binary'
@@ -115,7 +115,7 @@ function upload() {
                     
                     /* roa.sort((a, b) => (a.FECHA > b.FECHA) ? 1 : -1); */
 
-                  /*  delete elem.RECA;
+                /*  delete elem.RECA;
 
 
 
@@ -133,7 +133,7 @@ function upload() {
                     result[sheetName] = roa;
                 }
             });
-          
+        
         }
     }catch(e){
         console.error(e);
@@ -144,8 +144,8 @@ function upload() {
 function upload2() {
     var files = document.getElementById('file_upload2').files;
     if(files.length==0){
-      alert("Please choose any file...");
-      return;
+        alert("Please choose any file...");
+        return;
     }
     var filename = files[0].name;
     var extension = filename.substring(filename.lastIndexOf(".")).toUpperCase();
@@ -154,56 +154,54 @@ function upload2() {
     }else{
         alert("Please select a valid excel file.");
     }
-  }
+}
 
-  let result2 = {};
-  let roa2;
+let result2 = {};
+let roa2;
 
-  let tableP2 = document.getElementById("tableP2");
-   
-  //Method to read excel file and convert it into JSON 
-  function excelFileToJSON2(file){
-      try {
-        var reader = new FileReader();
-        reader.readAsBinaryString(file);
-        reader.onload = function(e) {
-   
-            var data = e.target.result;
-            var workbook = XLSX.read(data, {
-                type : 'binary'
-            });
-            workbook.SheetNames.forEach(function(sheetName) {
-                roa2 = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
+let tableP2 = document.getElementById("tableP2");
 
-                for (const elem of roa2){
-                    const ExcelDateToJSDate2 = (date) => {
-                        let converted_date = new Date(Math.round((date - 25568) * 864e5));
-                        converted_date = String(converted_date).slice(4, 15);
-                        date = converted_date.split(" ");
-                        let day = date[1];
-                        let month = date[0];
-                        month = "JanFebMarAprMayJunJulAugSepOctNovDec".indexOf(month) / 3 + 1;
-                        if (month.toString().length <= 1){
-                            month = '0' + month;
-                        }
-                        let year = date[2];
-                        return String(day + '/' + month + '/' + year);
+function excelFileToJSON2(file){
+    try {
+    var reader = new FileReader();
+    reader.readAsBinaryString(file);
+    reader.onload = function(e) {
+
+        var data = e.target.result;
+        var workbook = XLSX.read(data, {
+            type : 'binary'
+        });
+        workbook.SheetNames.forEach(function(sheetName) {
+            roa2 = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
+
+            for (const elem of roa2){
+                const ExcelDateToJSDate2 = (date) => {
+                    let converted_date = new Date(Math.round((date - 25568) * 864e5));
+                    converted_date = String(converted_date).slice(4, 15);
+                    date = converted_date.split(" ");
+                    let day = date[1];
+                    let month = date[0];
+                    month = "JanFebMarAprMayJunJulAugSepOctNovDec".indexOf(month) / 3 + 1;
+                    if (month.toString().length <= 1){
+                        month = '0' + month;
                     }
-                    elem.FechaInicio  = ExcelDateToJSDate2(elem.FechaInicio);
-                    elem.FechaFin  = ExcelDateToJSDate2(elem.FechaFin);
+                    let year = date[2];
+                    return String(day + '/' + month + '/' + year);
                 }
+                elem.FechaInicio  = ExcelDateToJSDate2(elem.FechaInicio);
+                elem.FechaFin  = ExcelDateToJSDate2(elem.FechaFin);
+            }
 
-                console.log(roa2[1]);
 
-                for (const elem of roa2){
-                    function excelDateToJSDate3(excel_date, time = false) {
-                        let day_time = excel_date % 1
-                        let meridiem = "AMPM"
-                        let hour = Math.floor(day_time * 24)
-                        let minute = Math.floor(Math.abs(day_time * 24 * 60) % 60)
-                        let second = Math.floor(Math.abs(day_time * 24 * 60 * 60) % 60)
-                        hour >= 12 ? meridiem = meridiem.slice(2, 4) : meridiem = meridiem.slice(0, 2)
-                        hour > 12 ? hour = hour : hour = hour
+            for (const elem of roa2){
+                function excelDateToJSDate3(excel_date, time = false) {
+                    let day_time = excel_date % 1
+                    let meridiem = "AMPM"
+                    let hour = Math.floor(day_time * 24)
+                    let minute = Math.floor(Math.abs(day_time * 24 * 60) % 60)
+                    let second = Math.floor(Math.abs(day_time * 24 * 60 * 60) % 60)
+                    hour >= 12 ? meridiem = meridiem.slice(2, 4) : meridiem = meridiem.slice(0, 2)
+                    hour > 12 ? hour = hour : hour = hour
                         hour = hour < 10 ? "0" + hour : hour
                         minute = minute < 10 ? "0" + minute : minute
                         second = second < 10 ? "0" + second : second
@@ -233,7 +231,6 @@ function upload2() {
                     dropIndex++;
                 }
 
-                              
 
                 for (i=0;i<fechasDisp.length;i++) {
                     let j = document.getElementById(dropAr[i])
@@ -242,7 +239,18 @@ function upload2() {
 
                 let new6=[];
                 function Write(a) {
+                    let infoP2 = document.getElementsByClassName("infoP2");
 
+                    if (infoP2.length>0){
+                        console.log(infoP2);
+                        
+                        do {
+                            tableP2.removeChild(infoP2[0]);
+                            console.log(infoP2);
+
+                        }while (infoP2.length!=0);
+
+                    }
 
                     
                     
@@ -265,12 +273,11 @@ function upload2() {
                     new6 =new5.concat(fonRapMasde54);
 
                     
-                    roa2 = new6;          
+                    new6.sort((a, b) => (a.Legajo > b.Legajo) ? 1 : -1);     
                     
-                    roa2.sort((a, b) => (a.Legajo > b.Legajo) ? 1 : -1);     
-                    
-                    for (const elem of roa2){
+                    for (const elem of new6){
                         const node = document.createElement("tr");
+                        node.classList.add("infoP2");
                         const subNode = document.createElement("td");
                         const subNode1 = document.createElement("td");
                         const subNode2 = document.createElement("td");
@@ -330,7 +337,6 @@ function upload2() {
                     result[sheetName] = roa2;
                 }
             });
-           
         }
     }catch(e){
         console.error(e);
