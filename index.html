@@ -11,12 +11,14 @@
     <title>Document</title>
 </head>
 <body>
-    <h1>Control de Seccionamiento</h1>
-<input type="file" id="file_upload" />
-<button onclick="upload()">Upload</button>  
-<br><br>
 
-<div>
+  <h1>Control de Seccionamiento</h1>
+  <input type="file" id="file_upload" />
+  <button onclick="upload()">Upload</button>  
+
+  <br><br>
+
+  <div>
     <table id = "tableP">
         <tr>
           <th>Interno</th>
@@ -29,15 +31,13 @@
         </tr>
         
       </table>
-</div>
+  </div>
 
-<h1>Control de Uso del SUBE</h1>
-<input type="file" id="file_upload2" />
-<button onclick="upload2()">Upload</button> 
-<div class="dropdown">
-  <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-    Fecha
-  </button>
+  <h1>Control de Uso del SUBE</h1>
+  <input type="file" id="file_upload2" />
+  <button onclick="upload2()">Upload</button> 
+  <div class="dropdown">
+    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Fecha</button>
   <ul id="drop" class="dropdown-menu">
     <li><a class="dropdown-item" id="drop0" href="#"></a></li>
     <li><a class="dropdown-item" id="drop1" href="#"></a></li>
@@ -63,6 +63,31 @@
 
 <div>
     <table id = "tableP2">
+        <tr>
+          <th>Legajo</th>
+          <th>Interno</th>
+          <th>Fecha Inicio</th>
+          <th>Fecha Fin</th>
+          <th>Hora Inicio</th>
+          <th>Hora Fin</th>
+          <th>Recorrido</th>
+          <th>Kms</th>
+        </tr>
+        
+      </table>
+</div>
+
+<br><br>
+
+<h1>Control de Seccionamiento Corrido</h1>
+<input type="file" id="file_upload3" />
+<button onclick="upload3()">Upload</button> 
+
+
+<br><br>
+
+<div>
+    <table id = "tableP3">
         <tr>
           <th>Legajo</th>
           <th>Interno</th>
