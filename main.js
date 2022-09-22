@@ -314,20 +314,19 @@ function excelFileToJSON3(file){
         });
         workbook.SheetNames.forEach(function(sheetName) {
             roa3 = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
-
-
+            
             for (const elem of roa3){
-
+                
                 elem.interno = elem.__EMPTY;
                 elem.fechaInicio = elem.__EMPTY_1;
                 elem.horaInicio = elem.__EMPTY_2;
-                elem.recorrido = elem.__EMPTY_3;
-                elem.ramal = elem.__EMPTY_4;
-                elem.direccion = elem.__EMPTY_5;
-                elem.seccion = elem.__EMPTY_6;
-                elem.legajo = elem.__EMPTY_7;
-                elem.tipoDeMarca = elem.__EMPTY_8;
-
+                elem.recorrido = elem.__EMPTY_4;
+                elem.ramal = elem.__EMPTY_5;
+                elem.direccion = elem.__EMPTY_6;
+                elem.seccion = elem.__EMPTY_7;
+                elem.legajo = elem.__EMPTY_8;
+                elem.tipoDeMarca = elem.__EMPTY_9;
+                
                 delete elem.__EMPTY;
                 delete elem.__EMPTY_1;
                 delete elem.__EMPTY_2;
@@ -340,20 +339,73 @@ function excelFileToJSON3(file){
                 delete elem.__EMPTY_9;
                 delete elem.__EMPTY_10;
                 delete elem.__EMPTY_11;
+                delete elem.__EMPTY_12;
             }
-            roa3.shift();
             
+
             let soloCambio = roa3.filter((elem) => elem.tipoDeMarca == "Cambio Seccion");
+            let soloCambio2 = soloCambio.filter((elem) => elem.legajo != "0");
+            
+            let porInterno = [];
 
             
-            for (const elem of soloCambio){
+            for (const elem of soloCambio2){
                 elem.fechaInicio  = ExcelDateToJSDate2(elem.fechaInicio);
                 elem.horaInicio  = excelDateToJSDate3(elem.horaInicio);
+                let e = elem.horaInicio.split(':');
+                elem.horaSinSec = (`${e[0]}:${e[1]}`);
+
+                if (porInterno.some((n) => n == elem.interno) == false){
+                    porInterno.push(elem.interno);
+                }
+            } 
+            
+           // let soloCambio3 = [];
+            
+            let x2 = [];
+            let x3 = [];
+            for (const elem of porInterno){
+                let x = soloCambio2.filter((elem2) => elem2.interno == elem);
+
+                console.log(x);
+
+                //NO FUNCIONA NADA
+
+                /* 
+                for (const elem3 of x){
+                    //let p = x.findIndex((n)=> n == elem3);
+                    let h = x;
+
+                    h.shift();
+                    
+                    if (h.some((n)=>n.horaSinSec == elem3.horaSinSec) == false){
+                        delete elem3;
+                    } */
+                
+
+                   // for (i=0;i<x;i++){
+                     //   console.log(elem3, x[i]);
+                        //if (x[i] !== elem3 == true){
+                            /* if (x[i].horaSinSec == elem3.horaSinSec == true){
+                                x2.push(x[i]);
+                            }
+                            if (x2.length > 2 == true){
+                                x3.push(elem3);
+                                x3.push(x2);
+                            } */
+
+                       // }
+                    }
+                    
+                   console.log(x);
+                
             }
+                
+        
+            //console.log(soloCambio3);
             
             //let malSecc = soloCambio.filter((elem) => elem.horaInicio  == "Cambio Seccion");
-
-            console.log(elem.horaInicio);
+            
             
                 if (roa3.length > 0) {
 
@@ -378,3 +430,12 @@ function excelFileToJSON3(file){
 
        // if (tiempo > "6"==true){ masHoras.push(elem);}
     
+       /* console.log(elem3.horaSinSec);
+                    for (i=0;i<x;i++){
+                        if (elem3.horaSinSec == x[i].horaSinSec == true){
+                            elemRep.push(elem3);
+                            elemRep.push(x[i]);
+                        }
+                        if (elemRep.length>3 ==true){
+                            for (const el of elemRep){
+                                soloCambio3.push(el); */
