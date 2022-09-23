@@ -359,53 +359,84 @@ function excelFileToJSON3(file){
                     porInterno.push(elem.interno);
                 }
             } 
+            let sinRepetidos = [];
+            
             
            // let soloCambio3 = [];
             
             let x2 = [];
             let x3 = [];
+            let x4 = [];
             for (const elem of porInterno){
                 let x = soloCambio2.filter((elem2) => elem2.interno == elem);
-
-                console.log(x);
-
-                //NO FUNCIONA NADA
-
-                /* 
-                for (const elem3 of x){
-                    //let p = x.findIndex((n)=> n == elem3);
-                    let h = x;
-
-                    h.shift();
-                    
-                    if (h.some((n)=>n.horaSinSec == elem3.horaSinSec) == false){
-                        delete elem3;
-                    } */
-                
-
-                   // for (i=0;i<x;i++){
-                     //   console.log(elem3, x[i]);
-                        //if (x[i] !== elem3 == true){
-                            /* if (x[i].horaSinSec == elem3.horaSinSec == true){
-                                x2.push(x[i]);
-                            }
-                            if (x2.length > 2 == true){
-                                x3.push(elem3);
-                                x3.push(x2);
-                            } */
-
-                       // }
-                    }
-                    
-                   console.log(x);
-                
+                x2.push(x);
             }
+           
+            for (i=0;i<porInterno.length;i++){
+                x3[i] = soloCambio2.filter((elem) => elem.interno == porInterno[i]);
+            }
+            console.log(x3);
+            
+            for (const elem of x3){
+                h = elem.length;
+                for (i=0;i<h;i++){
+
+                    sinRepetidos[i] += elem[i].horaSinSec;
+
+                }
+
+            }
+            console.log(sinRepetidos);
+
+            /*const toFindDuplicates = soloCambio2 => arry.filter((item, index) => arr.indexOf(item) !== index)
+            const duplicateElementa = tofindDuplicates(arry);
+            console.log(duplicateElements); */
+
+
+
+            /* for (const elem of x2){
+
+                 for (const el of elem){
+
+                    
+
+                     console.log(x4);
+                 }
+            } */
+            /* let count2 = [];
+            let count3 = [];
+            let count4 = [];
+            let count5 = [];
+            let l = []; */
+           /* for (i=0;i<x2[0].length;i++){
+                l[i]= x2[0][i].horaSinSec;
+
+            } */
+            //let g = l;
+            //console.log(l);
+            //for (const el of l){
+                //g.shift();
+                /* for (i=0;i<l.length;i++){
+                count2.push(l.filter((n) => n === l[i] == true));
+                }
+                for(i=0;i<count2.length;i++){
+                    if (count2[i].length<3 ==true){
+                        count2[i] = [];
+                    }
+                        
+                    count3 = count2.filter((n) => n[2] !=undefined  == true);
+
+                }
+                for (i=0;i<count3.length;i++){
+
+                    count4[i] = count3[i].filter((item,index) => count3[i].indexOf(item) === index);
+                }
+                    count5 = count4.filter((item,index) => count4.indexOf(item) === index);
+                console.log(count5);   */
                 
-        
-            //console.log(soloCambio3);
-            
-            //let malSecc = soloCambio.filter((elem) => elem.horaInicio  == "Cambio Seccion");
-            
+            //}
+
+
             
                 if (roa3.length > 0) {
 
