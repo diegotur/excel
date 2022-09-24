@@ -345,7 +345,6 @@ function excelFileToJSON3(file){
 
             let soloCambio = roa3.filter((elem) => elem.tipoDeMarca == "Cambio Seccion");
             let soloCambio2 = soloCambio.filter((elem) => elem.legajo != "0");
-            
             let porInterno = [];
 
             
@@ -359,53 +358,98 @@ function excelFileToJSON3(file){
                     porInterno.push(elem.interno);
                 }
             } 
-            
-           // let soloCambio3 = [];
-            
+
             let x2 = [];
             let x3 = [];
+            let x4 = [];
+            let intArr = [];
+
             for (const elem of porInterno){
                 let x = soloCambio2.filter((elem2) => elem2.interno == elem);
+                x2.push(x);
+            }
 
-                console.log(x);
-
-                //NO FUNCIONA NADA
-
-                /* 
-                for (const elem3 of x){
-                    //let p = x.findIndex((n)=> n == elem3);
-                    let h = x;
-
-                    h.shift();
-                    
-                    if (h.some((n)=>n.horaSinSec == elem3.horaSinSec) == false){
-                        delete elem3;
-                    } */
-                
-
-                   // for (i=0;i<x;i++){
-                     //   console.log(elem3, x[i]);
-                        //if (x[i] !== elem3 == true){
-                            /* if (x[i].horaSinSec == elem3.horaSinSec == true){
-                                x2.push(x[i]);
-                            }
-                            if (x2.length > 2 == true){
-                                x3.push(elem3);
-                                x3.push(x2);
-                            } */
-
-                       // }
-                    }
-                    
-                   console.log(x);
-                
+            for (i=0;i<porInterno.length;i++){
+                x3[i] = soloCambio2.filter((elem) => elem.interno == porInterno[i]);
+            }
+            
+            x4 = [ ...x3 ];
+            for (i=0;i<x4.length;i++){
+                for (ii=0;ii<x4[i].length;ii++){
+                    let m = x4[i][ii].horaSinSec;
+                    intArr[i] = x4[i][ii].interno;
+                    x4[i][ii] = m;
+                } 
+            }
+            for (f=0;f<3;f++){
+                for (i=0;i<x4.length;i++){
+                    const dup = x4[i].filter((item, index) => x4[i].indexOf(item) !== index);
+                    x4[i] = dup;
+                }
             }
                 
-        
-            //console.log(soloCambio3);
-            
-            //let malSecc = soloCambio.filter((elem) => elem.horaInicio  == "Cambio Seccion");
-            
+            for (i=0;i<x4.length;i++){
+                let dup = x4[i].filter((item, index) => x4[i].indexOf(item) == index);
+                x4[i] = dup;
+            }
+
+            let finalArr2 = [];
+
+                
+                for (i=0;i<x4.length;i++){
+                    for (ii=0;ii<x4[i].length;ii++){
+                        let x = soloCambio2.filter((elem)=> elem.interno == intArr[i] && elem.horaSinSec == x4[i][ii]);
+                        for (const elem of x){
+                            finalArr2.push(elem);
+                        }
+                    } 
+                }
+               
+
+                for (const elem of finalArr2){
+                    const node = document.createElement("tr");
+                    node.classList.add("infoP3");
+                    const subNode = document.createElement("td");
+                    const subNode1 = document.createElement("td");
+                    const subNode2 = document.createElement("td");
+                    const subNode3 = document.createElement("td");
+                    const subNode4 = document.createElement("td");
+                    const subNode5 = document.createElement("td");
+                    const subNode6 = document.createElement("td");
+                    const subNode7 = document.createElement("td");
+                    const subNode8 = document.createElement("td");
+                    
+                    const textnode = document.createTextNode(elem.interno);
+                    const textnode1 = document.createTextNode(elem.legajo);
+                    const textnode2 = document.createTextNode(elem.fechaInicio);
+                    const textnode3 = document.createTextNode(elem.horaInicio);
+                    const textnode4 = document.createTextNode(elem.recorrido);
+                    const textnode5 = document.createTextNode(elem.ramal);
+                    const textnode6 = document.createTextNode(elem.direccion);
+                    const textnode7 = document.createTextNode(elem.seccion);
+                    const textnode8 = document.createTextNode(elem.tipoDeMarca);
+                    subNode.appendChild(textnode);
+                    subNode1.appendChild(textnode1);
+                    subNode2.appendChild(textnode2);
+                    subNode3.appendChild(textnode3);
+                    subNode4.appendChild(textnode4);
+                    subNode5.appendChild(textnode5);
+                    subNode6.appendChild(textnode6);
+                    subNode7.appendChild(textnode7);
+                    subNode8.appendChild(textnode8);
+                    node.appendChild(subNode);
+                    node.appendChild(subNode1);
+                    node.appendChild(subNode2);
+                    node.appendChild(subNode3);
+                    node.appendChild(subNode4);
+                    node.appendChild(subNode5);
+                    node.appendChild(subNode6);
+                    node.appendChild(subNode7);
+                    node.appendChild(subNode8);
+                    tableP3.appendChild(node);
+                    
+                }
+
             
                 if (roa3.length > 0) {
 
@@ -430,12 +474,4 @@ function excelFileToJSON3(file){
 
        // if (tiempo > "6"==true){ masHoras.push(elem);}
     
-       /* console.log(elem3.horaSinSec);
-                    for (i=0;i<x;i++){
-                        if (elem3.horaSinSec == x[i].horaSinSec == true){
-                            elemRep.push(elem3);
-                            elemRep.push(x[i]);
-                        }
-                        if (elemRep.length>3 ==true){
-                            for (const el of elemRep){
-                                soloCambio3.push(el); */
+   
