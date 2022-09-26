@@ -296,11 +296,7 @@ function upload3() {
         alert("Please select a valid excel file.");
     }
 }
-
-//let result3 = {};
 let roa3;
-
-//let tableP3 = document.getElementById("tableP3");
 
 function excelFileToJSON3(file){
     try {
@@ -405,6 +401,7 @@ function excelFileToJSON3(file){
                     } 
                 }
                
+                finalArr2.sort((a, b) => (a.legajo > b.legajo) ? 1 : -1);
 
                 for (const elem of finalArr2){
                     const node = document.createElement("tr");
@@ -462,7 +459,136 @@ function excelFileToJSON3(file){
     }
 }
 
+function upload4() {
+    var files = document.getElementById('file_upload4').files;
+    if(files.length==0){
+        alert("Please choose any file...");
+        return;
+    }
+    var filename = files[0].name;
+    var extension = filename.substring(filename.lastIndexOf(".")).toUpperCase();
+    if (extension == '.XLS' || extension == '.XLSX') {
+        excelFileToJSON4(files[0]);
+    }else{
+        alert("Please select a valid excel file.");
+    }
+}
+let roa4;
 
+let tableP4 = document.getElementById("tableP4");
+
+function excelFileToJSON4(file){
+    try {
+    var reader = new FileReader();
+    reader.readAsBinaryString(file);
+    reader.onload = function(e) {
+
+        var data = e.target.result;
+        var workbook = XLSX.read(data, {
+            type : 'binary'
+        });
+        workbook.SheetNames.forEach(function(sheetName) {
+            roa4 = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
+            
+            
+            for (const elem of roa4){
+                
+                elem.Fecha  = ExcelDateToJSDate2(elem.Fecha);
+                elem.Hora  = excelDateToJSDate3(elem.Hora);
+            }
+            let temp1 = roa4.filter((elem) => elem.Cabecera != "Estación Benavidez");
+            let temp2 = temp1.filter((elem) => elem.MotivoCorte != "VUELTA ANULADA");
+
+            
+            console.log (temp2);
+
+            let fechasDisp2 = [];
+            
+            for (const elem of temp2){
+                if (fechasDisp2.some((n) => n == elem.Fecha) == false){
+                    fechasDisp2.push(elem.Fecha);
+                }
+            }
+            fechasDisp2.sort((a, b) => (a > b) ? 1 : -1);
+    
+            let drop2 = document.getElementsByClassName("dropdown-item2");
+            let dropIndex2 = 0;
+            let dropAr2 = [];
+            
+            for (const elem of fechasDisp2){
+    
+                drop2[dropIndex2].innerText = elem;
+                dropAr2.push("drop"+dropIndex2);
+                dropIndex2++;
+            }
+    
+    
+            for (i=0;i<fechasDisp2.length;i++) {
+                let j = document.getElementById(dropAr2[i])
+                j.addEventListener("click", () => {Write2(j.textContent)});
+            }
+            
+        function Write2(a) {
+            let infoP4 = document.getElementsByClassName("infoP4");
+
+            if (infoP4.length>0){
+                console.log(infoP4);
+                do {
+                    tableP4.removeChild(infoP4[0]);
+                    console.log(infoP4);
+
+                }while (infoP4.length!=0);
+            }
+            
+            temp2.sort((a, b) => (a.Legajo > b.Legajo) ? 1 : -1);     
+
+            for (const elem of temp2){
+                const node = document.createElement("tr");
+                node.classList.add("infoP4");
+                const subNode = document.createElement("td");
+                const subNode1 = document.createElement("td");
+                const subNode2 = document.createElement("td");
+                const subNode3 = document.createElement("td");
+                const subNode4 = document.createElement("td");
+              
+                
+                const textnode = document.createTextNode(elem.Coche);
+                const textnode1 = document.createTextNode(elem.Legajo);
+                const textnode5 = document.createTextNode(elem.Apellido);
+                const textnode2 = document.createTextNode(elem.Hora);
+                const textnode3 = document.createTextNode(elem.Recorrido);
+                const textnode4 = document.createTextNode(elem.MotivoCorte);
+                
+               
+                subNode.appendChild(textnode);
+                subNode1.appendChild(textnode1);
+                subNode2.appendChild(textnode2);
+                subNode3.appendChild(textnode3);
+                subNode4.appendChild(textnode4);
+         
+                node.appendChild(subNode);
+                node.appendChild(subNode1);
+                node.appendChild(subNode2);
+                node.appendChild(subNode3);
+                node.appendChild(subNode4);
+        
+                tableP4.appendChild(node);
+                
+            }
+        }
+                
+
+            
+                if (roa4.length > 0) {
+
+                    result[sheetName] = roa4;
+                }
+            });
+        }
+    }catch(e){
+        console.error(e);
+    }
+}
  //PARA CUANDO SE ARREGLE EL TEMA DE LA DIFERENCIA DE HORARIO
   //  let masHoras = [];
     //for (const elem of newArray20){
