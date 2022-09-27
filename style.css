@@ -1,0 +1,39 @@
+#controlSeccionamientoH1{
+    visibility: hidden;
+    position: absolute;
+}
+#controlMalUsoDelSubeH1{
+    visibility: hidden;
+    position: absolute;
+}
+#controlSeccCorridoH1{
+    visibility: hidden;
+    position: absolute;
+}
+#controlCortadosH1{
+    visibility: hidden;
+    position: absolute;
+}
+/* #tableP{
+    display: grid;
+    justify-items: center;
+} */
+
+.tabla tr td{
+    justify-items: center;
+    border: solid 1px black;
+    height: 8vh;
+    width: 15vh;
+    text-align: center;
+}
+.tabla th{
+   text-align: center;
+}
+.dropdown-item3{
+    text-decoration: none;
+    color: black;
+    font-size: 24px;
+}
+.dropdown-menu{
+    width: 25vw;
+}

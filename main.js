@@ -1,3 +1,25 @@
+let controlSeccionamiento = document.getElementById("controlSeccionamientoH1");
+let controlMalUsoDelSube = document.getElementById("controlMalUsoDelSubeH1"); 
+let controlSeccCorrido = document.getElementById("controlSeccCorridoH1"); 
+let controlCortados = document.getElementById("controlCortadosH1"); 
+
+function VerControl (a,b,c,d){
+    a.style.visibility = "visible";
+    b.style.visibility = "hidden";
+    c.style.visibility = "hidden";
+    d.style.visibility = "hidden";
+
+  
+}
+document.getElementById("controlSeccionamiento").addEventListener("click", ()=> {VerControl(controlSeccionamiento, controlMalUsoDelSube, controlSeccCorrido, controlCortados)});
+document.getElementById("controlMalUsoDelSube").addEventListener("click", ()=> {VerControl(controlMalUsoDelSube, controlSeccCorrido, controlCortados, controlSeccionamiento)});
+document.getElementById("controlCortados").addEventListener("click", ()=> {VerControl(controlSeccCorrido, controlMalUsoDelSube, controlSeccionamiento, controlCortados)});
+document.getElementById("controlSeccCorrido").addEventListener("click", ()=> {VerControl(controlCortados, controlMalUsoDelSube, controlSeccCorrido, controlSeccionamiento)});
+
+
+
+
+
 function upload() {
     var files = document.getElementById('file_upload').files;
     if(files.length==0){
@@ -84,7 +106,11 @@ function excelFileToJSON(file){
                 }
                 roa = newArray3;          
 
-                roa.sort((a, b) => (a.Legajo > b.Legajo) ? 1 : -1);     
+                roa.sort((a, b) => (a.Legajo > b.Legajo) ? 1 : -1);   
+
+                
+           
+                
                 
                 for (const elem of roa){
                     const node = document.createElement("tr");
