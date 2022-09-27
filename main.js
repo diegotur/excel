@@ -234,6 +234,7 @@ function excelFileToJSON2(file){
             new6 =new5.concat(fonRapMasde54);
 
             new6.sort((a, b) => (a.Legajo > b.Legajo) ? 1 : -1);     
+
             for (const elem of new6){
                 const node = document.createElement("tr");
                 node.classList.add("infoP2");
@@ -499,9 +500,6 @@ function excelFileToJSON4(file){
             let temp1 = roa4.filter((elem) => elem.Cabecera != "Estación Benavidez");
             let temp2 = temp1.filter((elem) => elem.MotivoCorte != "VUELTA ANULADA");
 
-            
-            console.log (temp2);
-
             let fechasDisp2 = [];
             
             for (const elem of temp2){
@@ -518,10 +516,9 @@ function excelFileToJSON4(file){
             for (const elem of fechasDisp2){
     
                 drop2[dropIndex2].innerText = elem;
-                dropAr2.push("drop"+dropIndex2);
+                dropAr2.push("cortadosDrop"+dropIndex2);
                 dropIndex2++;
             }
-    
     
             for (i=0;i<fechasDisp2.length;i++) {
                 let j = document.getElementById(dropAr2[i])
@@ -540,9 +537,11 @@ function excelFileToJSON4(file){
                 }while (infoP4.length!=0);
             }
             
-            temp2.sort((a, b) => (a.Legajo > b.Legajo) ? 1 : -1);     
+            let soloFecha = temp2.filter((elem) => a == elem.Fecha);
 
-            for (const elem of temp2){
+            soloFecha.sort((a, b) => (a.Legajo > b.Legajo) ? 1 : -1);     
+
+            for (const elem of soloFecha){
                 const node = document.createElement("tr");
                 node.classList.add("infoP4");
                 const subNode = document.createElement("td");
@@ -550,6 +549,7 @@ function excelFileToJSON4(file){
                 const subNode2 = document.createElement("td");
                 const subNode3 = document.createElement("td");
                 const subNode4 = document.createElement("td");
+                const subNode5 = document.createElement("td");
               
                 
                 const textnode = document.createTextNode(elem.Coche);
@@ -565,9 +565,11 @@ function excelFileToJSON4(file){
                 subNode2.appendChild(textnode2);
                 subNode3.appendChild(textnode3);
                 subNode4.appendChild(textnode4);
+                subNode5.appendChild(textnode5);
          
                 node.appendChild(subNode);
                 node.appendChild(subNode1);
+                node.appendChild(subNode5);
                 node.appendChild(subNode2);
                 node.appendChild(subNode3);
                 node.appendChild(subNode4);
