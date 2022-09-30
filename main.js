@@ -184,68 +184,76 @@ function excelFileToJSON2(file){
     reader.readAsBinaryString(file);
     reader.onload = function(e) {
 
-    var data = e.target.result;
-    var workbook = XLSX.read(data, {
-        type : 'binary'
-    });
-    workbook.SheetNames.forEach(function(sheetName) {
-        roa2 = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
-
-        for (const elem of roa2){
+        var data = e.target.result;
+        var workbook = XLSX.read(data, {
+            type : 'binary'
+        });
+        workbook.SheetNames.forEach(function(sheetName) {
+            roa2 = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
             
-            elem.FechaInicio  = ExcelDateToJSDate2(elem.FechaInicio);
-            elem.FechaFin  = ExcelDateToJSDate2(elem.FechaFin);
-        }
-
-        for (const elem of roa2){
+            for (const elem of roa2){
             
-            elem.HoraInicio  = excelDateToJSDate3(elem.HoraInicio);
-            elem.HoraFin  = excelDateToJSDate3(elem.HoraFin);
+                elem.FechaInicio  = ExcelDateToJSDate2(elem.FechaInicio);
+                elem.FechaFin  = ExcelDateToJSDate2(elem.FechaFin);
             }
             
+            for (const elem of roa2){
+                
+                elem.HoraInicio  = excelDateToJSDate3(elem.HoraInicio);
+            elem.HoraFin  = excelDateToJSDate3(elem.HoraFin);
+        }
+        
         let fechasDisp = [];
-            
+        
         for (const elem of roa2){
             if (fechasDisp.some((n) => n == elem.FechaInicio) == false){
                 fechasDisp.push(elem.FechaInicio);
             }
         }
+        
+
         fechasDisp.sort((a, b) => (a > b) ? 1 : -1);
 
+        
+        
         let drop = document.getElementsByClassName("dropdown-item");
         let dropIndex = 0;
         let dropAr = [];
         
         for (const elem of fechasDisp){
-
+            
             drop[dropIndex].innerText = elem;
             dropAr.push("drop"+dropIndex);
             dropIndex++;
         }
-
-
+        
+        
         for (i=0;i<fechasDisp.length;i++) {
-            let j = document.getElementById(dropAr[i])
-            j.addEventListener("click", () => {Write(j.textContent)});
+            let w = document.getElementById(dropAr[i])
+            w.addEventListener("click", () => {Write(w.textContent)});
         }
-
+        
         let new6=[];
         function Write(a) {
             let infoP2 = document.getElementsByClassName("infoP2");
-
+            
             if (infoP2.length>0){
                 console.log(infoP2);
                 do {
                     tableP2.removeChild(infoP2[0]);
                     console.log(infoP2);
-
+                    
                 }while (infoP2.length!=0);
             }
+            console.log(roa2);
+
             let newArray10 = roa2.filter((elem) => a == elem.FechaInicio);
             let newPP = newArray10.filter((elem) => a !== elem.FechaFin);
             let newPPP = newPP.filter((elem) => elem.HoraFin > "02:00:00");
             let newArray11 = newPPP.filter((elem) => elem.kms > 15);
 
+
+            
             let newArray20 = newArray10.filter((elem) => a == elem.FechaFin);
             let kmDeMas63 = newArray20.filter((elem) => elem.kms > "63");
             let pcoMasde48 = newArray20.filter((elem) => elem.kms > "48" && elem.Recorrido == "PCO COM");
@@ -260,6 +268,7 @@ function excelFileToJSON2(file){
             new6 =new5.concat(fonRapMasde54);
 
             new6.sort((a, b) => (a.Legajo > b.Legajo) ? 1 : -1);     
+
 
             for (const elem of new6){
                 const node = document.createElement("tr");
