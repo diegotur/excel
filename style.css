@@ -14,6 +14,10 @@
     visibility: hidden;
     position: absolute;
 }
+#controlKmPorRamalH1{
+    visibility: hidden;
+    position: absolute;
+}
 /* #tableP{
     display: grid;
     justify-items: center;

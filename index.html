@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -11,198 +12,230 @@
     <title>Document</title>
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-  <header>
+    <header>
 
-    <nav class="navbar sm-8 navbar-expand-md navbar-dark bg-dark">
-      <div class="container-fluid">
-        <a class="navbar-brand" href="#"></a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Seleccione Función
-              </a>
-              <ul class="dropdown-menu">
-                <li id="controlSeccionamiento"><a class="dropdown-item3" href="#">Seccionamiento</a></li>
-                <li id="controlMalUsoDelSube"><a class="dropdown-item3" href="#">Mal Uso Del Sube</a></li>
-                <li id="controlSeccCorrido"><a class="dropdown-item3" href="#">Servicios Cortados</a></li>
-                <li id="controlCortados"><a class="dropdown-item3" href="#">Seccionamiento Corrido</a></li>
-                
-            </ul>
-      </nav>
+        <nav class="navbar sm-8 navbar-expand-md navbar-dark bg-dark">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#"></a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Seleccione Función
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li id="controlSeccionamiento"><a class="dropdown-item3" href="#">Seccionamiento</a></li>
+                                <li id="controlMalUsoDelSube"><a class="dropdown-item3" href="#">Mal Uso Del Sube</a></li>
+                                <li id="controlSeccCorrido"><a class="dropdown-item3" href="#">Servicios Cortados</a></li>
+                                <li id="controlCortados"><a class="dropdown-item3" href="#">Seccionamiento Corrido</a></li>
+                                <li id="controlKmPorRamal"><a class="dropdown-item3" href="#">Km Por Ramal Mensual</a></li>
+
+                            </ul>
+        </nav>
     </header>
 
     <div id="controlSeccionamientoH1">
 
-      <h1 >Control de Seccionamiento</h1>
-      <input type="file" id="file_upload" />
-      <button onclick="upload()">Upload</button>  
-      <br><br>
-      <div>BORRAR TITULO + CORREGIR A "RAMAL"</div>  
+        <h1>Control de Seccionamiento</h1>
+        <input type="file" id="file_upload" />
+        <button onclick="upload()">Upload</button>
+        <br><br>
+        <div>BORRAR TITULO + CORREGIR A "RAMAL"</div>
 
-      
-      <br><br>
-      
-      <div>
-        <table class= "tabla" id = "tableP">
-          <tr>
-            <th>Interno</th>
-            <th>Ramal</th>
-            <th>Legajo</th>
-            <th>Kms</th>
-            <th>Secciones</th>
-            <th>Chofer</th>
-            <th>Diferencia</th>
-          </tr>
-          
-        </table>
-      </div>
+
+        <br><br>
+
+        <div>
+            <table class="tabla" id="tableP">
+                <tr>
+                    <th>Interno</th>
+                    <th>Ramal</th>
+                    <th>Legajo</th>
+                    <th>Kms</th>
+                    <th>Secciones</th>
+                    <th>Chofer</th>
+                    <th>Diferencia</th>
+                </tr>
+
+            </table>
+        </div>
     </div>
 
     <div id="controlMalUsoDelSubeH1">
 
-      
-      <h1 >Control de Uso del SUBE</h1>
-      <input type="file" id="file_upload2" />
-      <button onclick="upload2()">Upload</button> 
-      <div class="dropdown">
-        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Fecha</button>
-        <div>BORRAR HOJAS 2 Y 3, CAMBIAR A FECHAINICIO, HORAINICIO, BORRAR LINEA, RAMAL, REC Y EL ULTIMO</div>  
-        <ul id="drop" class="dropdown-menu">
-          <li><a class="dropdown-item" id="drop0" href="#"></a></li>
-          <li><a class="dropdown-item" id="drop1" href="#"></a></li>
-          <li><a class="dropdown-item" id="drop2" href="#"></a></li>
-          <li><a class="dropdown-item" id="drop3" href="#"></a></li>
-          <li><a class="dropdown-item" id="drop4" href="#"></a></li>
-          <li><a class="dropdown-item" id="drop5" href="#"></a></li>
-          <li><a class="dropdown-item" id="drop6" href="#"></a></li>
-          <li><a class="dropdown-item" id="drop7" href="#"></a></li>
-          <li><a class="dropdown-item" id="drop8" href="#"></a></li>
-          <li><a class="dropdown-item" id="drop9" href="#"></a></li>
-          <li><a class="dropdown-item" id="drop10" href="#"></a></li>
-          <li><a class="dropdown-item" id="drop11" href="#"></a></li>
-          <li><a class="dropdown-item" id="drop12" href="#"></a></li>
-          <li><a class="dropdown-item" id="drop13" href="#"></a></li>
-          
-        </ul>
-      </div> 
-      
-      <br><br>
-      
-      
-      
-      <div>
-        <table class= "tabla" id = "tableP2">
-          <tr>
-            <th>Legajo</th>
-            <th>Interno</th>
-            <th>Fecha Inicio</th>
-            <th>Fecha Fin</th>
-            <th>Hora Inicio</th>
-            <th>Hora Fin</th>
-            <th>Recorrido</th>
-            <th>Kms</th>
-          </tr>
-          
-        </table>
-      </div>
-      
-      <br><br>
+
+        <h1>Control de Uso del SUBE</h1>
+        <input type="file" id="file_upload2" />
+        <button onclick="upload2()">Upload</button>
+        <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Fecha</button>
+            <div>BORRAR HOJAS 2 Y 3, CAMBIAR A FECHAINICIO, HORAINICIO, BORRAR LINEA, RAMAL, REC Y EL ULTIMO</div>
+            <ul id="drop" class="dropdown-menu">
+                <li><a class="dropdown-item" id="drop0" href="#"></a></li>
+                <li><a class="dropdown-item" id="drop1" href="#"></a></li>
+                <li><a class="dropdown-item" id="drop2" href="#"></a></li>
+                <li><a class="dropdown-item" id="drop3" href="#"></a></li>
+                <li><a class="dropdown-item" id="drop4" href="#"></a></li>
+                <li><a class="dropdown-item" id="drop5" href="#"></a></li>
+                <li><a class="dropdown-item" id="drop6" href="#"></a></li>
+                <li><a class="dropdown-item" id="drop7" href="#"></a></li>
+                <li><a class="dropdown-item" id="drop8" href="#"></a></li>
+                <li><a class="dropdown-item" id="drop9" href="#"></a></li>
+                <li><a class="dropdown-item" id="drop10" href="#"></a></li>
+                <li><a class="dropdown-item" id="drop11" href="#"></a></li>
+                <li><a class="dropdown-item" id="drop12" href="#"></a></li>
+                <li><a class="dropdown-item" id="drop13" href="#"></a></li>
+
+            </ul>
+        </div>
+
+        <br><br>
+
+
+
+        <div>
+            <table class="tabla" id="tableP2">
+                <tr>
+                    <th>Legajo</th>
+                    <th>Interno</th>
+                    <th>Fecha Inicio</th>
+                    <th>Fecha Fin</th>
+                    <th>Hora Inicio</th>
+                    <th>Hora Fin</th>
+                    <th>Recorrido</th>
+                    <th>Kms</th>
+                </tr>
+
+            </table>
+        </div>
+
+        <br><br>
     </div>
-      
+
 
     <div id="controlSeccCorridoH1">
 
-      <h1 >Control de Seccionamiento Corrido</h1>
-      <input type="file" id="file_upload3" />
-      <button onclick="upload3()">Upload</button> 
-      
-      
-      <br><br>
-      
-      <div>
-        <table class= "tabla" id = "tableP3">
-          <tr>
-            <th>Interno</th>
-            <th>Legajo</th>
-            <th>Fecha Inicio</th>
-            <th>Hora Inicio</th>
-            <th>Recorrido</th>
-            <th>Ramal</th>
-            <th>Dirección</th>
-            <th>Sección</th>
-            <th>Tipo De Marca</th>
-          </tr>
-          
-        </table>
-      </div>
-      
-      <br><br>
-    </div >
+        <h1>Control de Seccionamiento Corrido</h1>
+        <input type="file" id="file_upload3" />
+        <button onclick="upload3()">Upload</button>
+
+
+        <br><br>
+
+        <div>
+            <table class="tabla" id="tableP3">
+                <tr>
+                    <th>Interno</th>
+                    <th>Legajo</th>
+                    <th>Fecha Inicio</th>
+                    <th>Hora Inicio</th>
+                    <th>Recorrido</th>
+                    <th>Ramal</th>
+                    <th>Dirección</th>
+                    <th>Sección</th>
+                    <th>Tipo De Marca</th>
+                </tr>
+
+            </table>
+        </div>
+
+        <br><br>
+    </div>
 
     <div id="controlCortadosH1">
 
-     
-      <h1 >Control Cortados </h1>
-      <input type="file" id="file_upload4" />
-      <button onclick="upload4()">Upload</button> 
-      
-      <div class="dropdown">
-        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Fecha</button>
-        <ul id="drop2" class="dropdown-menu">
-          <li><a class="dropdown-item22" id="cortadosDrop0" href="#"></a></li>
-          <li><a class="dropdown-item2" id="cortadosDrop1" href="#"></a></li>
-          <li><a class="dropdown-item2" id="cortadosDrop2" href="#"></a></li>
-          <li><a class="dropdown-item2" id="cortadosDrop3" href="#"></a></li>
-          <li><a class="dropdown-item2" id="cortadosDrop4" href="#"></a></li>
-          <li><a class="dropdown-item2" id="cortadosDrop5" href="#"></a></li>
-          <li><a class="dropdown-item2" id="cortadosDrop6" href="#"></a></li>
-          <li><a class="dropdown-item2" id="cortadosDrop7" href="#"></a></li>
-          <li><a class="dropdown-item2" id="cortadosDrop8" href="#"></a></li>
-          <li><a class="dropdown-item2" id="cortadosDrop9" href="#"></a></li>
-          <li><a class="dropdown-item2" id="cortadosDrop10" href="#"></a></li>
-          <li><a class="dropdown-item2" id="cortadosDrop11" href="#"></a></li>
-          <li><a class="dropdown-item2" id="cortadosDrop12" href="#"></a></li>
-          <li><a class="dropdown-item2" id="cortadosDrop13" href="#"></a></li>
-          <li><a class="dropdown-item2" id="cortadosDrop14" href="#"></a></li>
-          <li><a class="dropdown-item2" id="cortadosDrop15" href="#"></a></li>
-          <li><a class="dropdown-item2" id="cortadosDrop16" href="#"></a></li>
-          <li><a class="dropdown-item2" id="cortadosDrop17" href="#"></a></li>
-          <li><a class="dropdown-item2" id="cortadosDrop18" href="#"></a></li>
-          <li><a class="dropdown-item2" id="cortadosDrop19" href="#"></a></li>
-          <li><a class="dropdown-item2" id="cortadosDrop20" href="#"></a></li>
-          <li><a class="dropdown-item2" id="cortadosDrop21" href="#"></a></li>
-          <li><a class="dropdown-item2" id="cortadosDrop22" href="#"></a></li>
-          <li><a class="dropdown-item2" id="cortadosDrop23" href="#"></a></li>
-          <li><a class="dropdown-item2" id="cortadosDrop24" href="#"></a></li>
-          
-  
-</ul>
+
+        <h1>Control Cortados </h1>
+        <input type="file" id="file_upload4" />
+        <button onclick="upload4()">Upload</button>
+
+        <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Fecha</button>
+            <ul id="drop2" class="dropdown-menu">
+                <li><a class="dropdown-item22" id="cortadosDrop0" href="#"></a></li>
+                <li><a class="dropdown-item2" id="cortadosDrop1" href="#"></a></li>
+                <li><a class="dropdown-item2" id="cortadosDrop2" href="#"></a></li>
+                <li><a class="dropdown-item2" id="cortadosDrop3" href="#"></a></li>
+                <li><a class="dropdown-item2" id="cortadosDrop4" href="#"></a></li>
+                <li><a class="dropdown-item2" id="cortadosDrop5" href="#"></a></li>
+                <li><a class="dropdown-item2" id="cortadosDrop6" href="#"></a></li>
+                <li><a class="dropdown-item2" id="cortadosDrop7" href="#"></a></li>
+                <li><a class="dropdown-item2" id="cortadosDrop8" href="#"></a></li>
+                <li><a class="dropdown-item2" id="cortadosDrop9" href="#"></a></li>
+                <li><a class="dropdown-item2" id="cortadosDrop10" href="#"></a></li>
+                <li><a class="dropdown-item2" id="cortadosDrop11" href="#"></a></li>
+                <li><a class="dropdown-item2" id="cortadosDrop12" href="#"></a></li>
+                <li><a class="dropdown-item2" id="cortadosDrop13" href="#"></a></li>
+                <li><a class="dropdown-item2" id="cortadosDrop14" href="#"></a></li>
+                <li><a class="dropdown-item2" id="cortadosDrop15" href="#"></a></li>
+                <li><a class="dropdown-item2" id="cortadosDrop16" href="#"></a></li>
+                <li><a class="dropdown-item2" id="cortadosDrop17" href="#"></a></li>
+                <li><a class="dropdown-item2" id="cortadosDrop18" href="#"></a></li>
+                <li><a class="dropdown-item2" id="cortadosDrop19" href="#"></a></li>
+                <li><a class="dropdown-item2" id="cortadosDrop20" href="#"></a></li>
+                <li><a class="dropdown-item2" id="cortadosDrop21" href="#"></a></li>
+                <li><a class="dropdown-item2" id="cortadosDrop22" href="#"></a></li>
+                <li><a class="dropdown-item2" id="cortadosDrop23" href="#"></a></li>
+                <li><a class="dropdown-item2" id="cortadosDrop24" href="#"></a></li>
 
 
-<br><br>
+            </ul>
 
-<div>
-  <table class= "tabla" id = "tableP4">
-    <tr>
-      <th>Interno</th>
-      <th>Legajo</th>
-      <th>Apellido</th>
-      <th>Hora</th>
-      <th>Recorrido</th>
-      <th>Motivo Corte</th>
-    </tr>
-    
-  </table>
-</div>
-</div>
+
+            <br><br>
+
+            <div>
+                <table class="tabla" id="tableP4">
+                    <tr>
+                        <th>Interno</th>
+                        <th>Legajo</th>
+                        <th>Apellido</th>
+                        <th>Hora</th>
+                        <th>Recorrido</th>
+                        <th>Motivo Corte</th>
+                    </tr>
+
+                </table>
+            </div>
+        </div>
+
+        <div id="controlKmPorRamalH1">
+
+            <h1>Km por Ramal Mensual</h1>
+            <input type="file" id="file_upload5" />
+            <button onclick="upload5()">Upload</button>
+
+
+            <br><br>
+
+            <div>
+                <table class="tabla" id="tableP5">
+                    <tr>
+                        <th>Interno</th>
+                        <th>Legajo</th>
+                        <th>Fecha Inicio</th>
+                        <th>Hora Inicio</th>
+                        <th>Recorrido</th>
+                        <th>Ramal</th>
+                        <th>Dirección</th>
+                        <th>Sección</th>
+                        <th>Tipo De Marca</th>
+                    </tr>
+
+                </table>
+            </div>
+
+            <br><br>
+        </div>
 
 </body>
+
 </html>
 
