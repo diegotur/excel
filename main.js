@@ -382,6 +382,7 @@ function excelFileToJSON3(file) {
 
                 for (const elem of roa3) {
 
+
                     elem.interno = elem.__EMPTY;
                     elem.fechaInicio = elem.__EMPTY_1;
                     elem.horaInicio = elem.__EMPTY_2;
@@ -698,9 +699,9 @@ let bcasVta;
 let talarABen;
 let talarAPco;
 let talarAFon;
-let benAtalar;
-let pcoAtalar;
-let fonAtalar;
+let benATalar;
+let pcoATalar;
+let fonATalar;
 
 
 function excelFileToJSON5(file) {
@@ -720,7 +721,13 @@ function excelFileToJSON5(file) {
                     let x = elem.RecIda.split("");
                     x.shift();
                     elem.RecIda = x.join("");
+                    if (elem.RecVuelta!=undefined){
+                        let xx = elem.RecVuelta.split("");
+                        xx.shift();
+                        elem.RecVuelta = xx.join("");
+                    }
                 }
+                
 
                 
                 let temp1 = roa5.filter((elem) => elem.Cabecera != "Estación Benavidez ");
@@ -729,57 +736,73 @@ function excelFileToJSON5(file) {
                 let temp4 = temp3.filter((elem) => elem.Legajo != "2743");
                 console.log(temp4);
 
-                let temp5 = temp4.filter((elem) => elem.RecIda === "BEN LaV COM IDA"|| elem.RecIda ==="BEN SAB COM IDA" || elem.RecIda ==="BEN DOM IDA" || elem.RecIda ==="BEN FER IDA");
+                let benIda = temp4.filter((elem) => elem.RecIda === "BEN LaV COM IDA"|| elem.RecIda ==="BEN SAB COM IDA" || elem.RecIda ==="BEN DOM IDA" || elem.RecIda ==="BEN FER IDA"|| elem.RecIda ==="BEN LaV RAP IDA" || elem.RecIda ==="BEN SAB RAP IDA");
+                let pcoIda = temp4.filter((elem) => elem.RecIda === "PCO LaV COM IDA"|| elem.RecIda ==="PCO SAB COM IDA" || elem.RecIda ==="PCO DOM IDA" || elem.RecIda ==="PCO FER IDA"|| elem.RecIda ==="PCO LaV RAP IDA" || elem.RecIda ==="PCO SAB RAP IDA");
+                let fonIda = temp4.filter((elem) => elem.RecIda === "FON LaV COM IDA"|| elem.RecIda ==="FON SAB COM IDA" || elem.RecIda ==="FON DOM IDA" || elem.RecIda ==="FON FER IDA"|| elem.RecIda ==="FON LaV RAP IDA" || elem.RecIda ==="FON SAB RAP IDA");
+                let fonVta = temp4.filter((elem) => elem.RecVuelta === "FON LaV COM VTA" || elem.RecVuelta ==="FON SAB COM VTA" || elem.RecVuelta ==="FON DOM VTA" || elem.RecVuelta ==="FON FER VTA"|| elem.RecVuelta ==="FON LaV RAP VTA" || elem.RecVuelta ==="FON SAB RAP VTA");
+                let pcoVta = temp4.filter((elem) => elem.RecVuelta === "PCO LaV COM VTA" || elem.RecVuelta ==="PCO SAB COM VTA" || elem.RecVuelta ==="PCO DOM VTA" || elem.RecVuelta ==="PCO FER VTA"|| elem.RecVuelta ==="PCO LaV RAP VTA" || elem.RecVuelta ==="PCO SAB RAP VTA"|| elem.RecVuelta ==="PCO LaV R S/202 VTA");
+                let benVta = temp4.filter((elem) => elem.RecVuelta === "BEN LaV COM VTA" || elem.RecVuelta ==="BEN SAB COM VTA" || elem.RecVuelta ==="BEN DOM VTA" || elem.RecVuelta ==="BEN FER VTA"|| elem.RecVuelta ==="BEN LaV RAP VTA" || elem.RecVuelta ==="BEN SAB RAP VTA"|| elem.RecVuelta ==="BEN SAB R S/202 VTA"|| elem.RecVuelta ==="BEN LaV R DIR VTA"|| elem.RecVuelta ==="BEN LaV R S/202 VTA");
+                let ida197 = temp4.filter((elem) => elem.RecIda === "197 LaV COM IDA"|| elem.RecIda ==="197 SAB COM IDA" || elem.RecIda ==="197 DOM IDA" || elem.RecIda ==="197 FER IDA"|| elem.RecIda ==="197 LaV RAP IDA" || elem.RecIda ==="197 SAB RAP IDA"); 
+                let ida202 = temp4.filter((elem) => elem.RecIda === "202 LaV COM IDA"|| elem.RecIda ==="202 SAB COM IDA" || elem.RecIda ==="202 DOM IDA" || elem.RecIda ==="202 FER IDA"|| elem.RecIda ==="202 LaV RAP IDA" || elem.RecIda ==="202 SAB RAP IDA");  
+                let rivIda = temp4.filter((elem) => elem.RecIda === "RIV LaV IDA"|| elem.RecIda ==="RIV SAB IDA" || elem.RecIda ==="RIV DOM IDA" || elem.RecIda ==="RIV FER IDA");
+                let bcasIda = temp4.filter((elem) => elem.RecIda === "BCAS LaV IDA"|| elem.RecIda ==="BCAS SAB IDA" || elem.RecIda ==="BCAS DOM IDA" || elem.RecIda ==="BCAS FER IDA"); 
+                let vta197 = temp4.filter((elem) => elem.RecVuelta === "197 LaV COM VTA"|| elem.RecVuelta ==="197 SAB COM VTA" || elem.RecVuelta ==="197 DOM VTA" || elem.RecVuelta ==="197 FER VTA"|| elem.RecVuelta ==="197 LaV RAP VTA" || elem.RecVuelta ==="197 SAB RAP VTA"|| elem.RecVuelta ==="197 LaV R S/202 VTA");  
+                let vta202 = temp4.filter((elem) => elem.RecVuelta === "202 LaV COM VTA"|| elem.RecVuelta ==="202 SAB COM VTA" || elem.RecVuelta ==="202 DOM VTA" || elem.RecVuelta ==="202 FER VTA"|| elem.RecVuelta ==="202 LaV RAP VTA" || elem.RecVuelta ==="202 SAB RAP VTA"); 
+                let rivVta = temp4.filter((elem) => elem.RecVuelta === "RIV LaV VTA"|| elem.RecVuelta ==="RIV SAB VTA" || elem.RecVuelta ==="RIV DOM VTA" || elem.RecVuelta ==="RIV FER VTA"); 
+                let bcasVta = temp4.filter((elem) => elem.RecVuelta === "BCAS LaV VTA"|| elem.RecVuelta ==="BCAS SAB VTA" || elem.RecVuelta ==="BCAS DOM VTA" || elem.RecVuelta ==="BCAS FER VTA"); 
+                let benRelIda = temp4.filter((elem) => elem.RecIda === "BEN LaV REL COM IDA"|| elem.RecIda ==="BEN SAB REL COM IDA" || elem.RecIda ==="BEN DOM REL IDA" || elem.RecIda ==="BEN FER REL IDA"|| elem.RecIda ==="BEN LaV REL RAP IDA" || elem.RecIda ==="BEN SAB REL RAP IDA");
+                let pcoRelIda = temp4.filter((elem) => elem.RecIda === "PCO LaV REL COM IDA"|| elem.RecIda ==="PCO SAB REL COM IDA" || elem.RecIda ==="PCO DOM REL IDA" || elem.RecIda ==="PCO FER REL IDA"|| elem.RecIda ==="PCO LaV REL RAP IDA" || elem.RecIda ==="PCO SAB REL RAP IDA");
+                let fonRelIda = temp4.filter((elem) => elem.RecIda === "FON LaV REL COM IDA"|| elem.RecIda ==="FON SAB REL COM IDA" || elem.RecIda ==="FON DOM REL IDA" || elem.RecIda ==="FON FER REL IDA"|| elem.RecIda ==="FON LaV REL RAP IDA" || elem.RecIda ==="FON SAB REL RAP IDA");
+                let talarABen = temp4.filter((elem) => elem.RecIda === "TALAR A BEN IDA 2"||elem.RecIda === "TALAR A BEN IDA");
+                let talarAPco = temp4.filter((elem) => elem.RecIda === "TALAR A PCO IDA 2"||elem.RecIda === "TALAR A PCO IDA");
+                let talarAFon = temp4.filter((elem) => elem.RecIda === "TALAR A FON IDA 2"||elem.RecIda === "TALAR A FON IDA");
+                let benATalar = temp4.filter((elem) => elem.RecVuelta === "BEN A TALAR VTA");
+                let pcoATalar = temp4.filter((elem) => elem.RecVuelta === "PCO A TALAR VTA");
+                let fonATalar = temp4.filter((elem) => elem.RecVuelta === "FON A TALAR VTA");
+
+                let arrayRec=[];
+
+                arrayRec.push(benIda);
+                arrayRec.push(benVta);
+                arrayRec.push(benRelIda);
+                arrayRec.push(talarABen);
+                arrayRec.push(benATalar);
+                arrayRec.push(pcoIda);
+                arrayRec.push(pcoVta);
+                arrayRec.push(pcoRelIda);
+                arrayRec.push(talarAPco);
+                arrayRec.push(pcoATalar);
+                arrayRec.push(fonIda);
+                arrayRec.push(fonVta);
+                arrayRec.push(fonRelIda);
+                arrayRec.push(talarAFon);
+                arrayRec.push(fonATalar);
+                arrayRec.push(ida197);
+                arrayRec.push(vta197);
+                arrayRec.push(ida202);
+                arrayRec.push(vta202);
+                arrayRec.push(rivIda);
+                arrayRec.push(rivVta);
+                arrayRec.push(bcasIda);
+                arrayRec.push(bcasVta);
+
+                console.log(arrayRec);
 
 
-                      
-                console.log(temp5);
- 
+                let tableP5 = document.getElementById("tableP5");
 
-                /* for (const elem of finalArr2) {
+                for (const elem of arrayRec) {
                     const node = document.createElement("tr");
-                    node.classList.add("infoP3");
+                    node.classList.add("infoP5");
                     const subNode = document.createElement("td");
-                    const subNode1 = document.createElement("td");
-                    const subNode2 = document.createElement("td");
-                    const subNode3 = document.createElement("td");
-                    const subNode4 = document.createElement("td");
-                    const subNode5 = document.createElement("td");
-                    const subNode6 = document.createElement("td");
-                    const subNode7 = document.createElement("td");
-                    const subNode8 = document.createElement("td");
 
-                    const textnode = document.createTextNode(elem.interno);
-                    const textnode1 = document.createTextNode(elem.legajo);
-                    const textnode2 = document.createTextNode(elem.fechaInicio);
-                    const textnode3 = document.createTextNode(elem.horaInicio);
-                    const textnode4 = document.createTextNode(elem.recorrido);
-                    const textnode5 = document.createTextNode(elem.ramal);
-                    const textnode6 = document.createTextNode(elem.direccion);
-                    const textnode7 = document.createTextNode(elem.seccion);
-                    const textnode8 = document.createTextNode(elem.tipoDeMarca);
+                    const textnode = document.createTextNode(elem.length);
                     subNode.appendChild(textnode);
-                    subNode1.appendChild(textnode1);
-                    subNode2.appendChild(textnode2);
-                    subNode3.appendChild(textnode3);
-                    subNode4.appendChild(textnode4);
-                    subNode5.appendChild(textnode5);
-                    subNode6.appendChild(textnode6);
-                    subNode7.appendChild(textnode7);
-                    subNode8.appendChild(textnode8);
                     node.appendChild(subNode);
-                    node.appendChild(subNode1);
-                    node.appendChild(subNode2);
-                    node.appendChild(subNode3);
-                    node.appendChild(subNode4);
-                    node.appendChild(subNode5);
-                    node.appendChild(subNode6);
-                    node.appendChild(subNode7);
-                    node.appendChild(subNode8);
                     tableP5.appendChild(node);
 
                 }
- */
+
 
                 if (roa5.length > 0) {
 

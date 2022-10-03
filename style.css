@@ -26,7 +26,7 @@
 .tabla tr td{
     justify-items: center;
     border: solid 1px black;
-    height: 8vh;
+    height: 4vh;
     width: 15vh;
     text-align: center;
 }
@@ -40,4 +40,8 @@
 }
 .dropdown-menu{
     width: 25vw;
+}
+.infoP5 td{
+    font-size: 1vw;
+    
 }
