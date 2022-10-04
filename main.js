@@ -1060,35 +1060,35 @@ function excelFileToJSON6(file) {
             for (const elem of tempChoferesSeccionamiento){
                 xx = elem.legajo;
                 let x = tempChoferesSeccionamiento.filter((el)=>el.legajo==elem.legajo);
-                choferesSeccionamiento.push({legajo:xx, cantidad:x.length});
+                choferesSeccionamiento.push({legajo:xx, seccionamiento:x.length});
                 }
 
-                choferesSeccionamiento = choferesSeccionamiento.filter((e)=>e.cantidad>9);
+                choferesSeccionamiento = choferesSeccionamiento.filter((e)=>e.seccionamiento>9);
 
             for (const elem of tempChoferesMalUso){
                 xx = elem.legajo;
                 let x = tempChoferesMalUso.filter((el)=>el.legajo==elem.legajo);
-                choferesMalUso.push({legajo:xx, cantidad:x.length});
+                choferesMalUso.push({legajo:xx, malUso:x.length});
                 }
 
-                choferesMalUso = choferesMalUso.filter((e)=>e.cantidad>9);
+                choferesMalUso = choferesMalUso.filter((e)=>e.malUso>9);
 
             for (const elem of tempChoferesCortados){
                 xx = elem.legajo;
                 let x = tempChoferesCortados.filter((el)=>el.legajo==elem.legajo);
-                choferesCortados.push({legajo:xx, cantidad:x.length});
+                choferesCortados.push({legajo:xx, cortes:x.length});
                 }
 
-                choferesCortados = choferesCortados.filter((e)=>e.cantidad>2);
+                choferesCortados = choferesCortados.filter((e)=>e.cortes>2);
 
             for (const elem of corridosCant){
                 let x = tempCorridos.filter((el)=>el==elem);
                 //console.log(x.length);
-                corridos.push({legajo:elem,cantidad:x.length});
+                corridos.push({legajo:elem,seccCorrido:x.length});
                 }
-                corridos = corridos.filter((e)=>e.cantidad>40);
-                console.log(corridos);
-
+                corridos = corridos.filter((e)=>e.seccCorrido>40);
+                
+                
 
                 let pene=[];
                 let pene2=[];
@@ -1102,7 +1102,8 @@ function excelFileToJSON6(file) {
 
                 for (i=0;i<choferesSeccionamiento.length;i++){
                         pene.push(choferesSeccionamiento[i].legajo);
-                    }
+                }
+
                 for (const el of pene){
                     if (pene2.includes(el)==false){
                         pene2.push(el);
@@ -1110,7 +1111,7 @@ function excelFileToJSON6(file) {
                 }
                 for(const elem of pene2){
                     x = tempChoferesSeccionamiento.filter((el)=>el.legajo==elem);
-                    pene3.push({legajo:elem, cantidad:x.length});
+                    pene3.push({legajo:elem, seccionamiento:x.length});
                 }
                 choferesSeccionamiento = pene3;
 
@@ -1118,37 +1119,75 @@ function excelFileToJSON6(file) {
                 for (i=0;i<choferesMalUso.length;i++){
                     pene4.push(choferesMalUso[i].legajo);
                 }
-            for (const el of pene4){
-                if (pene5.includes(el)==false){
-                    pene5.push(el);
+
+                for (const el of pene4){
+                    if (pene5.includes(el)==false){
+                        pene5.push(el);
+                    }
                 }
-            }
-            for(const elem of pene5){
-                x = tempChoferesMalUso.filter((el)=>el.legajo==elem);
-                pene6.push({legajo:elem, cantidad:x.length});
-            }
-            choferesMalUso = pene6;
+                for(const elem of pene5){
+                    x = tempChoferesMalUso.filter((el)=>el.legajo==elem);
+                    pene6.push({legajo:elem, malUso:x.length});
+                }
+                choferesMalUso = pene6;
             
 
 
 
-            for (i=0;i<choferesCortados.length;i++){
-                pene7.push(choferesCortados[i].legajo);
-            }
-        for (const el of pene7){
-            if (pene8.includes(el)==false){
-                pene8.push(el);
-            }
-        }
-        for(const elem of pene8){
-            x = tempChoferesCortados.filter((el)=>el.legajo==elem);
-            pene9.push({legajo:elem, cantidad:x.length});
-        }
-        choferesCortados = pene9;
-        }
-      //  console.log(corridos[0]);
+                for (i=0;i<choferesCortados.length;i++){
+                    pene7.push(choferesCortados[i].legajo);
+                }
+                for (const el of pene7){
+                    if (pene8.includes(el)==false){
+                        pene8.push(el);
+                    }
+                }
+                for(const elem of pene8){
+                    x = tempChoferesCortados.filter((el)=>el.legajo==elem);
+                    pene9.push({legajo:elem, cortes:x.length});
+                }
+                choferesCortados = pene9;
+                
+                let soloChoferes=[];
+                
+                for (i=0;i<choferesSeccionamiento.length;i++){
+                        soloChoferes.push({
+                            legajo: choferesSeccionamiento[i].legajo,
+                            seccionamiento: choferesSeccionamiento[i].seccionamiento,
+                            malUso: 0,
+                            cortes:0,
+                            seccCorridos:0,
+                        });
+                }
+                let pipi=0;
+                for (const elem of soloChoferes){
+
+                        if (elem.legajo===choferesMalUso[pipi].legajo==false){
+                            
+                            soloChoferes.push({
+                                legajo: choferesMalUso[pipi].legajo,
+                                seccionamiento: 0,
+                                malUso: choferesMalUso[pipi].malUso,
+                                cortes:0,
+                                seccCorridos:0,
+                            });
+                            pipi++;
+                        } else{
+                            elem.malUso = choferesMalUso[pipi].malUso;
+                            pipi++;
+
+                        }
+                    
+                 }
+
+                console.log(soloChoferes);
 
 
+
+
+
+
+        }
     } catch (e) {
         console.error(e);
     }
