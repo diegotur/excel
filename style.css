@@ -18,6 +18,10 @@
     visibility: hidden;
     position: absolute;
 }
+#controlMensualH1{
+    visibility: hidden;
+    position: absolute;
+}
 /* #tableP{
     display: grid;
     justify-items: center;

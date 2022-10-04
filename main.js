@@ -3,30 +3,35 @@ let controlMalUsoDelSube = document.getElementById("controlMalUsoDelSubeH1");
 let controlSeccCorrido = document.getElementById("controlSeccCorridoH1");
 let controlCortados = document.getElementById("controlCortadosH1");
 let controlKmPorRamal = document.getElementById("controlKmPorRamalH1");
+let controlMensual = document.getElementById("controlMensualH1");
 
-function VerControl(a, b, c, d, e) {
+function VerControl(a, b, c, d, e, f) {
     a.style.visibility = "visible";
     b.style.visibility = "hidden";
     c.style.visibility = "hidden";
     d.style.visibility = "hidden";
     e.style.visibility = "hidden";
+    f.style.visibility = "hidden";
 
 
 }
 document.getElementById("controlSeccionamiento").addEventListener("click", () => {
-    VerControl(controlSeccionamiento, controlMalUsoDelSube, controlSeccCorrido, controlCortados, controlKmPorRamal)
+    VerControl(controlSeccionamiento, controlMalUsoDelSube, controlSeccCorrido, controlCortados, controlKmPorRamal, controlMensual)
 });
 document.getElementById("controlMalUsoDelSube").addEventListener("click", () => {
-    VerControl(controlMalUsoDelSube, controlSeccCorrido, controlCortados, controlSeccionamiento, controlKmPorRamal)
+    VerControl(controlMalUsoDelSube, controlSeccCorrido, controlCortados, controlSeccionamiento, controlKmPorRamal, controlMensual)
 });
 document.getElementById("controlCortados").addEventListener("click", () => {
-    VerControl(controlSeccCorrido, controlMalUsoDelSube, controlSeccionamiento, controlCortados, controlKmPorRamal)
+    VerControl(controlSeccCorrido, controlMalUsoDelSube, controlSeccionamiento, controlCortados, controlKmPorRamal, controlMensual)
 });
 document.getElementById("controlSeccCorrido").addEventListener("click", () => {
-    VerControl(controlCortados, controlMalUsoDelSube, controlSeccCorrido, controlSeccionamiento, controlKmPorRamal)
+    VerControl(controlCortados, controlMalUsoDelSube, controlSeccCorrido, controlSeccionamiento, controlKmPorRamal, controlMensual)
 });
 document.getElementById("controlKmPorRamal").addEventListener("click", () => {
-    VerControl(controlKmPorRamal, controlCortados, controlMalUsoDelSube, controlSeccCorrido, controlSeccionamiento)
+    VerControl(controlKmPorRamal, controlCortados, controlMalUsoDelSube, controlSeccCorrido, controlSeccionamiento, controlMensual)
+});
+document.getElementById("controlMensual").addEventListener("click", () => {
+    VerControl(controlMensual, controlKmPorRamal, controlCortados, controlMalUsoDelSube, controlSeccCorrido, controlSeccionamiento)
 });
 
 
@@ -809,6 +814,307 @@ function excelFileToJSON5(file) {
                     result[sheetName] = roa5;
                 }
             });
+        }
+    } catch (e) {
+        console.error(e);
+    }
+}
+
+function upload6() {
+    var files = document.getElementById('file_upload6').files;
+    if (files.length == 0) {
+        alert("Please choose any file...");
+        return;
+    }
+    var filename = files[0].name;
+    var extension = filename.substring(filename.lastIndexOf(".")).toUpperCase();
+    if (extension == '.XLS' || extension == '.XLSX') {
+        excelFileToJSON6(files[0]);
+    } else {
+        alert("Please select a valid excel file.");
+    }
+}
+
+let result6 = {};
+let roa6;
+let choferesSeccionamiento=[];
+let tempChoferesSeccionamiento=[];
+let choferesMalUso=[];
+let tempChoferesMalUso=[];
+let choferesCortados=[];
+let tempChoferesCortados=[];
+
+let tableP6 = document.getElementById("tableP6");
+
+function excelFileToJSON6(file) {
+    try {
+        var reader = new FileReader();
+        reader.readAsBinaryString(file);
+        reader.onload = function(e) {
+
+            var data = e.target.result;
+            var workbook = XLSX.read(data, {
+                type: 'binary'
+            });
+
+
+            workbook.SheetNames.forEach(function(sheetName) {
+                roa6 = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
+
+            //console.log (roa6);
+
+            let numberMalUso = roa6.findIndex((elem) =>elem.props == "CONTROL MAL USO DEL SUBE");
+            let numberCortados = roa6.findIndex((elem) =>elem.props == "SERVICIOS CORTADOS");
+            let numberSecCorridos = roa6.findIndex((elem) =>elem.props == "CONTROL SECCIONAMIENTO CORRIDO");
+
+
+            let arraySeccionamiento=[];
+            let arrayMalUso=[];
+            let arrayCortados=[];
+            let arrayCorridos=[];
+
+            for (i=2; i<numberMalUso; i++){
+                arraySeccionamiento.push(roa6[i]);
+            }
+            for (i=numberMalUso+2; i<numberCortados; i++){
+                arrayMalUso.push(roa6[i]);
+            }
+            for (i=numberCortados+2; i<numberSecCorridos; i++){
+                arrayCortados.push(roa6[i]);
+            }
+            for (i=numberSecCorridos+2; i<roa6.length; i++){
+                arrayCorridos.push(roa6[i]);
+            }
+            
+
+            for (const elem of arraySeccionamiento){
+                xx = elem.__EMPTY_1;
+                tempChoferesSeccionamiento.push({legajo:xx});
+            }
+            for (const elem of arrayMalUso){
+                xx = elem.props;
+                tempChoferesMalUso.push({legajo:xx});
+            }
+            for (const elem of arrayCortados){
+                xx = elem.__EMPTY;
+                tempChoferesCortados.push({legajo:xx});
+            }
+
+
+           //console.log(arrayCortados);
+            //console.log(tempChoferesSeccionamiento);
+
+                /* for (const elem of roa2) {
+
+                    elem.FechaInicio = ExcelDateToJSDate2(elem.FechaInicio);
+                    elem.FechaFin = ExcelDateToJSDate2(elem.FechaFin);
+                }
+
+                for (const elem of roa2) {
+
+                    elem.HoraInicio = excelDateToJSDate3(elem.HoraInicio);
+                    elem.HoraFin = excelDateToJSDate3(elem.HoraFin);
+                }
+
+                let fechasDisp = [];
+
+                for (const elem of roa2) {
+                    if (fechasDisp.some((n) => n == elem.FechaInicio) == false) {
+                        fechasDisp.push(elem.FechaInicio);
+                    }
+                }
+
+
+                fechasDisp.sort((a, b) => (a > b) ? 1 : -1);
+
+
+
+                let drop = document.getElementsByClassName("dropdown-item");
+                let dropIndex = 0;
+                let dropAr = [];
+
+                for (const elem of fechasDisp) {
+
+                    drop[dropIndex].innerText = elem;
+                    dropAr.push("drop" + dropIndex);
+                    dropIndex++;
+                }
+
+
+                for (i = 0; i < fechasDisp.length; i++) {
+                    let w = document.getElementById(dropAr[i])
+                    w.addEventListener("click", () => {
+                        Write(w.textContent)
+                    });
+                }
+
+                let new6 = [];
+
+                function Write(a) {
+                    let infoP2 = document.getElementsByClassName("infoP2");
+
+                    if (infoP2.length > 0) {
+                        console.log(infoP2);
+                        do {
+                            tableP2.removeChild(infoP2[0]);
+                            console.log(infoP2);
+
+                        } while (infoP2.length != 0);
+                    }
+                    console.log(roa2);
+
+                    let newArray10 = roa2.filter((elem) => a == elem.FechaInicio);
+                    let newPP = newArray10.filter((elem) => a !== elem.FechaFin);
+                    let newPPP = newPP.filter((elem) => elem.HoraFin > "02:00:00");
+                    let newArray11 = newPPP.filter((elem) => elem.kms > 15);
+
+
+
+                    let newArray20 = newArray10.filter((elem) => a == elem.FechaFin);
+                    let kmDeMas63 = newArray20.filter((elem) => elem.kms > "63");
+                    let pcoMasde48 = newArray20.filter((elem) => elem.kms > "48" && elem.Recorrido == "PCO COM");
+                    let pcoRapMasde48 = newArray20.filter((elem) => elem.kms > "48" && elem.Recorrido == "PCO RAP");
+                    let fonMasde54 = newArray20.filter((elem) => elem.kms > "54" && elem.Recorrido == "FON COM");
+                    let fonRapMasde54 = newArray20.filter((elem) => elem.kms > "54" && elem.Recorrido == "FON RAP");
+
+                    let new2 = newArray11.concat(kmDeMas63);
+                    let new3 = new2.concat(pcoMasde48);
+                    let new4 = new3.concat(pcoRapMasde48);
+                    let new5 = new4.concat(fonMasde54);
+                    new6 = new5.concat(fonRapMasde54);
+
+                    new6.sort((a, b) => (a.Legajo > b.Legajo) ? 1 : -1);
+
+
+                    for (const elem of new6) {
+                        const node = document.createElement("tr");
+                        node.classList.add("infoP2");
+                        const subNode = document.createElement("td");
+                        const subNode1 = document.createElement("td");
+                        const subNode2 = document.createElement("td");
+                        const subNode3 = document.createElement("td");
+                        const subNode4 = document.createElement("td");
+                        const subNode5 = document.createElement("td");
+                        const subNode6 = document.createElement("td");
+                        const subNode7 = document.createElement("td");
+
+                        const textnode = document.createTextNode(elem.Legajo);
+                        const textnode1 = document.createTextNode(elem.Interno);
+                        const textnode2 = document.createTextNode(elem.FechaInicio);
+                        const textnode3 = document.createTextNode(elem.FechaFin);
+                        const textnode4 = document.createTextNode(elem.HoraInicio);
+                        const textnode5 = document.createTextNode(elem.HoraFin);
+                        const textnode6 = document.createTextNode(elem.Recorrido);
+                        const textnode7 = document.createTextNode(elem.kms);
+                        subNode.appendChild(textnode);
+                        subNode1.appendChild(textnode1);
+                        subNode2.appendChild(textnode2);
+                        subNode3.appendChild(textnode3);
+                        subNode4.appendChild(textnode4);
+                        subNode5.appendChild(textnode5);
+                        subNode6.appendChild(textnode6);
+                        subNode7.appendChild(textnode7);
+                        node.appendChild(subNode);
+                        node.appendChild(subNode1);
+                        node.appendChild(subNode2);
+                        node.appendChild(subNode3);
+                        node.appendChild(subNode4);
+                        node.appendChild(subNode5);
+                        node.appendChild(subNode6);
+                        node.appendChild(subNode7);
+                        tableP2.appendChild(node);
+
+                    }
+                } */
+               
+                if (roa6.length > 0) {
+                    result[sheetName] = roa6;
+                }
+            });
+
+
+            
+            for (const elem of tempChoferesSeccionamiento){
+                xx = elem.legajo;
+                let x = tempChoferesSeccionamiento.filter((el)=>el.legajo==elem.legajo);
+                choferesSeccionamiento.push({legajo:xx, cantidad:x.length});
+                }
+
+                choferesSeccionamiento = choferesSeccionamiento.filter((e)=>e.cantidad>9);
+
+                for (const elem of tempChoferesMalUso){
+                    xx = elem.legajo;
+                    let x = tempChoferesMalUso.filter((el)=>el.legajo==elem.legajo);
+                    choferesMalUso.push({legajo:xx, cantidad:x.length});
+                    }
+    
+                    choferesMalUso = choferesMalUso.filter((e)=>e.cantidad>9);
+
+                    for (const elem of tempChoferesCortados){
+                        xx = elem.legajo;
+                        let x = tempChoferesCortados.filter((el)=>el.legajo==elem.legajo);
+                        choferesCortados.push({legajo:xx, cantidad:x.length});
+                       // console.log(choferesCortados);
+                        }
+        
+                        choferesCortados = choferesCortados.filter((e)=>e.cantidad>2);
+
+                let pene=[];
+                let pene2=[];
+                let pene3=[];
+                let pene4=[];
+                let pene5=[];
+                let pene6=[];
+                let pene7=[];
+                let pene8=[];
+                let pene9=[];
+
+                for (i=0;i<choferesSeccionamiento.length;i++){
+                        pene.push(choferesSeccionamiento[i].legajo);
+                    }
+                for (const el of pene){
+                    if (pene2.includes(el)==false){
+                        pene2.push(el);
+                    }
+                }
+                for(const elem of pene2){
+                    x = tempChoferesSeccionamiento.filter((el)=>el.legajo==elem);
+                    pene3.push({legajo:elem, cantidad:x.length});
+                }
+                choferesSeccionamiento = pene3;
+
+                
+                for (i=0;i<choferesMalUso.length;i++){
+                    pene4.push(choferesMalUso[i].legajo);
+                }
+            for (const el of pene4){
+                if (pene5.includes(el)==false){
+                    pene5.push(el);
+                }
+            }
+            for(const elem of pene5){
+                x = tempChoferesMalUso.filter((el)=>el.legajo==elem);
+                pene6.push({legajo:elem, cantidad:x.length});
+            }
+            choferesMalUso = pene6;
+            
+
+
+
+            for (i=0;i<choferesCortados.length;i++){
+                pene7.push(choferesCortados[i].legajo);
+            }
+        for (const el of pene7){
+            if (pene8.includes(el)==false){
+                pene8.push(el);
+            }
+        }
+        for(const elem of pene8){
+            x = tempChoferesCortados.filter((el)=>el.legajo==elem);
+            pene9.push({legajo:elem, cantidad:x.length});
+        }
+        choferesCortados = pene9;
+           console.log(choferesCortados);
         }
     } catch (e) {
         console.error(e);
