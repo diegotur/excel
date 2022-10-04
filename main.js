@@ -843,6 +843,9 @@ let choferesMalUso=[];
 let tempChoferesMalUso=[];
 let choferesCortados=[];
 let tempChoferesCortados=[];
+let corridos=[];
+let tempCorridos=[];
+let corridosCant=[];
 
 let tableP6 = document.getElementById("tableP6");
 
@@ -899,7 +902,27 @@ function excelFileToJSON6(file) {
                 xx = elem.__EMPTY;
                 tempChoferesCortados.push({legajo:xx});
             }
+            for (const elem of arrayCorridos) {
 
+                elem.fecha = ExcelDateToJSDate2(elem.__EMPTY_1);
+                elem.hora = excelDateToJSDate3(elem.__EMPTY_2);
+            }
+            let pija=[];
+            for (const elem of arrayCorridos){
+                xx = elem.__EMPTY;
+                tempCorridos.push(xx);
+            }
+            for (const elem of tempCorridos){
+                pija.push(elem);
+            }
+            for (const el of pija){
+            if (corridosCant.includes(el)==false){
+                corridosCant.push(el);
+            }
+        }
+
+
+            //console.log(corridosCant);
 
            //console.log(arrayCortados);
             //console.log(tempChoferesSeccionamiento);
@@ -1026,7 +1049,7 @@ function excelFileToJSON6(file) {
 
                     }
                 } */
-               
+            
                 if (roa6.length > 0) {
                     result[sheetName] = roa6;
                 }
@@ -1042,22 +1065,30 @@ function excelFileToJSON6(file) {
 
                 choferesSeccionamiento = choferesSeccionamiento.filter((e)=>e.cantidad>9);
 
-                for (const elem of tempChoferesMalUso){
-                    xx = elem.legajo;
-                    let x = tempChoferesMalUso.filter((el)=>el.legajo==elem.legajo);
-                    choferesMalUso.push({legajo:xx, cantidad:x.length});
-                    }
-    
-                    choferesMalUso = choferesMalUso.filter((e)=>e.cantidad>9);
+            for (const elem of tempChoferesMalUso){
+                xx = elem.legajo;
+                let x = tempChoferesMalUso.filter((el)=>el.legajo==elem.legajo);
+                choferesMalUso.push({legajo:xx, cantidad:x.length});
+                }
 
-                    for (const elem of tempChoferesCortados){
-                        xx = elem.legajo;
-                        let x = tempChoferesCortados.filter((el)=>el.legajo==elem.legajo);
-                        choferesCortados.push({legajo:xx, cantidad:x.length});
-                       // console.log(choferesCortados);
-                        }
-        
-                        choferesCortados = choferesCortados.filter((e)=>e.cantidad>2);
+                choferesMalUso = choferesMalUso.filter((e)=>e.cantidad>9);
+
+            for (const elem of tempChoferesCortados){
+                xx = elem.legajo;
+                let x = tempChoferesCortados.filter((el)=>el.legajo==elem.legajo);
+                choferesCortados.push({legajo:xx, cantidad:x.length});
+                }
+
+                choferesCortados = choferesCortados.filter((e)=>e.cantidad>2);
+
+            for (const elem of corridosCant){
+                let x = tempCorridos.filter((el)=>el==elem);
+                //console.log(x.length);
+                corridos.push({legajo:elem,cantidad:x.length});
+                }
+                corridos = corridos.filter((e)=>e.cantidad>40);
+                console.log(corridos);
+
 
                 let pene=[];
                 let pene2=[];
@@ -1114,8 +1145,10 @@ function excelFileToJSON6(file) {
             pene9.push({legajo:elem, cantidad:x.length});
         }
         choferesCortados = pene9;
-           console.log(choferesCortados);
         }
+      //  console.log(corridos[0]);
+
+
     } catch (e) {
         console.error(e);
     }
