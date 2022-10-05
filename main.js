@@ -1176,28 +1176,6 @@ function excelFileToJSON6(file) {
                         })
                     }
                 }
-<<<<<<< HEAD
-                /* for (const elem of soloChoferes){
-                    for(i=0;i<choferesMalUso.length;i++){
-
-                        if (elem.legajo===choferesMalUso[i].legajo==true){
-                            
-                            elem.malUso = choferesMalUso[i].malUso;
-                        } else{
-                            
-                        soloChoferes.push({
-                            legajo: choferesMalUso[i].legajo,
-                            seccionamiento: 0,
-                            malUso: choferesMalUso[i].malUso,
-                            cortes:0,
-                            seccCorridos:0,
-                        });
-                    }
-                }
-            } */
-
-                console.log(soloChoferes);
-=======
 
                 for (const e of corridos){
                     x = choferesMalUso.filter((n)=>n.legajo==e.legajo);
@@ -1279,7 +1257,6 @@ function excelFileToJSON6(file) {
 
                             
                 
->>>>>>> 62f3f23a32b0fef4ab4d783bfe289f1b7f6903d3
 
 
 
