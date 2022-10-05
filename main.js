@@ -1159,26 +1159,24 @@ function excelFileToJSON6(file) {
                             seccCorridos:0,
                         });
                 }
-                let pipi=0;
-                for (const elem of soloChoferes){
+                /* for (const elem of soloChoferes){
+                    for(i=0;i<choferesMalUso.length;i++){
 
-                        if (elem.legajo===choferesMalUso[pipi].legajo==false){
+                        if (elem.legajo===choferesMalUso[i].legajo==true){
                             
-                            soloChoferes.push({
-                                legajo: choferesMalUso[pipi].legajo,
-                                seccionamiento: 0,
-                                malUso: choferesMalUso[pipi].malUso,
-                                cortes:0,
-                                seccCorridos:0,
-                            });
-                            pipi++;
+                            elem.malUso = choferesMalUso[i].malUso;
                         } else{
-                            elem.malUso = choferesMalUso[pipi].malUso;
-                            pipi++;
-
-                        }
-                    
-                 }
+                            
+                        soloChoferes.push({
+                            legajo: choferesMalUso[i].legajo,
+                            seccionamiento: 0,
+                            malUso: choferesMalUso[i].malUso,
+                            cortes:0,
+                            seccCorridos:0,
+                        });
+                    }
+                }
+            } */
 
                 console.log(soloChoferes);
 
