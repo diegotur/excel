@@ -440,10 +440,11 @@ function excelFileToJSON3(file) {
                     x2.push(x);
                 }
 
+                
                 for (i = 0; i < porInterno.length; i++) {
                     x3[i] = soloCambio2.filter((elem) => elem.interno == porInterno[i]);
                 }
-
+                
                 x4 = [...x3];
                 for (i = 0; i < x4.length; i++) {
                     for (ii = 0; ii < x4[i].length; ii++) {
@@ -475,8 +476,16 @@ function excelFileToJSON3(file) {
                         }
                     }
                 }
-
+                
                 finalArr2.sort((a, b) => (a.legajo > b.legajo) ? 1 : -1);
+                
+                let putisima = [];
+                for (i=0;i<finalArr2;i++){
+                    
+                }
+                console.log(putisima.length, x, g);
+
+
 
                 for (const elem of finalArr2) {
                     const node = document.createElement("tr");
@@ -908,6 +917,8 @@ function excelFileToJSON6(file) {
                 elem.hora = excelDateToJSDate3(elem.__EMPTY_2);
             }
             let pija=[];
+
+            console.log(arrayCorridos);
             for (const elem of arrayCorridos){
                 xx = elem.__EMPTY;
                 tempCorridos.push(xx);
@@ -1084,9 +1095,9 @@ function excelFileToJSON6(file) {
             for (const elem of corridosCant){
                 let x = tempCorridos.filter((el)=>el==elem);
                 //console.log(x.length);
-                corridos.push({legajo:elem,seccCorrido:x.length});
+                corridos.push({legajo:elem,seccCorridos:x.length});
                 }
-                corridos = corridos.filter((e)=>e.seccCorrido>40);
+                corridos = corridos.filter((e)=>e.seccCorridos>40);
                 
                 
 
@@ -1148,39 +1159,104 @@ function excelFileToJSON6(file) {
                 }
                 choferesCortados = pene9;
                 
-                let soloChoferes=[];
-                
-                for (i=0;i<choferesSeccionamiento.length;i++){
-                        soloChoferes.push({
-                            legajo: choferesSeccionamiento[i].legajo,
-                            seccionamiento: choferesSeccionamiento[i].seccionamiento,
-                            malUso: 0,
-                            cortes:0,
-                            seccCorridos:0,
-                        });
+                for (const e of corridos){
+                    x = choferesSeccionamiento.filter((n)=>n.legajo==e.legajo);
+                    if (x.length>0 ==true){
+                        e.seccionamiento = x[0].seccionamiento;
+                    } else {
+                        e.seccionamiento = 0;
+                    }
                 }
-                let pipi=0;
-                for (const elem of soloChoferes){
+                for (const e of choferesSeccionamiento){
+                    x = corridos.filter((n)=>n.legajo==e.legajo);
+                    if (x.length<1==true){
+                        corridos.push({
+                            ...e,
+                            seccCorridos:0,
+                        })
+                    }
+                }
 
-                        if (elem.legajo===choferesMalUso[pipi].legajo==false){
+                for (const e of corridos){
+                    x = choferesMalUso.filter((n)=>n.legajo==e.legajo);
+                    if (x.length>0 ==true){
+                        e.malUso = x[0].malUso;
+                    } else {
+                        e.malUso = 0;
+                    }
+                }
+                for (const e of choferesMalUso){
+                    x = corridos.filter((n)=>n.legajo==e.legajo);
+                    if (x.length<1==true){
+                        corridos.push({
+                            ...e,
+                            seccCorridos:0,
+                            seccionamiento:0,
+                        })
+                    }
+                }
+
+                for (const e of corridos){
+                    x = choferesCortados.filter((n)=>n.legajo==e.legajo);
+                    if (x.length>0 ==true){
+                        e.cortes = x[0].cortes;
+                    } else {
+                        e.cortes = 0;
+                    }
+                }
+                for (const e of choferesCortados){
+                    x = corridos.filter((n)=>n.legajo==e.legajo);
+                    if (x.length<1==true){
+                        corridos.push({
+                            ...e,
+                            seccCorridos:0,
+                            seccionamiento:0,
+                            malUso:0,
+                        })
+                    }
+                }
+
+                corridos.sort((a, b) => (a.legajo > b.legajo) ? 1 : -1);
+
+                /* for (const e of corridos){
+                    x = choferesMalUso.filter((n)=>n.legajo==e.legajo);
+                    if (x.length>0 ==true){
+                        e.malUso = x[0].malUso;
+                    } else {
+                        e.malUso = 0;
+                    }
+                } */
+
+
+                //console.log(corridos);
+
+
+
+
+                //console.log(soloChoferes.length);
+               
+               /*  for (const elem of soloChoferes){
+                    if (elem.seccionamiento==undefined){
+                        elem.seccionamiento=0;
+                    }
+                    if (elem.malUso==undefined){
+                        elem.malUso=0;
+                    }
+                    if (elem.cortes==undefined){
+                        elem.cortes=0;
+                    }
+                    if (elem.seccCorridos==undefined){
+                        elem.seccCorridos=0;
+                    }
+                }
+                soloChoferes.sort((a, b) => (a.legajo > b.legajo) ? 1 : -1); */
+
+               
+
+              
+
                             
-                            soloChoferes.push({
-                                legajo: choferesMalUso[pipi].legajo,
-                                seccionamiento: 0,
-                                malUso: choferesMalUso[pipi].malUso,
-                                cortes:0,
-                                seccCorridos:0,
-                            });
-                            pipi++;
-                        } else{
-                            elem.malUso = choferesMalUso[pipi].malUso;
-                            pipi++;
-
-                        }
-                    
-                 }
-
-                console.log(soloChoferes);
+                
 
 
 
