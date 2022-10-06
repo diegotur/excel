@@ -478,12 +478,11 @@ function excelFileToJSON3(file) {
                 }
                 
                 finalArr2.sort((a, b) => (a.legajo > b.legajo) ? 1 : -1);
+            
                 
-                let putisima = [];
-                for (i=0;i<finalArr2;i++){
-                    
-                }
-                console.log(putisima.length, x, g);
+
+                
+                
 
 
 
