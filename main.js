@@ -941,87 +941,61 @@ function excelFileToJSON6(file) {
             //console.log(tempChoferesSeccionamiento);
 
                 /* for (const elem of roa2) {
-
                     elem.FechaInicio = ExcelDateToJSDate2(elem.FechaInicio);
                     elem.FechaFin = ExcelDateToJSDate2(elem.FechaFin);
                 }
-
                 for (const elem of roa2) {
-
                     elem.HoraInicio = excelDateToJSDate3(elem.HoraInicio);
                     elem.HoraFin = excelDateToJSDate3(elem.HoraFin);
                 }
-
                 let fechasDisp = [];
-
                 for (const elem of roa2) {
                     if (fechasDisp.some((n) => n == elem.FechaInicio) == false) {
                         fechasDisp.push(elem.FechaInicio);
                     }
                 }
-
-
                 fechasDisp.sort((a, b) => (a > b) ? 1 : -1);
-
-
-
                 let drop = document.getElementsByClassName("dropdown-item");
                 let dropIndex = 0;
                 let dropAr = [];
-
                 for (const elem of fechasDisp) {
-
                     drop[dropIndex].innerText = elem;
                     dropAr.push("drop" + dropIndex);
                     dropIndex++;
                 }
-
-
                 for (i = 0; i < fechasDisp.length; i++) {
                     let w = document.getElementById(dropAr[i])
                     w.addEventListener("click", () => {
                         Write(w.textContent)
                     });
                 }
-
                 let new6 = [];
-
                 function Write(a) {
                     let infoP2 = document.getElementsByClassName("infoP2");
-
                     if (infoP2.length > 0) {
                         console.log(infoP2);
                         do {
                             tableP2.removeChild(infoP2[0]);
                             console.log(infoP2);
-
                         } while (infoP2.length != 0);
                     }
                     console.log(roa2);
-
                     let newArray10 = roa2.filter((elem) => a == elem.FechaInicio);
                     let newPP = newArray10.filter((elem) => a !== elem.FechaFin);
                     let newPPP = newPP.filter((elem) => elem.HoraFin > "02:00:00");
                     let newArray11 = newPPP.filter((elem) => elem.kms > 15);
-
-
-
                     let newArray20 = newArray10.filter((elem) => a == elem.FechaFin);
                     let kmDeMas63 = newArray20.filter((elem) => elem.kms > "63");
                     let pcoMasde48 = newArray20.filter((elem) => elem.kms > "48" && elem.Recorrido == "PCO COM");
                     let pcoRapMasde48 = newArray20.filter((elem) => elem.kms > "48" && elem.Recorrido == "PCO RAP");
                     let fonMasde54 = newArray20.filter((elem) => elem.kms > "54" && elem.Recorrido == "FON COM");
                     let fonRapMasde54 = newArray20.filter((elem) => elem.kms > "54" && elem.Recorrido == "FON RAP");
-
                     let new2 = newArray11.concat(kmDeMas63);
                     let new3 = new2.concat(pcoMasde48);
                     let new4 = new3.concat(pcoRapMasde48);
                     let new5 = new4.concat(fonMasde54);
                     new6 = new5.concat(fonRapMasde54);
-
                     new6.sort((a, b) => (a.Legajo > b.Legajo) ? 1 : -1);
-
-
                     for (const elem of new6) {
                         const node = document.createElement("tr");
                         node.classList.add("infoP2");
@@ -1033,7 +1007,6 @@ function excelFileToJSON6(file) {
                         const subNode5 = document.createElement("td");
                         const subNode6 = document.createElement("td");
                         const subNode7 = document.createElement("td");
-
                         const textnode = document.createTextNode(elem.Legajo);
                         const textnode1 = document.createTextNode(elem.Interno);
                         const textnode2 = document.createTextNode(elem.FechaInicio);
@@ -1059,7 +1032,6 @@ function excelFileToJSON6(file) {
                         node.appendChild(subNode6);
                         node.appendChild(subNode7);
                         tableP2.appendChild(node);
-
                     }
                 } */
             
