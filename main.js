@@ -274,14 +274,14 @@ function excelFileToJSON2(file) {
                     let infoP2 = document.getElementsByClassName("infoP2");
 
                     if (infoP2.length > 0) {
-                        console.log(infoP2);
+                        //console.log(infoP2);
                         do {
                             tableP2.removeChild(infoP2[0]);
-                            console.log(infoP2);
+                          //  console.log(infoP2);
 
                         } while (infoP2.length != 0);
                     }
-                    console.log(roa2);
+                   // console.log(roa2);
 
                     let newArray10 = roa2.filter((elem) => a == elem.FechaInicio);
                     let newPP = newArray10.filter((elem) => a !== elem.FechaFin);
@@ -479,53 +479,47 @@ function excelFileToJSON3(file) {
                 
                 finalArr2.sort((a, b) => (a.legajo > b.legajo) ? 1 : -1);
             
+                let finalArr3 = [];
+                let finalArr4 = [];
+
+
+                for (const s of finalArr2){
+                    finalArr3.push(s.legajo);
+                    finalArr4.push(s.horaSinSec);
+
+                }
+                function Duplicados(a) {
+                    return [...new Set(a)];
+                }
+             
+                let finalArr5 = Duplicados(finalArr3);
+
+                let finalArr6=[];
+                for (const e of finalArr5){
+                    let x = finalArr2.filter((el)=> el.legajo === e);
+                    
+                    h=[];
+                    for (const e of x){
+                        h.push(e.horaSinSec);
+                    }
+
+                    let xx = Duplicados(h);
+
+                    finalArr6.push({legajo:e, cantCorridos:xx.length})
+                }
                 
-
-                
-                
-
-
-
-                for (const elem of finalArr2) {
+                for (const elem of finalArr6) {
                     const node = document.createElement("tr");
                     node.classList.add("infoP3");
                     const subNode = document.createElement("td");
                     const subNode1 = document.createElement("td");
-                    const subNode2 = document.createElement("td");
-                    const subNode3 = document.createElement("td");
-                    const subNode4 = document.createElement("td");
-                    const subNode5 = document.createElement("td");
-                    const subNode6 = document.createElement("td");
-                    const subNode7 = document.createElement("td");
-                    const subNode8 = document.createElement("td");
 
-                    const textnode = document.createTextNode(elem.interno);
-                    const textnode1 = document.createTextNode(elem.legajo);
-                    const textnode2 = document.createTextNode(elem.fechaInicio);
-                    const textnode3 = document.createTextNode(elem.horaInicio);
-                    const textnode4 = document.createTextNode(elem.recorrido);
-                    const textnode5 = document.createTextNode(elem.ramal);
-                    const textnode6 = document.createTextNode(elem.direccion);
-                    const textnode7 = document.createTextNode(elem.seccion);
-                    const textnode8 = document.createTextNode(elem.tipoDeMarca);
+                    const textnode = document.createTextNode(elem.legajo);
+                    const textnode1 = document.createTextNode(elem.cantCorridos);
                     subNode.appendChild(textnode);
                     subNode1.appendChild(textnode1);
-                    subNode2.appendChild(textnode2);
-                    subNode3.appendChild(textnode3);
-                    subNode4.appendChild(textnode4);
-                    subNode5.appendChild(textnode5);
-                    subNode6.appendChild(textnode6);
-                    subNode7.appendChild(textnode7);
-                    subNode8.appendChild(textnode8);
                     node.appendChild(subNode);
                     node.appendChild(subNode1);
-                    node.appendChild(subNode2);
-                    node.appendChild(subNode3);
-                    node.appendChild(subNode4);
-                    node.appendChild(subNode5);
-                    node.appendChild(subNode6);
-                    node.appendChild(subNode7);
-                    node.appendChild(subNode8);
                     tableP3.appendChild(node);
 
                 }
@@ -613,10 +607,10 @@ function excelFileToJSON4(file) {
                     let infoP4 = document.getElementsByClassName("infoP4");
 
                     if (infoP4.length > 0) {
-                        console.log(infoP4);
+                       // console.log(infoP4);
                         do {
                             tableP4.removeChild(infoP4[0]);
-                            console.log(infoP4);
+                           // console.log(infoP4);
 
                         } while (infoP4.length != 0);
                     }
@@ -747,7 +741,7 @@ function excelFileToJSON5(file) {
                 let temp2 = temp1.filter((elem) => elem.Tipo != "C ");
                 let temp3 = temp2.filter((elem) => elem.Tipo != "CE ");
                 let temp4 = temp3.filter((elem) => elem.Legajo != "2743");
-                console.log(temp4);
+                //console.log(temp4);
 
                 let benIda = temp4.filter((elem) => elem.RecIda === "BEN LaV COM IDA"|| elem.RecIda ==="BEN SAB COM IDA" || elem.RecIda ==="BEN DOM IDA" || elem.RecIda ==="BEN FER IDA"|| elem.RecIda ==="BEN LaV RAP IDA" || elem.RecIda ==="BEN SAB RAP IDA");
                 let pcoIda = temp4.filter((elem) => elem.RecIda === "PCO LaV COM IDA"|| elem.RecIda ==="PCO SAB COM IDA" || elem.RecIda ==="PCO DOM IDA" || elem.RecIda ==="PCO FER IDA"|| elem.RecIda ==="PCO LaV RAP IDA" || elem.RecIda ==="PCO SAB RAP IDA");
@@ -799,7 +793,7 @@ function excelFileToJSON5(file) {
                 arrayRec.push(bcasIda);
                 arrayRec.push(bcasVta);
 
-                console.log(arrayRec);
+                //console.log(arrayRec);
 
 
                 let tableP5 = document.getElementById("tableP5");
@@ -917,7 +911,7 @@ function excelFileToJSON6(file) {
             }
             let pija=[];
 
-            console.log(arrayCorridos);
+            //console.log(arrayCorridos);
             for (const elem of arrayCorridos){
                 xx = elem.__EMPTY;
                 tempCorridos.push(xx);
@@ -1189,40 +1183,41 @@ function excelFileToJSON6(file) {
 
                 corridos.sort((a, b) => (a.legajo > b.legajo) ? 1 : -1);
 
-                /* for (const e of corridos){
-                    x = choferesMalUso.filter((n)=>n.legajo==e.legajo);
-                    if (x.length>0 ==true){
-                        e.malUso = x[0].malUso;
-                    } else {
-                        e.malUso = 0;
-                    }
-                } */
+                console.log(corridos);
 
+                for (const elem of corridos) {
+                    const node = document.createElement("tr");
+                    node.classList.add("infoP6");
+                    const subNode = document.createElement("td");
+                    const subNode1 = document.createElement("td");
+                    const subNode2 = document.createElement("td");
+                    const subNode3 = document.createElement("td");
+                    const subNode4 = document.createElement("td");
+                    const subNode5 = document.createElement("td");
+                    const subNode6 = document.createElement("td");
+                    const subNode7 = document.createElement("td");
 
-                //console.log(corridos);
+                    const textnode = document.createTextNode(elem.legajo);
+                    const textnode1 = document.createTextNode(elem.seccionamiento);
+                    const textnode2 = document.createTextNode(elem.malUso);
+                    const textnode3 = document.createTextNode(elem.cortes);
+                    const textnode4 = document.createTextNode(elem.seccCorridos);
+                    subNode.appendChild(textnode);
+                    subNode1.appendChild(textnode1);
+                    subNode2.appendChild(textnode2);
+                    subNode3.appendChild(textnode3);
+                    subNode4.appendChild(textnode4);
+                    node.appendChild(subNode);
+                    node.appendChild(subNode1);
+                    node.appendChild(subNode2);
+                    node.appendChild(subNode3);
+                    node.appendChild(subNode4);
+                    tableP6.appendChild(node);
 
+                }       
 
-
-
-                //console.log(soloChoferes.length);
-               
-               /*  for (const elem of soloChoferes){
-                    if (elem.seccionamiento==undefined){
-                        elem.seccionamiento=0;
-                    }
-                    if (elem.malUso==undefined){
-                        elem.malUso=0;
-                    }
-                    if (elem.cortes==undefined){
-                        elem.cortes=0;
-                    }
-                    if (elem.seccCorridos==undefined){
-                        elem.seccCorridos=0;
-                    }
-                }
-                soloChoferes.sort((a, b) => (a.legajo > b.legajo) ? 1 : -1); */
-
-               
+             
+                   
 
               
 
