@@ -478,46 +478,37 @@ function excelFileToJSON3(file) {
                 }
                 
                 finalArr2.sort((a, b) => (a.legajo > b.legajo) ? 1 : -1);
-                
-                let tempL = [];
+            
+                let finalArr3 = [];
+                let finalArr4 = [];
 
-                for (let e of finalArr2){
-                    tempL.push({legajo: e.legajo, hora: e.horaSinSec});
+
+                for (const s of finalArr2){
+                    finalArr3.push(s.legajo);
+                    finalArr4.push(s.horaSinSec);
+
+                }
+                function Duplicados(a) {
+                    return [...new Set(a)];
                 }
              
+                let finalArr5 = Duplicados(finalArr3);
 
-                let pppdaad = [];
-                for (const e of tempL){
-                    pppdaad.push(e.legajo);
-                }
-                function removeDuplicates(arr) {
-                    return [...new Set(arr)];
-                }
-             
-                let caca = removeDuplicates(pppdaad);
-
-                //console.log(caca);
-
-                let puta1 = [];
-                let puta2= [];
-                for (const e of caca){
+                let finalArr6=[];
+                for (const e of finalArr5){
                     let x = finalArr2.filter((el)=> el.legajo === e);
                     
-                    puta2=[];
+                    h=[];
                     for (const e of x){
-                        puta2.push(e.horaSinSec);
+                        h.push(e.horaSinSec);
                     }
 
-                    let xx = removeDuplicates(puta2);
+                    let xx = Duplicados(h);
 
-                    puta1.push({legajo:e, cantCorridos:xx.length})
-
-                   // console.log (puta1);
-
-                    
+                    finalArr6.push({legajo:e, cantCorridos:xx.length})
                 }
                 
-                for (const elem of puta1) {
+                for (const elem of finalArr6) {
                     const node = document.createElement("tr");
                     node.classList.add("infoP3");
                     const subNode = document.createElement("td");
