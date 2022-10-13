@@ -750,7 +750,6 @@ function excelFileToJSON5(file) {
                 let temp2 = temp1.filter((elem) => elem.Tipo != "C ");
                 let temp3 = temp2.filter((elem) => elem.Tipo != "CE ");
                 let temp4 = temp3.filter((elem) => elem.Legajo != "2743");
-                //console.log(temp4);
 
                 let benIda = temp4.filter((elem) => elem.RecIda === "BEN LaV COM IDA"|| elem.RecIda ==="BEN SAB COM IDA" || elem.RecIda ==="BEN DOM IDA" || elem.RecIda ==="BEN FER IDA"|| elem.RecIda ==="BEN LaV RAP IDA" || elem.RecIda ==="BEN SAB RAP IDA");
                 let pcoIda = temp4.filter((elem) => elem.RecIda === "PCO LaV COM IDA"|| elem.RecIda ==="PCO SAB COM IDA" || elem.RecIda ==="PCO DOM IDA" || elem.RecIda ==="PCO FER IDA"|| elem.RecIda ==="PCO LaV RAP IDA" || elem.RecIda ==="PCO SAB RAP IDA");
@@ -801,9 +800,6 @@ function excelFileToJSON5(file) {
                 arrayRec.push(rivVta);
                 arrayRec.push(bcasIda);
                 arrayRec.push(bcasVta);
-
-                //console.log(arrayRec);
-
 
                 let tableP5 = document.getElementById("tableP5");
 
@@ -920,7 +916,6 @@ function excelFileToJSON6(file) {
             }
             let pija=[];
 
-            //console.log(arrayCorridos);
             for (const elem of arrayCorridos){
                 xx = elem.__EMPTY;
                 tempCorridos.push(xx);
@@ -934,106 +929,6 @@ function excelFileToJSON6(file) {
             }
         }
 
-
-            //console.log(corridosCant);
-
-           //console.log(arrayCortados);
-            //console.log(tempChoferesSeccionamiento);
-
-                /* for (const elem of roa2) {
-                    elem.FechaInicio = ExcelDateToJSDate2(elem.FechaInicio);
-                    elem.FechaFin = ExcelDateToJSDate2(elem.FechaFin);
-                }
-                for (const elem of roa2) {
-                    elem.HoraInicio = excelDateToJSDate3(elem.HoraInicio);
-                    elem.HoraFin = excelDateToJSDate3(elem.HoraFin);
-                }
-                let fechasDisp = [];
-                for (const elem of roa2) {
-                    if (fechasDisp.some((n) => n == elem.FechaInicio) == false) {
-                        fechasDisp.push(elem.FechaInicio);
-                    }
-                }
-                fechasDisp.sort((a, b) => (a > b) ? 1 : -1);
-                let drop = document.getElementsByClassName("dropdown-item");
-                let dropIndex = 0;
-                let dropAr = [];
-                for (const elem of fechasDisp) {
-                    drop[dropIndex].innerText = elem;
-                    dropAr.push("drop" + dropIndex);
-                    dropIndex++;
-                }
-                for (i = 0; i < fechasDisp.length; i++) {
-                    let w = document.getElementById(dropAr[i])
-                    w.addEventListener("click", () => {
-                        Write(w.textContent)
-                    });
-                }
-                let new6 = [];
-                function Write(a) {
-                    let infoP2 = document.getElementsByClassName("infoP2");
-                    if (infoP2.length > 0) {
-                        console.log(infoP2);
-                        do {
-                            tableP2.removeChild(infoP2[0]);
-                            console.log(infoP2);
-                        } while (infoP2.length != 0);
-                    }
-                    console.log(roa2);
-                    let newArray10 = roa2.filter((elem) => a == elem.FechaInicio);
-                    let newPP = newArray10.filter((elem) => a !== elem.FechaFin);
-                    let newPPP = newPP.filter((elem) => elem.HoraFin > "02:00:00");
-                    let newArray11 = newPPP.filter((elem) => elem.kms > 15);
-                    let newArray20 = newArray10.filter((elem) => a == elem.FechaFin);
-                    let kmDeMas63 = newArray20.filter((elem) => elem.kms > "63");
-                    let pcoMasde48 = newArray20.filter((elem) => elem.kms > "48" && elem.Recorrido == "PCO COM");
-                    let pcoRapMasde48 = newArray20.filter((elem) => elem.kms > "48" && elem.Recorrido == "PCO RAP");
-                    let fonMasde54 = newArray20.filter((elem) => elem.kms > "54" && elem.Recorrido == "FON COM");
-                    let fonRapMasde54 = newArray20.filter((elem) => elem.kms > "54" && elem.Recorrido == "FON RAP");
-                    let new2 = newArray11.concat(kmDeMas63);
-                    let new3 = new2.concat(pcoMasde48);
-                    let new4 = new3.concat(pcoRapMasde48);
-                    let new5 = new4.concat(fonMasde54);
-                    new6 = new5.concat(fonRapMasde54);
-                    new6.sort((a, b) => (a.Legajo > b.Legajo) ? 1 : -1);
-                    for (const elem of new6) {
-                        const node = document.createElement("tr");
-                        node.classList.add("infoP2");
-                        const subNode = document.createElement("td");
-                        const subNode1 = document.createElement("td");
-                        const subNode2 = document.createElement("td");
-                        const subNode3 = document.createElement("td");
-                        const subNode4 = document.createElement("td");
-                        const subNode5 = document.createElement("td");
-                        const subNode6 = document.createElement("td");
-                        const subNode7 = document.createElement("td");
-                        const textnode = document.createTextNode(elem.Legajo);
-                        const textnode1 = document.createTextNode(elem.Interno);
-                        const textnode2 = document.createTextNode(elem.FechaInicio);
-                        const textnode3 = document.createTextNode(elem.FechaFin);
-                        const textnode4 = document.createTextNode(elem.HoraInicio);
-                        const textnode5 = document.createTextNode(elem.HoraFin);
-                        const textnode6 = document.createTextNode(elem.Recorrido);
-                        const textnode7 = document.createTextNode(elem.kms);
-                        subNode.appendChild(textnode);
-                        subNode1.appendChild(textnode1);
-                        subNode2.appendChild(textnode2);
-                        subNode3.appendChild(textnode3);
-                        subNode4.appendChild(textnode4);
-                        subNode5.appendChild(textnode5);
-                        subNode6.appendChild(textnode6);
-                        subNode7.appendChild(textnode7);
-                        node.appendChild(subNode);
-                        node.appendChild(subNode1);
-                        node.appendChild(subNode2);
-                        node.appendChild(subNode3);
-                        node.appendChild(subNode4);
-                        node.appendChild(subNode5);
-                        node.appendChild(subNode6);
-                        node.appendChild(subNode7);
-                        tableP2.appendChild(node);
-                    }
-                } */
             
                 if (roa6.length > 0) {
                     result[sheetName] = roa6;
@@ -1225,19 +1120,6 @@ function excelFileToJSON6(file) {
 
                 }       
 
-             
-                   
-
-              
-
-                            
-                
-
-
-
-
-
-
         }
     } catch (e) {
         console.error(e);
@@ -1254,3 +1136,49 @@ function excelFileToJSON6(file) {
 //let tiempo = e[0] - s[0];
 
 // if (tiempo > "6"==true){ masHoras.push(elem);}
+
+function upload7() {
+    var files = document.getElementById('file_upload7').files;
+    if (files.length == 0) {
+        alert("Please choose any file...");
+        return;
+    }
+    var filename = files[0].name;
+    var extension = filename.substring(filename.lastIndexOf(".")).toUpperCase();
+    if (extension == '.XLS' || extension == '.XLSX') {
+        excelFileToJSON7(files[0]);
+    } else {
+        alert("Please select a valid excel file.");
+    }
+}
+let roa7;
+
+let tableP7 = document.getElementById("tableP7");
+
+function excelFileToJSON7(file) {
+    try {
+        var reader = new FileReader();
+        reader.readAsBinaryString(file);
+        reader.onload = function(e) {
+
+            var data = e.target.result;
+            var workbook = XLSX.read(data, {
+                type: 'binary'
+            });
+            workbook.SheetNames.forEach(function(sheetName) {
+                roa7 = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
+
+                na1 = roa7.filter((el)=>el.__EMPTY_1>0);
+
+                console.log(roa7.length, na1.length, na1);
+
+                if (roa7.length > 0) {
+
+                    result[sheetName] = roa7;
+                }
+            });
+        }
+    } catch (e) {
+        console.error(e);
+    }
+}
