@@ -1161,7 +1161,107 @@ function excelFileToJSON7(file) {
 
                 na1 = roa7.filter((el)=>el.__EMPTY_1>0);
 
-                console.log(roa7.length, na1.length, na1);
+                for (const elem of roa7){
+
+                    elem.interno = elem.__EMPTY;
+                    elem.legajo = elem.__EMPTY_1;
+                    elem.chofer = elem.__EMPTY_2;
+                    elem.dia1 = elem.__EMPTY_3;
+                    elem.dia2 = elem.__EMPTY_4;
+                    elem.dia3 = elem.__EMPTY_5;
+                    elem.dia4 = elem.__EMPTY_6;
+                    elem.dia5 = elem.__EMPTY_7;
+                    elem.dia6 = elem.__EMPTY_8;
+                    elem.dia7 = elem.__EMPTY_9;
+                    elem.dia8 = elem.__EMPTY_10;
+                    elem.dia9 = elem.__EMPTY_11;
+                    elem.dia10 = elem.__EMPTY_12;
+                    elem.dia11 = elem.__EMPTY_13;
+                    elem.dia12 = elem.__EMPTY_14;
+                    elem.dia13 = elem.__EMPTY_15;
+                    elem.dia14 = elem.__EMPTY_16;
+                    elem.dia15 = elem.__EMPTY_17;
+                    elem.dia16= elem.__EMPTY_18;
+                    elem.dia17 = elem.__EMPTY_19;
+                    elem.dia18= elem.__EMPTY_20;
+                    elem.dia19 = elem.__EMPTY_21;
+                    elem.dia20 = elem.__EMPTY_22;
+                    elem.dia21 = elem.__EMPTY_23;
+                    elem.dia22 = elem.__EMPTY_24;
+                    elem.dia23 = elem.__EMPTY_25;
+                    elem.dia24 = elem.__EMPTY_26;
+                    elem.dia25 = elem.__EMPTY_27;
+                    elem.dia26 = elem.__EMPTY_28;
+                    elem.dia27 = elem.__EMPTY_29;
+                    elem.dia28 = elem.__EMPTY_30;
+                    elem.dia29 = elem.__EMPTY_31;
+                    elem.dia30 = elem.__EMPTY_32;
+
+                    
+                     delete elem.__EMPTY;
+                    delete elem.__EMPTY_1;
+                    delete elem.__EMPTY_2;
+                    delete elem.__EMPTY_3;
+                    delete elem.__EMPTY_4;
+                    delete elem.__EMPTY_5;
+                    delete elem.__EMPTY_6;
+                    delete elem.__EMPTY_7;
+                    delete elem.__EMPTY_8;
+                    delete elem.__EMPTY_9;
+                    delete elem.__EMPTY_10;
+                    delete elem.__EMPTY_11;
+                    delete elem.__EMPTY_12;
+                    delete elem.__EMPTY_13;
+                    delete elem.__EMPTY_14;
+                    delete elem.__EMPTY_15;
+                    delete elem.__EMPTY_16;
+                    delete elem.__EMPTY_17;
+                    delete elem.__EMPTY_18;
+                    delete elem.__EMPTY_19;
+                    delete elem.__EMPTY_20;
+                    delete elem.__EMPTY_21;
+                    delete elem.__EMPTY_22;
+                    delete elem.__EMPTY_23;
+                    delete elem.__EMPTY_24;
+                    delete elem.__EMPTY_25;
+                    delete elem.__EMPTY_26;
+                    delete elem.__EMPTY_27;
+                    delete elem.__EMPTY_28;
+                    delete elem.__EMPTY_29;
+                    delete elem.__EMPTY_30;
+                    delete elem.__EMPTY_31;
+                    delete elem.__EMPTY_32;
+                    delete elem.SEPTIEMBRE;
+                    delete elem.interno;
+
+                }
+                na1.sort((a, b) => (a.legajo > b.legajo) ? 1 : -1);
+
+                for (const elem of na1){
+                    let borrarCaracs = elem.chofer.split(' ');
+
+                    let x = borrarCaracs.filter((m)=> m.length > 2);
+
+                    elem.chofer = x[0];
+                }
+
+
+
+                for (const el of na1){
+                    
+                }
+                    
+
+                
+
+                    //console.log(na1);
+
+
+
+
+
+
+
 
                 if (roa7.length > 0) {
 
