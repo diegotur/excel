@@ -1145,6 +1145,8 @@ function upload7() {
 let roa7;
 
 let tableP7 = document.getElementById("tableP7");
+let francosMoreTR = document.getElementById("francosDeMas");
+let francosLessTR = document.getElementById("francosDeMenos");
 
 function excelFileToJSON7(file) {
     try {
@@ -1166,36 +1168,36 @@ function excelFileToJSON7(file) {
                     elem.interno = elem.__EMPTY;
                     elem.legajo = elem.__EMPTY_1;
                     elem.chofer = elem.__EMPTY_2;
-                    elem.dia1 = elem.__EMPTY_3;
-                    elem.dia2 = elem.__EMPTY_4;
-                    elem.dia3 = elem.__EMPTY_5;
-                    elem.dia4 = elem.__EMPTY_6;
-                    elem.dia5 = elem.__EMPTY_7;
-                    elem.dia6 = elem.__EMPTY_8;
-                    elem.dia7 = elem.__EMPTY_9;
-                    elem.dia8 = elem.__EMPTY_10;
-                    elem.dia9 = elem.__EMPTY_11;
-                    elem.dia10 = elem.__EMPTY_12;
-                    elem.dia11 = elem.__EMPTY_13;
-                    elem.dia12 = elem.__EMPTY_14;
-                    elem.dia13 = elem.__EMPTY_15;
-                    elem.dia14 = elem.__EMPTY_16;
-                    elem.dia15 = elem.__EMPTY_17;
-                    elem.dia16= elem.__EMPTY_18;
-                    elem.dia17 = elem.__EMPTY_19;
-                    elem.dia18= elem.__EMPTY_20;
-                    elem.dia19 = elem.__EMPTY_21;
-                    elem.dia20 = elem.__EMPTY_22;
-                    elem.dia21 = elem.__EMPTY_23;
-                    elem.dia22 = elem.__EMPTY_24;
-                    elem.dia23 = elem.__EMPTY_25;
-                    elem.dia24 = elem.__EMPTY_26;
-                    elem.dia25 = elem.__EMPTY_27;
-                    elem.dia26 = elem.__EMPTY_28;
-                    elem.dia27 = elem.__EMPTY_29;
-                    elem.dia28 = elem.__EMPTY_30;
-                    elem.dia29 = elem.__EMPTY_31;
-                    elem.dia30 = elem.__EMPTY_32;
+                    elem.xx1 = elem.__EMPTY_3;
+                    elem.xx2 = elem.__EMPTY_4;
+                    elem.xx3 = elem.__EMPTY_5;
+                    elem.xx4 = elem.__EMPTY_6;
+                    elem.xx5 = elem.__EMPTY_7;
+                    elem.xx6 = elem.__EMPTY_8;
+                    elem.xx7 = elem.__EMPTY_9;
+                    elem.xx8 = elem.__EMPTY_10;
+                    elem.xx9 = elem.__EMPTY_11;
+                    elem.xx10 = elem.__EMPTY_12;
+                    elem.xx11 = elem.__EMPTY_13;
+                    elem.xx12 = elem.__EMPTY_14;
+                    elem.xx13 = elem.__EMPTY_15;
+                    elem.xx14 = elem.__EMPTY_16;
+                    elem.xx15 = elem.__EMPTY_17;
+                    elem.xx16= elem.__EMPTY_18;
+                    elem.xx17 = elem.__EMPTY_19;
+                    elem.xx18= elem.__EMPTY_20;
+                    elem.xx19 = elem.__EMPTY_21;
+                    elem.xx20 = elem.__EMPTY_22;
+                    elem.xx21 = elem.__EMPTY_23;
+                    elem.xx22 = elem.__EMPTY_24;
+                    elem.xx23 = elem.__EMPTY_25;
+                    elem.xx24 = elem.__EMPTY_26;
+                    elem.xx25 = elem.__EMPTY_27;
+                    elem.xx26 = elem.__EMPTY_28;
+                    elem.xx27 = elem.__EMPTY_29;
+                    elem.xx28 = elem.__EMPTY_30;
+                    elem.xx29 = elem.__EMPTY_31;
+                    elem.xx30 = elem.__EMPTY_32;
 
                     
                      delete elem.__EMPTY;
@@ -1231,7 +1233,8 @@ function excelFileToJSON7(file) {
                     delete elem.__EMPTY_30;
                     delete elem.__EMPTY_31;
                     delete elem.__EMPTY_32;
-                    delete elem.SEPTIEMBRE;
+                    delete elem.__EMPTY_33;
+                    delete elem.__EMPTY_34;
                     delete elem.interno;
 
                 }
@@ -1245,16 +1248,110 @@ function excelFileToJSON7(file) {
                     elem.chofer = x[0];
                 }
 
+                console.log(na1)
 
 
-                for (const el of na1){
+
+                let francos = [];
+
+                for(i=0;i<na1.length;i++){
                     
+                    let pr = [];
+                    
+                    Object.entries(na1[i]).forEach(pair => {
+
+                        let fdf = pair[0].split("");
+
+                        if(fdf[0]==="x"){
+                            fdf.shift();
+                            fdf.shift();
+
+                            let d = fdf.join("");
+
+                            pair[0] = d;
+                        }
+
+                        let key = pair[0];
+                        let value = pair[1];
+
+                        if (value == "F*"){
+                            value = "F";
+                        }
+                        if (value == "FV"){
+                            value = "F";
+                        }
+                        if (value == " F"){
+                            value = "F";
+                        }
+                        if (value == " F "){
+                            value = "F";
+                        }
+                        if (value == "F "){
+                            value = "F";
+                        }
+
+                        
+                        if (value != undefined && value != "6" && value != "7" && value != "8" && value != "**" && value != "*" && value != "V" && value != " " && value != "9" && value != "10"){
+
+                            
+
+                            pr.push(key, value);
+
+                            let x = pr.filter((d)=>d !="F"&& d !="legajo"&& d !="chofer");
+                            pr = x;
+
+                            
+                        }
+                        francos[i] = pr;
+                    });
                 }
-                    
+
+                let francosLess = francos.filter ((e)=>e.length < 8  );
+                let francosMore = francos.filter ((e)=>e.length > 8  );
 
                 
 
-                    //console.log(na1);
+
+                
+
+                for (const elem of francosMore){
+                    const node = document.createElement("tr");
+                    const subNode = document.createElement("td");
+                    node.classList.add("detailP7");
+                    const textnode = document.createTextNode(elem[0]);
+                    subNode.appendChild(textnode);
+                    node.appendChild(subNode);
+                    francosMoreTR.appendChild(node);
+                    
+                }
+                for (const elem of francosLess){
+                    const node = document.createElement("tr");
+                    const subNode = document.createElement("td");
+                    node.classList.add("detailP7");
+                    const textnode = document.createTextNode(elem[0]);
+                    subNode.appendChild(textnode);
+                    node.appendChild(subNode);
+                    francosLessTR.appendChild(node);
+                    
+                }
+                
+
+                for (const elem of francos) {
+                    const node = document.createElement("tr");
+                    node.classList.add("infoP7");
+                    for (const e of elem){
+                        const subNode = document.createElement("td");
+                        const textnode = document.createTextNode(e);
+                        subNode.appendChild(textnode);
+                        node.appendChild(subNode);
+                        tableP7.appendChild(node);
+                    }
+
+                }     
+
+                
+
+                
 
 
 
