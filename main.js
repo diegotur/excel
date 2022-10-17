@@ -861,12 +861,14 @@ function excelFileToJSON6(file) {
 
             workbook.SheetNames.forEach(function(sheetName) {
                 roa6 = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
-
-            //console.log (roa6);
-
-            let numberMalUso = roa6.findIndex((elem) =>elem.props == "CONTROL MAL USO DEL SUBE");
-            let numberCortados = roa6.findIndex((elem) =>elem.props == "SERVICIOS CORTADOS");
-            let numberSecCorridos = roa6.findIndex((elem) =>elem.props == "CONTROL SECCIONAMIENTO CORRIDO");
+                
+                //console.log (roa6);
+                
+                let numberMalUso = roa6.findIndex((elem) =>elem.props == "CONTROL MAL USO DEL SUBE");
+                let numberCortados = roa6.findIndex((elem) =>elem.props == "SERVICIOS CORTADOS");
+                let numberSecCorridos = roa6.findIndex((elem) =>elem.props == "CONTROL SECCIONAMIENTO CORRIDO");
+                
+            //console.log(numberCortados);
 
 
             let arraySeccionamiento=[];
@@ -886,7 +888,6 @@ function excelFileToJSON6(file) {
             for (i=numberSecCorridos+2; i<roa6.length; i++){
                 arrayCorridos.push(roa6[i]);
             }
-            
 
             for (const elem of arraySeccionamiento){
                 xx = elem.__EMPTY_1;
@@ -900,25 +901,16 @@ function excelFileToJSON6(file) {
                 xx = elem.__EMPTY;
                 tempChoferesCortados.push({legajo:xx});
             }
-            for (const elem of arrayCorridos) {
-
-                elem.fecha = ExcelDateToJSDate2(elem.__EMPTY_1);
-                elem.hora = excelDateToJSDate3(elem.__EMPTY_2);
-            }
+            
             let pija=[];
-
+            
             for (const elem of arrayCorridos){
+                let leg = elem.props,
                 xx = elem.__EMPTY;
-                tempCorridos.push(xx);
+                tempCorridos.push({leg, xx});
             }
-            for (const elem of tempCorridos){
-                pija.push(elem);
-            }
-            for (const el of pija){
-            if (corridosCant.includes(el)==false){
-                corridosCant.push(el);
-            }
-        }
+            
+            
 
             
                 if (roa6.length > 0) {
@@ -958,6 +950,10 @@ function excelFileToJSON6(file) {
                 corridos.push({legajo:elem,seccCorridos:x.length});
                 }
                 corridos = corridos.filter((e)=>e.seccCorridos>40);
+/* 
+                let tem = tempCorridos.reduce((acc, cur)=> acc + cur);
+
+            console.log(tem); */
                 
                 
 
