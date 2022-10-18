@@ -1248,8 +1248,14 @@ function excelFileToJSON7(file) {
 
 
                 for (const el of na1){
+                    for (const elem in el){
+                        if (elem.valueOf === undefined){
+                            delete elem;
+                        }
+                    }
                     
                 }
+                console.log(na1);
                     
 
                 
