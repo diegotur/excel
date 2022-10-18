@@ -224,6 +224,36 @@ function excelFileToJSON2(file) {
             workbook.SheetNames.forEach(function(sheetName) {
                 roa2 = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
 
+                roa2.shift();
+
+
+                for (const elem of roa2) {
+                    elem.Legajo = elem.__EMPTY;
+                    elem.Interno = elem.__EMPTY_1;
+                    elem.HoraInicio = elem.__EMPTY_4;
+                    elem.FechaInicio = elem.__EMPTY_3;
+                    elem.FechaFin = elem.__EMPTY_5;
+                    elem.HoraFin = elem.__EMPTY_6;
+                    elem.Ramal = elem.__EMPTY_7;
+                    elem.Recorrido = elem.__EMPTY_9;
+                    elem.Kms = elem.__EMPTY_10;
+
+                    delete elem.__EMPTY;
+                    delete elem.__EMPTY_1;
+                    delete elem.__EMPTY_2;
+                    delete elem.__EMPTY_3;
+                    delete elem.__EMPTY_4;
+                    delete elem.__EMPTY_5;
+                    delete elem.__EMPTY_6;
+                    delete elem.__EMPTY_7;
+                    delete elem.__EMPTY_8;
+                    delete elem.__EMPTY_9;
+                    delete elem.__EMPTY_10;
+                    delete elem.__EMPTY_11;
+                    delete elem.__EMPTY_12;
+                }
+                
+
                 for (const elem of roa2) {
 
                     elem.FechaInicio = ExcelDateToJSDate2(elem.FechaInicio);
@@ -239,11 +269,12 @@ function excelFileToJSON2(file) {
                 let fechasDisp = [];
 
                 for (const elem of roa2) {
-                    if (fechasDisp.some((n) => n == elem.FechaInicio) == false) {
-                        fechasDisp.push(elem.FechaInicio);
-                    }
+                    fechasDisp.push(elem.FechaInicio);
                 }
-
+                
+                const fechasDisp3 = [...new Set(fechasDisp)];
+                
+                fechasDisp = fechasDisp3;
 
                 fechasDisp.sort((a, b) => (a > b) ? 1 : -1);
 
@@ -264,46 +295,47 @@ function excelFileToJSON2(file) {
                 for (i = 0; i < fechasDisp.length; i++) {
                     let w = document.getElementById(dropAr[i])
                     w.addEventListener("click", () => {
-                        Write(w.textContent)
+                        Write(w.textContent);
                     });
                 }
 
-                let new6 = [];
-
+                    
                 function Write(a) {
                     let infoP2 = document.getElementsByClassName("infoP2");
 
                     if (infoP2.length > 0) {
-                        //console.log(infoP2);
                         do {
                             tableP2.removeChild(infoP2[0]);
-                          //  console.log(infoP2);
 
                         } while (infoP2.length != 0);
                     }
-                   // console.log(roa2);
-
+                    
+                    console.log (roa2)
                     let newArray10 = roa2.filter((elem) => a == elem.FechaInicio);
+                    
+
                     let newPP = newArray10.filter((elem) => a !== elem.FechaFin);
                     let newPPP = newPP.filter((elem) => elem.HoraFin > "02:00:00");
-                    let newArray11 = newPPP.filter((elem) => elem.kms > 15);
+                    let newArray11 = newPPP.filter((elem) => elem.Kms > 15);
 
 
 
                     let newArray20 = newArray10.filter((elem) => a == elem.FechaFin);
-                    let kmDeMas63 = newArray20.filter((elem) => elem.kms > "63");
-                    let pcoMasde48 = newArray20.filter((elem) => elem.kms > "48" && elem.Recorrido == "PCO COM");
-                    let pcoRapMasde48 = newArray20.filter((elem) => elem.kms > "48" && elem.Recorrido == "PCO RAP");
-                    let fonMasde54 = newArray20.filter((elem) => elem.kms > "54" && elem.Recorrido == "FON COM");
-                    let fonRapMasde54 = newArray20.filter((elem) => elem.kms > "54" && elem.Recorrido == "FON RAP");
+                    let kmDeMas63 = newArray20.filter((elem) => elem.Kms > "63" && elem.Recorrido.includes("BEN"));
+                    let pcoMasde48 = newArray20.filter((elem) => elem.Kms > "48" && elem.Recorrido == "PCO COM");
+                    let pcoRapMasde48 = newArray20.filter((elem) => elem.Kms > "48" && elem.Recorrido == "PCO RAP");
+                    let fonMasde54 = newArray20.filter((elem) => elem.Kms > "54" && elem.Recorrido == "FON COM");
+                    let fonRapMasde54 = newArray20.filter((elem) => elem.Kms > "54" && elem.Recorrido == "FON RAP");
 
                     let new2 = newArray11.concat(kmDeMas63);
                     let new3 = new2.concat(pcoMasde48);
+
                     let new4 = new3.concat(pcoRapMasde48);
                     let new5 = new4.concat(fonMasde54);
-                    new6 = new5.concat(fonRapMasde54);
+                    let new6 = new5.concat(fonRapMasde54);
 
                     new6.sort((a, b) => (a.Legajo > b.Legajo) ? 1 : -1);
+
 
 
                     for (const elem of new6) {
@@ -325,7 +357,7 @@ function excelFileToJSON2(file) {
                         const textnode4 = document.createTextNode(elem.HoraInicio);
                         const textnode5 = document.createTextNode(elem.HoraFin);
                         const textnode6 = document.createTextNode(elem.Recorrido);
-                        const textnode7 = document.createTextNode(elem.kms);
+                        const textnode7 = document.createTextNode(elem.Kms);
                         subNode.appendChild(textnode);
                         subNode1.appendChild(textnode1);
                         subNode2.appendChild(textnode2);
@@ -440,11 +472,11 @@ function excelFileToJSON3(file) {
                     x2.push(x);
                 }
 
-                
+
                 for (i = 0; i < porInterno.length; i++) {
                     x3[i] = soloCambio2.filter((elem) => elem.interno == porInterno[i]);
                 }
-                
+
                 x4 = [...x3];
                 for (i = 0; i < x4.length; i++) {
                     for (ii = 0; ii < x4[i].length; ii++) {
@@ -476,38 +508,42 @@ function excelFileToJSON3(file) {
                         }
                     }
                 }
-                
+
                 finalArr2.sort((a, b) => (a.legajo > b.legajo) ? 1 : -1);
-            
+
                 let finalArr3 = [];
                 let finalArr4 = [];
 
 
-                for (const s of finalArr2){
+                for (const s of finalArr2) {
                     finalArr3.push(s.legajo);
                     finalArr4.push(s.horaSinSec);
 
                 }
+
                 function Duplicados(a) {
                     return [...new Set(a)];
                 }
-             
+
                 let finalArr5 = Duplicados(finalArr3);
 
-                let finalArr6=[];
-                for (const e of finalArr5){
-                    let x = finalArr2.filter((el)=> el.legajo === e);
-                    
-                    h=[];
-                    for (const e of x){
+                let finalArr6 = [];
+                for (const e of finalArr5) {
+                    let x = finalArr2.filter((el) => el.legajo === e);
+
+                    h = [];
+                    for (const e of x) {
                         h.push(e.horaSinSec);
                     }
 
                     let xx = Duplicados(h);
 
-                    finalArr6.push({legajo:e, cantCorridos:xx.length})
+                    finalArr6.push({
+                        legajo: e,
+                        cantCorridos: xx.length
+                    })
                 }
-                
+
                 for (const elem of finalArr6) {
                     const node = document.createElement("tr");
                     node.classList.add("infoP3");
@@ -607,10 +643,8 @@ function excelFileToJSON4(file) {
                     let infoP4 = document.getElementsByClassName("infoP4");
 
                     if (infoP4.length > 0) {
-                       // console.log(infoP4);
                         do {
                             tableP4.removeChild(infoP4[0]);
-                           // console.log(infoP4);
 
                         } while (infoP4.length != 0);
                     }
@@ -724,49 +758,49 @@ function excelFileToJSON5(file) {
             workbook.SheetNames.forEach(function(sheetName) {
                 roa5 = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
 
-                for (const elem of roa5){
+                for (const elem of roa5) {
                     let x = elem.RecIda.split("");
                     x.shift();
                     elem.RecIda = x.join("");
-                    if (elem.RecVuelta!=undefined){
+                    if (elem.RecVuelta != undefined) {
                         let xx = elem.RecVuelta.split("");
                         xx.shift();
                         elem.RecVuelta = xx.join("");
                     }
                 }
-                
 
-                
+
+
                 let temp1 = roa5.filter((elem) => elem.Cabecera != "Estación Benavidez ");
                 let temp2 = temp1.filter((elem) => elem.Tipo != "C ");
                 let temp3 = temp2.filter((elem) => elem.Tipo != "CE ");
                 let temp4 = temp3.filter((elem) => elem.Legajo != "2743");
 
-                let benIda = temp4.filter((elem) => elem.RecIda === "BEN LaV COM IDA"|| elem.RecIda ==="BEN SAB COM IDA" || elem.RecIda ==="BEN DOM IDA" || elem.RecIda ==="BEN FER IDA"|| elem.RecIda ==="BEN LaV RAP IDA" || elem.RecIda ==="BEN SAB RAP IDA");
-                let pcoIda = temp4.filter((elem) => elem.RecIda === "PCO LaV COM IDA"|| elem.RecIda ==="PCO SAB COM IDA" || elem.RecIda ==="PCO DOM IDA" || elem.RecIda ==="PCO FER IDA"|| elem.RecIda ==="PCO LaV RAP IDA" || elem.RecIda ==="PCO SAB RAP IDA");
-                let fonIda = temp4.filter((elem) => elem.RecIda === "FON LaV COM IDA"|| elem.RecIda ==="FON SAB COM IDA" || elem.RecIda ==="FON DOM IDA" || elem.RecIda ==="FON FER IDA"|| elem.RecIda ==="FON LaV RAP IDA" || elem.RecIda ==="FON SAB RAP IDA");
-                let fonVta = temp4.filter((elem) => elem.RecVuelta === "FON LaV COM VTA" || elem.RecVuelta ==="FON SAB COM VTA" || elem.RecVuelta ==="FON DOM VTA" || elem.RecVuelta ==="FON FER VTA"|| elem.RecVuelta ==="FON LaV RAP VTA" || elem.RecVuelta ==="FON SAB RAP VTA");
-                let pcoVta = temp4.filter((elem) => elem.RecVuelta === "PCO LaV COM VTA" || elem.RecVuelta ==="PCO SAB COM VTA" || elem.RecVuelta ==="PCO DOM VTA" || elem.RecVuelta ==="PCO FER VTA"|| elem.RecVuelta ==="PCO LaV RAP VTA" || elem.RecVuelta ==="PCO SAB RAP VTA"|| elem.RecVuelta ==="PCO LaV R S/202 VTA");
-                let benVta = temp4.filter((elem) => elem.RecVuelta === "BEN LaV COM VTA" || elem.RecVuelta ==="BEN SAB COM VTA" || elem.RecVuelta ==="BEN DOM VTA" || elem.RecVuelta ==="BEN FER VTA"|| elem.RecVuelta ==="BEN LaV RAP VTA" || elem.RecVuelta ==="BEN SAB RAP VTA"|| elem.RecVuelta ==="BEN SAB R S/202 VTA"|| elem.RecVuelta ==="BEN LaV R DIR VTA"|| elem.RecVuelta ==="BEN LaV R S/202 VTA");
-                let ida197 = temp4.filter((elem) => elem.RecIda === "197 LaV COM IDA"|| elem.RecIda ==="197 SAB COM IDA" || elem.RecIda ==="197 DOM IDA" || elem.RecIda ==="197 FER IDA"|| elem.RecIda ==="197 LaV RAP IDA" || elem.RecIda ==="197 SAB RAP IDA"); 
-                let ida202 = temp4.filter((elem) => elem.RecIda === "202 LaV COM IDA"|| elem.RecIda ==="202 SAB COM IDA" || elem.RecIda ==="202 DOM IDA" || elem.RecIda ==="202 FER IDA"|| elem.RecIda ==="202 LaV RAP IDA" || elem.RecIda ==="202 SAB RAP IDA");  
-                let rivIda = temp4.filter((elem) => elem.RecIda === "RIV LaV IDA"|| elem.RecIda ==="RIV SAB IDA" || elem.RecIda ==="RIV DOM IDA" || elem.RecIda ==="RIV FER IDA");
-                let bcasIda = temp4.filter((elem) => elem.RecIda === "BCAS LaV IDA"|| elem.RecIda ==="BCAS SAB IDA" || elem.RecIda ==="BCAS DOM IDA" || elem.RecIda ==="BCAS FER IDA"); 
-                let vta197 = temp4.filter((elem) => elem.RecVuelta === "197 LaV COM VTA"|| elem.RecVuelta ==="197 SAB COM VTA" || elem.RecVuelta ==="197 DOM VTA" || elem.RecVuelta ==="197 FER VTA"|| elem.RecVuelta ==="197 LaV RAP VTA" || elem.RecVuelta ==="197 SAB RAP VTA"|| elem.RecVuelta ==="197 LaV R S/202 VTA");  
-                let vta202 = temp4.filter((elem) => elem.RecVuelta === "202 LaV COM VTA"|| elem.RecVuelta ==="202 SAB COM VTA" || elem.RecVuelta ==="202 DOM VTA" || elem.RecVuelta ==="202 FER VTA"|| elem.RecVuelta ==="202 LaV RAP VTA" || elem.RecVuelta ==="202 SAB RAP VTA"); 
-                let rivVta = temp4.filter((elem) => elem.RecVuelta === "RIV LaV VTA"|| elem.RecVuelta ==="RIV SAB VTA" || elem.RecVuelta ==="RIV DOM VTA" || elem.RecVuelta ==="RIV FER VTA"); 
-                let bcasVta = temp4.filter((elem) => elem.RecVuelta === "BCAS LaV VTA"|| elem.RecVuelta ==="BCAS SAB VTA" || elem.RecVuelta ==="BCAS DOM VTA" || elem.RecVuelta ==="BCAS FER VTA"); 
-                let benRelIda = temp4.filter((elem) => elem.RecIda === "BEN LaV REL COM IDA"|| elem.RecIda ==="BEN SAB REL COM IDA" || elem.RecIda ==="BEN DOM REL IDA" || elem.RecIda ==="BEN FER REL IDA"|| elem.RecIda ==="BEN LaV REL RAP IDA" || elem.RecIda ==="BEN SAB REL RAP IDA");
-                let pcoRelIda = temp4.filter((elem) => elem.RecIda === "PCO LaV REL COM IDA"|| elem.RecIda ==="PCO SAB REL COM IDA" || elem.RecIda ==="PCO DOM REL IDA" || elem.RecIda ==="PCO FER REL IDA"|| elem.RecIda ==="PCO LaV REL RAP IDA" || elem.RecIda ==="PCO SAB REL RAP IDA");
-                let fonRelIda = temp4.filter((elem) => elem.RecIda === "FON LaV REL COM IDA"|| elem.RecIda ==="FON SAB REL COM IDA" || elem.RecIda ==="FON DOM REL IDA" || elem.RecIda ==="FON FER REL IDA"|| elem.RecIda ==="FON LaV REL RAP IDA" || elem.RecIda ==="FON SAB REL RAP IDA");
-                let talarABen = temp4.filter((elem) => elem.RecIda === "TALAR A BEN IDA 2"||elem.RecIda === "TALAR A BEN IDA");
-                let talarAPco = temp4.filter((elem) => elem.RecIda === "TALAR A PCO IDA 2"||elem.RecIda === "TALAR A PCO IDA");
-                let talarAFon = temp4.filter((elem) => elem.RecIda === "TALAR A FON IDA 2"||elem.RecIda === "TALAR A FON IDA");
+                let benIda = temp4.filter((elem) => elem.RecIda === "BEN LaV COM IDA" || elem.RecIda === "BEN SAB COM IDA" || elem.RecIda === "BEN DOM IDA" || elem.RecIda === "BEN FER IDA" || elem.RecIda === "BEN LaV RAP IDA" || elem.RecIda === "BEN SAB RAP IDA");
+                let pcoIda = temp4.filter((elem) => elem.RecIda === "PCO LaV COM IDA" || elem.RecIda === "PCO SAB COM IDA" || elem.RecIda === "PCO DOM IDA" || elem.RecIda === "PCO FER IDA" || elem.RecIda === "PCO LaV RAP IDA" || elem.RecIda === "PCO SAB RAP IDA");
+                let fonIda = temp4.filter((elem) => elem.RecIda === "FON LaV COM IDA" || elem.RecIda === "FON SAB COM IDA" || elem.RecIda === "FON DOM IDA" || elem.RecIda === "FON FER IDA" || elem.RecIda === "FON LaV RAP IDA" || elem.RecIda === "FON SAB RAP IDA");
+                let fonVta = temp4.filter((elem) => elem.RecVuelta === "FON LaV COM VTA" || elem.RecVuelta === "FON SAB COM VTA" || elem.RecVuelta === "FON DOM VTA" || elem.RecVuelta === "FON FER VTA" || elem.RecVuelta === "FON LaV RAP VTA" || elem.RecVuelta === "FON SAB RAP VTA");
+                let pcoVta = temp4.filter((elem) => elem.RecVuelta === "PCO LaV COM VTA" || elem.RecVuelta === "PCO SAB COM VTA" || elem.RecVuelta === "PCO DOM VTA" || elem.RecVuelta === "PCO FER VTA" || elem.RecVuelta === "PCO LaV RAP VTA" || elem.RecVuelta === "PCO SAB RAP VTA" || elem.RecVuelta === "PCO LaV R S/202 VTA");
+                let benVta = temp4.filter((elem) => elem.RecVuelta === "BEN LaV COM VTA" || elem.RecVuelta === "BEN SAB COM VTA" || elem.RecVuelta === "BEN DOM VTA" || elem.RecVuelta === "BEN FER VTA" || elem.RecVuelta === "BEN LaV RAP VTA" || elem.RecVuelta === "BEN SAB RAP VTA" || elem.RecVuelta === "BEN SAB R S/202 VTA" || elem.RecVuelta === "BEN LaV R DIR VTA" || elem.RecVuelta === "BEN LaV R S/202 VTA");
+                let ida197 = temp4.filter((elem) => elem.RecIda === "197 LaV COM IDA" || elem.RecIda === "197 SAB COM IDA" || elem.RecIda === "197 DOM IDA" || elem.RecIda === "197 FER IDA" || elem.RecIda === "197 LaV RAP IDA" || elem.RecIda === "197 SAB RAP IDA");
+                let ida202 = temp4.filter((elem) => elem.RecIda === "202 LaV COM IDA" || elem.RecIda === "202 SAB COM IDA" || elem.RecIda === "202 DOM IDA" || elem.RecIda === "202 FER IDA" || elem.RecIda === "202 LaV RAP IDA" || elem.RecIda === "202 SAB RAP IDA");
+                let rivIda = temp4.filter((elem) => elem.RecIda === "RIV LaV IDA" || elem.RecIda === "RIV SAB IDA" || elem.RecIda === "RIV DOM IDA" || elem.RecIda === "RIV FER IDA");
+                let bcasIda = temp4.filter((elem) => elem.RecIda === "BCAS LaV IDA" || elem.RecIda === "BCAS SAB IDA" || elem.RecIda === "BCAS DOM IDA" || elem.RecIda === "BCAS FER IDA");
+                let vta197 = temp4.filter((elem) => elem.RecVuelta === "197 LaV COM VTA" || elem.RecVuelta === "197 SAB COM VTA" || elem.RecVuelta === "197 DOM VTA" || elem.RecVuelta === "197 FER VTA" || elem.RecVuelta === "197 LaV RAP VTA" || elem.RecVuelta === "197 SAB RAP VTA" || elem.RecVuelta === "197 LaV R S/202 VTA");
+                let vta202 = temp4.filter((elem) => elem.RecVuelta === "202 LaV COM VTA" || elem.RecVuelta === "202 SAB COM VTA" || elem.RecVuelta === "202 DOM VTA" || elem.RecVuelta === "202 FER VTA" || elem.RecVuelta === "202 LaV RAP VTA" || elem.RecVuelta === "202 SAB RAP VTA");
+                let rivVta = temp4.filter((elem) => elem.RecVuelta === "RIV LaV VTA" || elem.RecVuelta === "RIV SAB VTA" || elem.RecVuelta === "RIV DOM VTA" || elem.RecVuelta === "RIV FER VTA");
+                let bcasVta = temp4.filter((elem) => elem.RecVuelta === "BCAS LaV VTA" || elem.RecVuelta === "BCAS SAB VTA" || elem.RecVuelta === "BCAS DOM VTA" || elem.RecVuelta === "BCAS FER VTA");
+                let benRelIda = temp4.filter((elem) => elem.RecIda === "BEN LaV REL COM IDA" || elem.RecIda === "BEN SAB REL COM IDA" || elem.RecIda === "BEN DOM REL IDA" || elem.RecIda === "BEN FER REL IDA" || elem.RecIda === "BEN LaV REL RAP IDA" || elem.RecIda === "BEN SAB REL RAP IDA");
+                let pcoRelIda = temp4.filter((elem) => elem.RecIda === "PCO LaV REL COM IDA" || elem.RecIda === "PCO SAB REL COM IDA" || elem.RecIda === "PCO DOM REL IDA" || elem.RecIda === "PCO FER REL IDA" || elem.RecIda === "PCO LaV REL RAP IDA" || elem.RecIda === "PCO SAB REL RAP IDA");
+                let fonRelIda = temp4.filter((elem) => elem.RecIda === "FON LaV REL COM IDA" || elem.RecIda === "FON SAB REL COM IDA" || elem.RecIda === "FON DOM REL IDA" || elem.RecIda === "FON FER REL IDA" || elem.RecIda === "FON LaV REL RAP IDA" || elem.RecIda === "FON SAB REL RAP IDA");
+                let talarABen = temp4.filter((elem) => elem.RecIda === "TALAR A BEN IDA 2" || elem.RecIda === "TALAR A BEN IDA");
+                let talarAPco = temp4.filter((elem) => elem.RecIda === "TALAR A PCO IDA 2" || elem.RecIda === "TALAR A PCO IDA");
+                let talarAFon = temp4.filter((elem) => elem.RecIda === "TALAR A FON IDA 2" || elem.RecIda === "TALAR A FON IDA");
                 let benATalar = temp4.filter((elem) => elem.RecVuelta === "BEN A TALAR VTA");
                 let pcoATalar = temp4.filter((elem) => elem.RecVuelta === "PCO A TALAR VTA");
                 let fonATalar = temp4.filter((elem) => elem.RecVuelta === "FON A TALAR VTA");
 
-                let arrayRec=[];
+                let arrayRec = [];
 
                 arrayRec.push(benIda);
                 arrayRec.push(benVta);
@@ -835,15 +869,14 @@ function upload6() {
 
 let result6 = {};
 let roa6;
-let choferesSeccionamiento=[];
-let tempChoferesSeccionamiento=[];
-let choferesMalUso=[];
-let tempChoferesMalUso=[];
-let choferesCortados=[];
-let tempChoferesCortados=[];
-let corridos=[];
-let tempCorridos=[];
-let corridosCant=[];
+let choferesSeccionamiento = [];
+let tempChoferesSeccionamiento = [];
+let choferesMalUso = [];
+let tempChoferesMalUso = [];
+let choferesCortados = [];
+let tempChoferesCortados = [];
+let corridos = [];
+let tempCorridos = [];
 
 let tableP6 = document.getElementById("tableP6");
 
@@ -861,251 +894,304 @@ function excelFileToJSON6(file) {
 
             workbook.SheetNames.forEach(function(sheetName) {
                 roa6 = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
-                
-                //console.log (roa6);
-                
-                let numberMalUso = roa6.findIndex((elem) =>elem.props == "CONTROL MAL USO DEL SUBE");
-                let numberCortados = roa6.findIndex((elem) =>elem.props == "SERVICIOS CORTADOS");
-                let numberSecCorridos = roa6.findIndex((elem) =>elem.props == "CONTROL SECCIONAMIENTO CORRIDO");
-                
-            //console.log(numberCortados);
 
 
-            let arraySeccionamiento=[];
-            let arrayMalUso=[];
-            let arrayCortados=[];
-            let arrayCorridos=[];
+                let numberMalUso = roa6.findIndex((elem) => elem.props == "CONTROL MAL USO DEL SUBE");
+                let numberCortados = roa6.findIndex((elem) => elem.props == "SERVICIOS CORTADOS");
+                let numberSecCorridos = roa6.findIndex((elem) => elem.props == "CONTROL SECCIONAMIENTO CORRIDO");
 
-            for (i=2; i<numberMalUso; i++){
-                arraySeccionamiento.push(roa6[i]);
-            }
-            for (i=numberMalUso+2; i<numberCortados; i++){
-                arrayMalUso.push(roa6[i]);
-            }
-            for (i=numberCortados+2; i<numberSecCorridos; i++){
-                arrayCortados.push(roa6[i]);
-            }
-            for (i=numberSecCorridos+2; i<roa6.length; i++){
-                arrayCorridos.push(roa6[i]);
-            }
 
-            for (const elem of arraySeccionamiento){
-                xx = elem.__EMPTY_1;
-                tempChoferesSeccionamiento.push({legajo:xx});
-            }
-            for (const elem of arrayMalUso){
-                xx = elem.props;
-                tempChoferesMalUso.push({legajo:xx});
-            }
-            for (const elem of arrayCortados){
-                xx = elem.__EMPTY;
-                tempChoferesCortados.push({legajo:xx});
-            }
-            
-            let pija=[];
-            
-            for (const elem of arrayCorridos){
-                let leg = elem.props,
-                xx = elem.__EMPTY;
-                tempCorridos.push({leg, xx});
-            }
-            
-            
 
-            
+                let arraySeccionamiento = [];
+                let arrayMalUso = [];
+                let arrayCortados = [];
+                let arrayCorridos = [];
+
+                for (i = 2; i < numberMalUso; i++) {
+                    arraySeccionamiento.push(roa6[i]);
+                }
+                for (i = numberMalUso + 2; i < numberCortados; i++) {
+                    arrayMalUso.push(roa6[i]);
+                }
+                for (i = numberCortados + 2; i < numberSecCorridos; i++) {
+                    arrayCortados.push(roa6[i]);
+                }
+                for (i = numberSecCorridos + 2; i < roa6.length; i++) {
+                    arrayCorridos.push(roa6[i]);
+                }
+
+                for (const elem of arraySeccionamiento) {
+                    xx = elem.__EMPTY_1;
+                    tempChoferesSeccionamiento.push({
+                        legajo: xx
+                    });
+                }
+                for (const elem of arrayMalUso) {
+                    xx = elem.props;
+                    tempChoferesMalUso.push({
+                        legajo: xx
+                    });
+                }
+                for (const elem of arrayCortados) {
+                    xx = elem.__EMPTY;
+                    tempChoferesCortados.push({
+                        legajo: xx
+                    });
+                }
+
+                let pija = [];
+
+                for (const elem of arrayCorridos) {
+                    let leg = elem.props,
+                        xx = elem.__EMPTY;
+                    tempCorridos.push({
+                        leg,
+                        xx
+                    });
+                }
+
+
+
                 if (roa6.length > 0) {
                     result[sheetName] = roa6;
                 }
             });
 
 
-            
-            for (const elem of tempChoferesSeccionamiento){
+            let corr = [];
+            let corr3 = [];
+
+
+            for (const el of tempCorridos) {
+                corr.push(el.leg);
+            }
+
+            const corr2 = [...new Set(corr)];
+
+            for (const el of corr2) {
+                let x = tempCorridos.filter((e) => e.leg == el);
+
+                let initialValue = 0
+
+                let ff = x.reduce(function(accumulator, curValue) {
+
+                    return accumulator + curValue.xx
+
+                }, initialValue);
+
+                corr3.push({
+                    legajo: el,
+                    seccCorridos: ff
+                });
+
+            }
+            corr3.sort((a, b) => (a.legajo > b.legajo) ? 1 : -1);
+
+
+            for (const elem of tempChoferesSeccionamiento) {
                 xx = elem.legajo;
-                let x = tempChoferesSeccionamiento.filter((el)=>el.legajo==elem.legajo);
-                choferesSeccionamiento.push({legajo:xx, seccionamiento:x.length});
-                }
+                let x = tempChoferesSeccionamiento.filter((el) => el.legajo == elem.legajo);
+                choferesSeccionamiento.push({
+                    legajo: xx,
+                    seccionamiento: x.length
+                });
+            }
 
-                choferesSeccionamiento = choferesSeccionamiento.filter((e)=>e.seccionamiento>9);
+            choferesSeccionamiento = choferesSeccionamiento.filter((e) => e.seccionamiento > 9);
 
-            for (const elem of tempChoferesMalUso){
+            for (const elem of tempChoferesMalUso) {
                 xx = elem.legajo;
-                let x = tempChoferesMalUso.filter((el)=>el.legajo==elem.legajo);
-                choferesMalUso.push({legajo:xx, malUso:x.length});
-                }
+                let x = tempChoferesMalUso.filter((el) => el.legajo == elem.legajo);
+                choferesMalUso.push({
+                    legajo: xx,
+                    malUso: x.length
+                });
+            }
 
-                choferesMalUso = choferesMalUso.filter((e)=>e.malUso>9);
+            choferesMalUso = choferesMalUso.filter((e) => e.malUso > 5);
 
-            for (const elem of tempChoferesCortados){
+            for (const elem of tempChoferesCortados) {
                 xx = elem.legajo;
-                let x = tempChoferesCortados.filter((el)=>el.legajo==elem.legajo);
-                choferesCortados.push({legajo:xx, cortes:x.length});
+                let x = tempChoferesCortados.filter((el) => el.legajo == elem.legajo);
+                choferesCortados.push({
+                    legajo: xx,
+                    cortes: x.length
+                });
+            }
+
+            choferesCortados = choferesCortados.filter((e) => e.cortes > 2);
+
+            let corr4 = corr3.filter((e) => e.seccCorridos > 5);
+
+            corridos = corr4;
+
+
+
+            let pene = [];
+            let pene2 = [];
+            let pene3 = [];
+            let pene4 = [];
+            let pene5 = [];
+            let pene6 = [];
+            let pene7 = [];
+            let pene8 = [];
+            let pene9 = [];
+
+            for (i = 0; i < choferesSeccionamiento.length; i++) {
+                pene.push(choferesSeccionamiento[i].legajo);
+            }
+
+            for (const el of pene) {
+                if (pene2.includes(el) == false) {
+                    pene2.push(el);
+                }
+            }
+            for (const elem of pene2) {
+                x = tempChoferesSeccionamiento.filter((el) => el.legajo == elem);
+                pene3.push({
+                    legajo: elem,
+                    seccionamiento: x.length
+                });
+            }
+            choferesSeccionamiento = pene3;
+
+
+            for (i = 0; i < choferesMalUso.length; i++) {
+                pene4.push(choferesMalUso[i].legajo);
+            }
+
+            for (const el of pene4) {
+                if (pene5.includes(el) == false) {
+                    pene5.push(el);
+                }
+            }
+            for (const elem of pene5) {
+                x = tempChoferesMalUso.filter((el) => el.legajo == elem);
+                pene6.push({
+                    legajo: elem,
+                    malUso: x.length
+                });
+            }
+            choferesMalUso = pene6;
+
+
+
+
+            for (i = 0; i < choferesCortados.length; i++) {
+                pene7.push(choferesCortados[i].legajo);
+            }
+            for (const el of pene7) {
+                if (pene8.includes(el) == false) {
+                    pene8.push(el);
+                }
+            }
+            for (const elem of pene8) {
+                x = tempChoferesCortados.filter((el) => el.legajo == elem);
+                pene9.push({
+                    legajo: elem,
+                    cortes: x.length
+                });
+            }
+            choferesCortados = pene9;
+
+            for (const e of corridos) {
+                x = choferesSeccionamiento.filter((n) => n.legajo == e.legajo);
+                if (x.length > 0 == true) {
+                    e.seccionamiento = x[0].seccionamiento;
+                } else {
+                    e.seccionamiento = 0;
+                }
+            }
+
+            for (const e of choferesSeccionamiento) {
+                x = corridos.filter((n) => n.legajo == e.legajo);
+                if (x.length < 1 == true) {
+                    corridos.push({
+                        ...e,
+                        seccCorridos: 0,
+                    })
+                }
+            }
+
+            for (const e of corridos) {
+                x = choferesMalUso.filter((n) => n.legajo == e.legajo);
+                if (x.length > 0 == true) {
+                    e.malUso = x[0].malUso;
+                } else {
+                    e.malUso = 0;
+                }
+            }
+            for (const e of choferesMalUso) {
+                x = corridos.filter((n) => n.legajo == e.legajo);
+                if (x.length < 1 == true) {
+                    corridos.push({
+                        ...e,
+                        seccCorridos: 0,
+                        seccionamiento: 0,
+                    })
+                }
+            }
+
+            for (const e of corridos) {
+                x = choferesCortados.filter((n) => n.legajo == e.legajo);
+                if (x.length > 0 == true) {
+                    e.cortes = x[0].cortes;
+                } else {
+                    e.cortes = 0;
+                }
+            }
+            for (const e of choferesCortados) {
+                x = corridos.filter((n) => n.legajo == e.legajo);
+                if (x.length < 1 == true) {
+                    corridos.push({
+                        ...e,
+                        seccCorridos: 0,
+                        seccionamiento: 0,
+                        malUso: 0,
+                    })
+                }
+            }
+
+            corridos.sort((a, b) => (a.legajo > b.legajo) ? 1 : -1);
+
+            for (i=0;i<corridos.length;i++){
+                let x = corridos[i].seccionamiento + corridos[i].cortes + corridos[i].malUso + corridos[i].seccCorridos;
+                corridos[i] = {...corridos[i], total:x};
                 }
 
-                choferesCortados = choferesCortados.filter((e)=>e.cortes>2);
+            console.log(corridos);
 
-            for (const elem of corridosCant){
-                let x = tempCorridos.filter((el)=>el==elem);
-                //console.log(x.length);
-                corridos.push({legajo:elem,seccCorridos:x.length});
-                }
-                corridos = corridos.filter((e)=>e.seccCorridos>40);
-/* 
-                let tem = tempCorridos.reduce((acc, cur)=> acc + cur);
+            for (const elem of corridos) {
+                const node = document.createElement("tr");
+                node.classList.add("infoP6");
+                const subNode = document.createElement("td");
+                const subNode1 = document.createElement("td");
+                const subNode2 = document.createElement("td");
+                const subNode3 = document.createElement("td");
+                const subNode4 = document.createElement("td");
+                const subNode5 = document.createElement("td");
 
-            console.log(tem); */
-                
-                
+                const textnode = document.createTextNode(elem.legajo);
+                const textnode1 = document.createTextNode(elem.seccionamiento);
+                const textnode2 = document.createTextNode(elem.malUso);
+                const textnode3 = document.createTextNode(elem.cortes);
+                const textnode4 = document.createTextNode(elem.seccCorridos);
+                const textnode5 = document.createTextNode(elem.total);
+                subNode.appendChild(textnode);
+                subNode1.appendChild(textnode1);
+                subNode2.appendChild(textnode2);
+                subNode3.appendChild(textnode3);
+                subNode4.appendChild(textnode4);
+                subNode5.appendChild(textnode5);
+                node.appendChild(subNode);
+                node.appendChild(subNode1);
+                node.appendChild(subNode2);
+                node.appendChild(subNode3);
+                node.appendChild(subNode4);
+                node.appendChild(subNode5);
+                tableP6.appendChild(node);
 
-                let pene=[];
-                let pene2=[];
-                let pene3=[];
-                let pene4=[];
-                let pene5=[];
-                let pene6=[];
-                let pene7=[];
-                let pene8=[];
-                let pene9=[];
-
-                for (i=0;i<choferesSeccionamiento.length;i++){
-                        pene.push(choferesSeccionamiento[i].legajo);
-                }
-
-                for (const el of pene){
-                    if (pene2.includes(el)==false){
-                        pene2.push(el);
-                    }
-                }
-                for(const elem of pene2){
-                    x = tempChoferesSeccionamiento.filter((el)=>el.legajo==elem);
-                    pene3.push({legajo:elem, seccionamiento:x.length});
-                }
-                choferesSeccionamiento = pene3;
-
-                
-                for (i=0;i<choferesMalUso.length;i++){
-                    pene4.push(choferesMalUso[i].legajo);
-                }
-
-                for (const el of pene4){
-                    if (pene5.includes(el)==false){
-                        pene5.push(el);
-                    }
-                }
-                for(const elem of pene5){
-                    x = tempChoferesMalUso.filter((el)=>el.legajo==elem);
-                    pene6.push({legajo:elem, malUso:x.length});
-                }
-                choferesMalUso = pene6;
-            
-
-
-
-                for (i=0;i<choferesCortados.length;i++){
-                    pene7.push(choferesCortados[i].legajo);
-                }
-                for (const el of pene7){
-                    if (pene8.includes(el)==false){
-                        pene8.push(el);
-                    }
-                }
-                for(const elem of pene8){
-                    x = tempChoferesCortados.filter((el)=>el.legajo==elem);
-                    pene9.push({legajo:elem, cortes:x.length});
-                }
-                choferesCortados = pene9;
-                
-                for (const e of corridos){
-                    x = choferesSeccionamiento.filter((n)=>n.legajo==e.legajo);
-                    if (x.length>0 ==true){
-                        e.seccionamiento = x[0].seccionamiento;
-                    } else {
-                        e.seccionamiento = 0;
-                    }
-                }
-                for (const e of choferesSeccionamiento){
-                    x = corridos.filter((n)=>n.legajo==e.legajo);
-                    if (x.length<1==true){
-                        corridos.push({
-                            ...e,
-                            seccCorridos:0,
-                        })
-                    }
-                }
-
-                for (const e of corridos){
-                    x = choferesMalUso.filter((n)=>n.legajo==e.legajo);
-                    if (x.length>0 ==true){
-                        e.malUso = x[0].malUso;
-                    } else {
-                        e.malUso = 0;
-                    }
-                }
-                for (const e of choferesMalUso){
-                    x = corridos.filter((n)=>n.legajo==e.legajo);
-                    if (x.length<1==true){
-                        corridos.push({
-                            ...e,
-                            seccCorridos:0,
-                            seccionamiento:0,
-                        })
-                    }
-                }
-
-                for (const e of corridos){
-                    x = choferesCortados.filter((n)=>n.legajo==e.legajo);
-                    if (x.length>0 ==true){
-                        e.cortes = x[0].cortes;
-                    } else {
-                        e.cortes = 0;
-                    }
-                }
-                for (const e of choferesCortados){
-                    x = corridos.filter((n)=>n.legajo==e.legajo);
-                    if (x.length<1==true){
-                        corridos.push({
-                            ...e,
-                            seccCorridos:0,
-                            seccionamiento:0,
-                            malUso:0,
-                        })
-                    }
-                }
-
-                corridos.sort((a, b) => (a.legajo > b.legajo) ? 1 : -1);
-
-                console.log(corridos);
-
-                for (const elem of corridos) {
-                    const node = document.createElement("tr");
-                    node.classList.add("infoP6");
-                    const subNode = document.createElement("td");
-                    const subNode1 = document.createElement("td");
-                    const subNode2 = document.createElement("td");
-                    const subNode3 = document.createElement("td");
-                    const subNode4 = document.createElement("td");
-                    const subNode5 = document.createElement("td");
-                    const subNode6 = document.createElement("td");
-                    const subNode7 = document.createElement("td");
-
-                    const textnode = document.createTextNode(elem.legajo);
-                    const textnode1 = document.createTextNode(elem.seccionamiento);
-                    const textnode2 = document.createTextNode(elem.malUso);
-                    const textnode3 = document.createTextNode(elem.cortes);
-                    const textnode4 = document.createTextNode(elem.seccCorridos);
-                    subNode.appendChild(textnode);
-                    subNode1.appendChild(textnode1);
-                    subNode2.appendChild(textnode2);
-                    subNode3.appendChild(textnode3);
-                    subNode4.appendChild(textnode4);
-                    node.appendChild(subNode);
-                    node.appendChild(subNode1);
-                    node.appendChild(subNode2);
-                    node.appendChild(subNode3);
-                    node.appendChild(subNode4);
-                    tableP6.appendChild(node);
-
-                }       
+            }
 
         }
     } catch (e) {
@@ -1157,9 +1243,9 @@ function excelFileToJSON7(file) {
             workbook.SheetNames.forEach(function(sheetName) {
                 roa7 = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
 
-                na1 = roa7.filter((el)=>el.__EMPTY_1>0);
+                na1 = roa7.filter((el) => el.__EMPTY_1 > 0);
 
-                for (const elem of roa7){
+                for (const elem of roa7) {
 
                     elem.interno = elem.__EMPTY;
                     elem.legajo = elem.__EMPTY_1;
@@ -1179,9 +1265,9 @@ function excelFileToJSON7(file) {
                     elem.xx13 = elem.__EMPTY_15;
                     elem.xx14 = elem.__EMPTY_16;
                     elem.xx15 = elem.__EMPTY_17;
-                    elem.xx16= elem.__EMPTY_18;
+                    elem.xx16 = elem.__EMPTY_18;
                     elem.xx17 = elem.__EMPTY_19;
-                    elem.xx18= elem.__EMPTY_20;
+                    elem.xx18 = elem.__EMPTY_20;
                     elem.xx19 = elem.__EMPTY_21;
                     elem.xx20 = elem.__EMPTY_22;
                     elem.xx21 = elem.__EMPTY_23;
@@ -1195,8 +1281,8 @@ function excelFileToJSON7(file) {
                     elem.xx29 = elem.__EMPTY_31;
                     elem.xx30 = elem.__EMPTY_32;
 
-                    
-                     delete elem.__EMPTY;
+
+                    delete elem.__EMPTY;
                     delete elem.__EMPTY_1;
                     delete elem.__EMPTY_2;
                     delete elem.__EMPTY_3;
@@ -1236,10 +1322,10 @@ function excelFileToJSON7(file) {
                 }
                 na1.sort((a, b) => (a.legajo > b.legajo) ? 1 : -1);
 
-                for (const elem of na1){
+                for (const elem of na1) {
                     let borrarCaracs = elem.chofer.split(' ');
 
-                    let x = borrarCaracs.filter((m)=> m.length > 2);
+                    let x = borrarCaracs.filter((m) => m.length > 2);
 
                     elem.chofer = x[0];
                 }
@@ -1250,15 +1336,15 @@ function excelFileToJSON7(file) {
 
                 let francos = [];
 
-                for(i=0;i<na1.length;i++){
-                    
+                for (i = 0; i < na1.length; i++) {
+
                     let pr = [];
-                    
+
                     Object.entries(na1[i]).forEach(pair => {
 
                         let fdf = pair[0].split("");
 
-                        if(fdf[0]==="x"){
+                        if (fdf[0] === "x") {
                             fdf.shift();
                             fdf.shift();
 
@@ -1270,47 +1356,45 @@ function excelFileToJSON7(file) {
                         let key = pair[0];
                         let value = pair[1];
 
-                        if (value == "F*"){
+                        if (value == "F*") {
                             value = "F";
                         }
-                        if (value == "FV"){
+                        if (value == "FV") {
                             value = "F";
                         }
-                        if (value == " F"){
+                        if (value == " F") {
                             value = "F";
                         }
-                        if (value == " F "){
+                        if (value == " F ") {
                             value = "F";
                         }
-                        if (value == "F "){
+                        if (value == "F ") {
                             value = "F";
                         }
 
-                        
-                        if (value != undefined && value != "6" && value != "7" && value != "8" && value != "**" && value != "*" && value != "V" && value != " " && value != "9" && value != "10"){
 
-                            
+                        if (value != undefined && value != "6" && value != "7" && value != "8" && value != "**" && value != "*" && value != "V" && value != " " && value != "9" && value != "10") {
+
+
 
                             pr.push(key, value);
 
-                            let x = pr.filter((d)=>d !="F"&& d !="legajo"&& d !="chofer");
+                            let x = pr.filter((d) => d != "F" && d != "legajo" && d != "chofer");
                             pr = x;
 
-                            
+
                         }
                         francos[i] = pr;
                     });
                 }
 
-                let francosLess = francos.filter ((e)=>e.length < 8  );
-                let francosMore = francos.filter ((e)=>e.length > 8  );
-
-                
+                let francosLess = francos.filter((e) => e.length < 8);
+                let francosMore = francos.filter((e) => e.length > 8);
 
 
-                
 
-                for (const elem of francosMore){
+
+                for (const elem of francosMore) {
                     const node = document.createElement("tr");
                     const subNode = document.createElement("td");
                     node.classList.add("detailP7");
@@ -1318,9 +1402,9 @@ function excelFileToJSON7(file) {
                     subNode.appendChild(textnode);
                     node.appendChild(subNode);
                     francosMoreTR.appendChild(node);
-                    
+
                 }
-                for (const elem of francosLess){
+                for (const elem of francosLess) {
                     const node = document.createElement("tr");
                     const subNode = document.createElement("td");
                     node.classList.add("detailP7");
@@ -1328,14 +1412,14 @@ function excelFileToJSON7(file) {
                     subNode.appendChild(textnode);
                     node.appendChild(subNode);
                     francosLessTR.appendChild(node);
-                    
+
                 }
-                
+
 
                 for (const elem of francos) {
                     const node = document.createElement("tr");
                     node.classList.add("infoP7");
-                    for (const e of elem){
+                    for (const e of elem) {
                         const subNode = document.createElement("td");
                         const textnode = document.createTextNode(e);
                         subNode.appendChild(textnode);
@@ -1343,15 +1427,7 @@ function excelFileToJSON7(file) {
                         tableP7.appendChild(node);
                     }
 
-                }     
-
-                
-
-                
-
-
-
-
+                }
 
 
 

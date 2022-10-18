@@ -22,10 +22,10 @@
     visibility: hidden;
     position: absolute;
 }
-/* #controlFrancosH1{
+#controlFrancosH1{
     visibility: hidden;
     position: absolute;
-} */
+}
 /* #tableP{
     display: grid;
     justify-items: center;
@@ -47,8 +47,16 @@
 }
 .dropdown-item3{
     text-decoration: none;
-    color: black;
-    font-size: 24px;
+    color: white;
+    font-size: 16px;
+    background-color: rgb(0, 2, 0);
+}
+.navbar{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    width: 100%;
+
 }
 .dropdown-menu{
     width: 25vw;
@@ -56,6 +64,22 @@
 .infoP5 td{
     font-size: 1vw;
     
+}
+#tableP6{
+    width: 70vw;
+    font-size: 1.3vw;
+}
+#tableP6 td{
+    width: fit-content;
+    font-size: 1vw;
+}
+#tableP2{
+    width: 70vw;
+    font-size: 1.3vw;
+}
+#tableP2 td{
+    width: fit-content;
+    font-size: 1vw;
 }
 .detailP7{
     color: red;

@@ -18,28 +18,13 @@
     <header>
 
         <nav class="navbar sm-8 navbar-expand-md navbar-dark bg-dark">
-            <div class="container-fluid">
-                <a class="navbar-brand" href="#"></a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Seleccione Función
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li id="controlSeccionamiento"><a class="dropdown-item3" href="#">Seccionamiento</a></li>
-                                <li id="controlMalUsoDelSube"><a class="dropdown-item3" href="#">Mal Uso Del Sube</a></li>
-                                <li id="controlSeccCorrido"><a class="dropdown-item3" href="#">Servicios Cortados</a></li>
-                                <li id="controlCortados"><a class="dropdown-item3" href="#">Seccionamiento Corrido</a></li>
-                                <li id="controlKmPorRamal"><a class="dropdown-item3" href="#">Km Por Ramal Mensual</a></li>
-                                <li id="controlMensual"><a class="dropdown-item3" href="#">Control Mensual</a></li>
-                                <li id="controlFrancos"><a class="dropdown-item3" href="#">Control Francos</a></li>
-
-                            </ul>
+            <button id="controlSeccionamiento"class="dropdown-item3" href="#">Seccionamiento</button>
+            <button id="controlMalUsoDelSube"class="dropdown-item3" href="#">Mal Uso Del Sube</button>
+            <button id="controlSeccCorrido"class="dropdown-item3" href="#">Servicios Cortados</button>
+            <button id="controlCortados"class="dropdown-item3" href="#">Seccionamiento Corrido</button>
+            <button id="controlKmPorRamal"class="dropdown-item3" href="#">Km Por Ramal Mensual</button>
+            <button id="controlMensual"class="dropdown-item3" href="#">Control Mensual</button>
+            <button id="controlFrancos"class="dropdown-item3" href="#">Control Francos</button>
         </nav>
     </header>
 
@@ -78,7 +63,6 @@
         <button onclick="upload2()">Upload</button>
         <div class="dropdown">
             <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Fecha</button>
-            <div>BORRAR HOJAS 2 Y 3, CAMBIAR A FECHAINICIO, HORAINICIO, BORRAR LINEA, RAMAL, REC Y EL ULTIMO</div>
             <ul id="drop" class="dropdown-menu">
                 <li><a class="dropdown-item" id="drop0" href="#"></a></li>
                 <li><a class="dropdown-item" id="drop1" href="#"></a></li>
@@ -238,7 +222,8 @@
                         <th>Seccionamiento</th>
                         <th>Mal Uso Del Sube</th>
                         <th>Servicios Cortados</th>
-                        <th>Seccionamiento Corrido</th>
+                        <th>Secc. Corrido</th>
+                        <th>Total Por Chofer</th>
                     </tr>
 
                 </table>
