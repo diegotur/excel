@@ -18,28 +18,14 @@
     <header>
 
         <nav class="navbar sm-8 navbar-expand-md navbar-dark bg-dark">
-            <div class="container-fluid">
-                <a class="navbar-brand" href="#"></a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Seleccione Función
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li id="controlSeccionamiento"><a class="dropdown-item3" href="#">Seccionamiento</a></li>
-                                <li id="controlMalUsoDelSube"><a class="dropdown-item3" href="#">Mal Uso Del Sube</a></li>
-                                <li id="controlSeccCorrido"><a class="dropdown-item3" href="#">Servicios Cortados</a></li>
-                                <li id="controlCortados"><a class="dropdown-item3" href="#">Seccionamiento Corrido</a></li>
-                                <li id="controlKmPorRamal"><a class="dropdown-item3" href="#">Km Por Ramal Mensual</a></li>
-                                <li id="controlMensual"><a class="dropdown-item3" href="#">Control Mensual</a></li>
-                                <li id="controlFrancos"><a class="dropdown-item3" href="#">Control Francos</a></li>
-
-                            </ul>
+            <button id="controlSeccionamiento"class="dropdown-item3" href="#">Seccionamiento</button>
+            <button id="controlMalUsoDelSube"class="dropdown-item3" href="#">Mal Uso Del Sube</button>
+            <button id="controlSeccCorrido"class="dropdown-item3" href="#">Servicios Cortados</button>
+            <button id="controlCortados"class="dropdown-item3" href="#">Seccionamiento Corrido</button>
+            <button id="controlKmPorRamal"class="dropdown-item3" href="#">Km Por Ramal Mensual</button>
+            <button id="controlMensual"class="dropdown-item3" href="#">Control Mensual</button>
+            <button id="controlFrancos"class="dropdown-item3" href="#">Control Francos</button>
+            <button id="controlPlanillas"class="dropdown-item3" href="#">Control Planillas</button>
         </nav>
     </header>
 
@@ -78,7 +64,6 @@
         <button onclick="upload2()">Upload</button>
         <div class="dropdown">
             <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Fecha</button>
-            <div>BORRAR HOJAS 2 Y 3, CAMBIAR A FECHAINICIO, HORAINICIO, BORRAR LINEA, RAMAL, REC Y EL ULTIMO</div>
             <ul id="drop" class="dropdown-menu">
                 <li><a class="dropdown-item" id="drop0" href="#"></a></li>
                 <li><a class="dropdown-item" id="drop1" href="#"></a></li>
@@ -238,7 +223,8 @@
                         <th>Seccionamiento</th>
                         <th>Mal Uso Del Sube</th>
                         <th>Servicios Cortados</th>
-                        <th>Seccionamiento Corrido</th>
+                        <th>Secc. Corrido</th>
+                        <th>Total Por Chofer</th>
                     </tr>
 
                 </table>
@@ -258,13 +244,84 @@
         <br><br>
 
         <div>
-            <table class="tabla" id="tableP7">
+            <table class="tableCH" id="francosDeMas">
                 <tr>
-                    <th>legajo</th>
-                    <th>Seccionamiento</th>
-                    <th>Mal Uso Del Sube</th>
-                    <th>Servicios Cortados</th>
-                    <th>Seccionamiento Corrido</th>
+                    <th>Choferes Con Francos De Más</th> 
+                </tr>
+            </table>
+            <table class="tableCH" id="francosDeMenos">
+                <tr>
+                    <th>Choferes Con Francos De Menos</th> 
+                </tr>
+            </table>
+            <br><br>
+            
+            <br><br>
+
+            <table class="tabla" id="tableP7">
+                
+                <tr>
+                </tr>
+
+            </table>
+        </div>
+
+        <br><br>
+    </div>
+    <div id="controlPlanillasH1">
+
+        <h1>Control Planillas</h1>
+        <input type="file" id="file_upload8" />
+        <button onclick="upload8()">Upload</button>
+        <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Fecha</button>
+            <ul id="drop" class="dropdown-menu">
+                <li><a class="dropdown-itemPL" id="planillasDrop0" href="#"></a></li>
+                <li><a class="dropdown-itemPL" id="planillasDrop1" href="#"></a></li>
+                <li><a class="dropdown-itemPL" id="planillasDrop2" href="#"></a></li>
+                <li><a class="dropdown-itemPL" id="planillasDrop3" href="#"></a></li>
+                <li><a class="dropdown-itemPL" id="planillasDrop4" href="#"></a></li>
+                <li><a class="dropdown-itemPL" id="planillasDrop5" href="#"></a></li>
+                <li><a class="dropdown-itemPL" id="planillasDrop6" href="#"></a></li>
+                <li><a class="dropdown-itemPL" id="planillasDrop7" href="#"></a></li>
+                <li><a class="dropdown-itemPL" id="planillasDrop8" href="#"></a></li>
+                <li><a class="dropdown-itemPL" id="planillasDrop9" href="#"></a></li>
+                <li><a class="dropdown-itemPL" id="planillasDrop10" href="#"></a></li>
+                <li><a class="dropdown-itemPL" id="planillasDrop11" href="#"></a></li>
+                <li><a class="dropdown-itemPL" id="planillasDrop12" href="#"></a></li>
+                <li><a class="dropdown-itemPL" id="planillasDrop13" href="#"></a></li>
+                <li><a class="dropdown-itemPL" id="planillasDrop14" href="#"></a></li>
+                <li><a class="dropdown-itemPL" id="planillasDrop15" href="#"></a></li>
+                <li><a class="dropdown-itemPL" id="planillasDrop16" href="#"></a></li>
+                <li><a class="dropdown-itemPL" id="planillasDrop17" href="#"></a></li>
+                <li><a class="dropdown-itemPL" id="planillasDrop18" href="#"></a></li>
+                <li><a class="dropdown-itemPL" id="planillasDrop19" href="#"></a></li>
+                <li><a class="dropdown-itemPL" id="planillasDrop20" href="#"></a></li>
+                <li><a class="dropdown-itemPL" id="planillasDrop21" href="#"></a></li>
+                <li><a class="dropdown-itemPL" id="planillasDrop22" href="#"></a></li>
+                <li><a class="dropdown-itemPL" id="planillasDrop23" href="#"></a></li>
+                <li><a class="dropdown-itemPL" id="planillasDrop24" href="#"></a></li>
+                <li><a class="dropdown-itemPL" id="planillasDrop26" href="#"></a></li>
+                <li><a class="dropdown-itemPL" id="planillasDrop27" href="#"></a></li>
+                <li><a class="dropdown-itemPL" id="planillasDrop28" href="#"></a></li>
+                <li><a class="dropdown-itemPL" id="planillasDrop29" href="#"></a></li>
+                <li><a class="dropdown-itemPL" id="planillasDrop30" href="#"></a></li>
+                <li><a class="dropdown-itemPL" id="planillasDrop31" href="#"></a></li>
+
+            </ul>
+
+
+        <br><br>
+
+        <div>
+            <table class="tabla" id="tableP8">
+                <tr>
+                    <th>COCHE</th>
+                    <th>LEGAJO</th>
+                    <th>HORA SALIDA</th>
+                    <th>HORA LLEGADA</th>
+                    <th>CITACIÓN</th>
+                    <th>KMS</th>
                 </tr>
 
             </table>
