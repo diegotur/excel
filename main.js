@@ -1442,3 +1442,69 @@ function excelFileToJSON7(file) {
         console.error(e);
     }
 }
+
+
+
+function upload8() {
+    var files = document.getElementById('file_upload8').files;
+    if (files.length == 0) {
+        alert("Please choose any file...");
+        return;
+    }
+    var filename = files[0].name;
+    var extension = filename.substring(filename.lastIndexOf(".")).toUpperCase();
+    if (extension == '.XLS' || extension == '.XLSX'|| extension == '.DBF') {
+        excelFileToJSON8(files[0]);
+    } else {
+        alert("Please select a valid excel file.");
+    }
+}
+
+let roa8;
+
+let tableP8 = document.getElementById("tableP8");
+
+function excelFileToJSON8(file) {
+    try {
+        var reader = new FileReader();
+        reader.readAsBinaryString(file);
+        reader.onload = function(e) {
+
+            var data = e.target.result;
+            var workbook = XLSX.read(data, {
+                type: 'binary'
+            });
+            workbook.SheetNames.forEach(function(sheetName) {
+                roa8 = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
+
+
+                for (const elem of roa8) {
+
+                    elem.FECHA = ExcelDateToJSDate2(elem.FECHA);
+                }
+                
+               /*  let pipin = roa8.filter((e ) => e.FECHA == "17/10/2022");
+
+                let pipino = pipin.filter((e ) => e.COCHE == 20);
+
+                pipino.sort((a, b) => (a.HSALE > b.HSALE) ? 1 : -1);
+                
+                console.log(pipino);
+                 */
+                
+                
+                
+
+                
+                if (roa8.length > 0) {
+                    
+                    result[sheetName] = roa8;
+                }
+        })
+    }
+        
+            
+    } catch (e) {
+        console.error(e);
+    }
+}
