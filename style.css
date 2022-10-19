@@ -26,6 +26,14 @@
     visibility: hidden;
     position: absolute;
 }
+#controlPlanillasH1{
+    visibility: hidden;
+    position: absolute;
+}
+#controlKMSubeH1{
+    visibility: visible;
+    position: absolute;
+}
 /* #tableP{
     display: grid;
     justify-items: center;
@@ -95,6 +103,9 @@
     justify-items: center;
     width: 180vh;
     text-align: justify;
+}
+.infoP9{
+    border: black solid;
 }
 
 

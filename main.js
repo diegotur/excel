@@ -1,40 +1,50 @@
-let controlSeccionamiento = document.getElementById("controlSeccionamientoH1");
-let controlMalUsoDelSube = document.getElementById("controlMalUsoDelSubeH1");
-let controlSeccCorrido = document.getElementById("controlSeccCorridoH1");
-let controlCortados = document.getElementById("controlCortadosH1");
-let controlKmPorRamal = document.getElementById("controlKmPorRamalH1");
-let controlMensual = document.getElementById("controlMensualH1");
+let l1 = document.getElementById("controlSeccionamientoH1");
+let l2 = document.getElementById("controlMalUsoDelSubeH1");
+let l3 = document.getElementById("controlSeccCorridoH1");
+let l4 = document.getElementById("controlCortadosH1");
+let l5 = document.getElementById("controlKmPorRamalH1");
+let l6 = document.getElementById("controlMensualH1");
+let l7 = document.getElementById("controlFrancosH1");
+let l8 = document.getElementById("controlPlanillasH1");
+let l9 = document.getElementById("controlKMSubeH1");
 
-function VerControl(a, b, c, d, e, f) {
+function VerControl(a, b, c, d, e, f, g, h, i) {
     a.style.visibility = "visible";
     b.style.visibility = "hidden";
     c.style.visibility = "hidden";
     d.style.visibility = "hidden";
     e.style.visibility = "hidden";
     f.style.visibility = "hidden";
+    g.style.visibility = "hidden";
+    h.style.visibility = "hidden";
+    i.style.visibility = "hidden";
 
 
 }
+
+let arrLinks = [l1,l2,l3,l4,l5,l6,l7,l8,l9];
+
 document.getElementById("controlSeccionamiento").addEventListener("click", () => {
-    VerControl(controlSeccionamiento, controlMalUsoDelSube, controlSeccCorrido, controlCortados, controlKmPorRamal, controlMensual)
-});
+    VerControl(l1, l2, l3, l4, l5, l6, l7, l8, l9)});
 document.getElementById("controlMalUsoDelSube").addEventListener("click", () => {
-    VerControl(controlMalUsoDelSube, controlSeccCorrido, controlCortados, controlSeccionamiento, controlKmPorRamal, controlMensual)
-});
+    VerControl(l2, l1, l3, l4, l5, l6, l7, l8, l9)});
 document.getElementById("controlCortados").addEventListener("click", () => {
-    VerControl(controlSeccCorrido, controlMalUsoDelSube, controlSeccionamiento, controlCortados, controlKmPorRamal, controlMensual)
-});
+    VerControl(l3, l2, l1, l4, l5, l6, l7, l8, l9)});
 document.getElementById("controlSeccCorrido").addEventListener("click", () => {
-    VerControl(controlCortados, controlMalUsoDelSube, controlSeccCorrido, controlSeccionamiento, controlKmPorRamal, controlMensual)
-});
+    VerControl(l4, l2, l3, l1, l5, l6, l7, l8, l9)});
 document.getElementById("controlKmPorRamal").addEventListener("click", () => {
-    VerControl(controlKmPorRamal, controlCortados, controlMalUsoDelSube, controlSeccCorrido, controlSeccionamiento, controlMensual)
-});
+    VerControl(l5, l2, l3, l4, l1, l6, l7, l8, l9)});
 document.getElementById("controlMensual").addEventListener("click", () => {
-    VerControl(controlMensual, controlKmPorRamal, controlCortados, controlMalUsoDelSube, controlSeccCorrido, controlSeccionamiento)
-});
+    VerControl(l6, l2, l3, l4, l5, l1, l7, l8, l9)});
+document.getElementById("controlFrancos").addEventListener("click", () => {
+    VerControl(l7, l2, l3, l4, l5, l6, l1, l8, l9)});
+document.getElementById("controlPlanillas").addEventListener("click", () => {
+    VerControl(l8, l2, l3, l4, l5, l6, l7, l1, l9)});
+document.getElementById("controlKMSube").addEventListener("click", () => {
+    VerControl(l9, l2, l3, l4, l5, l6, l7, l8, l1)});
 
 
+    let arrayKM4=[];
 
 
 function upload() {
@@ -1617,6 +1627,429 @@ function excelFileToJSON8(file) {
         })
     }
         
+            
+    } catch (e) {
+        console.error(e);
+    }
+}
+function upload9() {
+    var files = document.getElementById('file_upload9').files;
+    if (files.length == 0) {
+        alert("Please choose any file...");
+        return;
+    }
+    var filename = files[0].name;
+    var extension = filename.substring(filename.lastIndexOf(".")).toUpperCase();
+    if (extension == '.XLS' || extension == '.XLSX'|| extension == '.DBF') {
+        excelFileToJSON9(files[0]);
+    } else {
+        alert("Please select a valid excel file.");
+    }
+}
+
+let roa9;
+
+
+function excelFileToJSON9(file) {
+    try {
+        var reader = new FileReader();
+        reader.readAsBinaryString(file);
+        reader.onload = function(e) {
+
+            var data = e.target.result;
+            var workbook = XLSX.read(data, {
+                type: 'binary'
+            });
+            workbook.SheetNames.forEach(function(sheetName) {
+                roa9 = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
+
+
+                for (const elem of roa9) {
+
+                    elem.FECHA = ExcelDateToJSDate2(elem.FECHA);
+                    delete elem.RECA;
+                }
+            
+                
+                
+                
+                let fechasDispPL = [];
+
+                for (const elem of roa9) {
+                    fechasDispPL.push(elem.FECHA);
+                }
+                
+                const fechasDispPL1 = [...new Set(fechasDispPL)];
+                
+
+                fechasDispPL1.sort((a, b) => (a > b) ? 1 : -1);
+
+                
+                
+                let dropPL = document.getElementsByClassName("dropdown-itemPL");
+                let dropIndexPL = 0;
+                let dropArPL = [];
+
+                for (const elem of fechasDispPL1) {
+
+                    dropPL[dropIndexPL].innerText = elem;
+                    dropArPL.push("planillasDrop" + dropIndexPL);
+                    dropIndexPL++;
+                }
+
+                for (i = 0; i < fechasDispPL1.length; i++) {
+                    let wPL = document.getElementById(dropArPL[i])
+                    wPL.addEventListener("click", () => {
+                        Write(wPL.textContent);
+                    });
+                }
+
+                    
+                function Write(a) {
+                    let infoP9 = document.getElementsByClassName("infoP9");
+
+                    if (infoP9.length > 0) {
+                        do {
+                            tableP8.removeChild(infoP9[0]);
+
+                        } while (infoP9.length != 0);
+                    }
+                    
+                    let arrayPL = roa9.filter((elem) => a == elem.FECHA);
+                    
+                    arrayPL = arrayPL.sort((a, b)=>(a.COCHE > b.COCHE)? 1:-1);
+
+                    let cochesPL = [];
+
+                    for (const el of arrayPL){
+                        cochesPL.push(el.COCHE);
+                    }
+
+                    cochesPL = [... new Set(cochesPL)];
+
+                    let tempPL=[];
+
+                    for (const el of cochesPL){
+                        tx = arrayPL.filter((e)=> e.COCHE == el);
+                        tx  = tx.sort((a,b)=>(a.HSALE > b.HSALE)? 1:-1);
+                        tempPL.push(tx);
+                    }
+                    
+                    
+                    finalPL = [];
+
+                    for (i=0;i<tempPL.length;i++){
+                        for (const el of tempPL[i]){
+                            finalPL.push(el);        
+                        }
+                    } 
+
+                    finalPL = finalPL.filter((el)=> el.KMTS != 0);
+                    console.log(finalPL);
+
+                    let initialValue = 0
+
+                    let kmSum = finalPL.reduce((acc, value)=> acc + value.KMTS, initialValue);
+
+
+                    for (const elem of finalPL) {
+                        const node = document.createElement("tr");
+                        node.classList.add("infoP9");
+                        const subNode = document.createElement("td");
+                        const subNode1 = document.createElement("td");
+                        const subNode2 = document.createElement("td");
+                        const subNode3 = document.createElement("td");
+                        const subNode4 = document.createElement("td");
+                        const subNode5 = document.createElement("td");
+
+                        const textnode = document.createTextNode(elem.COCHE);
+                        const textnode1 = document.createTextNode(elem.LEGAJO);
+                        const textnode2 = document.createTextNode(elem.HSALE);
+                        const textnode3 = document.createTextNode(elem.HLLEGA);
+                        const textnode4 = document.createTextNode(elem.HCITA);
+                        const textnode5 = document.createTextNode(elem.KMTS);
+                        subNode.appendChild(textnode);
+                        subNode1.appendChild(textnode1);
+                        subNode2.appendChild(textnode2);
+                        subNode3.appendChild(textnode3);
+                        subNode4.appendChild(textnode4);
+                        subNode5.appendChild(textnode5);
+                        node.appendChild(subNode);
+                        node.appendChild(subNode1);
+                        node.appendChild(subNode2);
+                        node.appendChild(subNode3);
+                        node.appendChild(subNode4);
+                        node.appendChild(subNode5);
+                        tableP8.appendChild(node);
+
+                    } 
+                    const kmPL = document.createElement("td");
+                    const kmPL1 = document.createElement("td");
+                    const kmPL2 = document.createElement("td");
+                    const kmPL3 = document.createElement("td");
+                    const kmPL4 = document.createElement("td");
+                    const kmPL5 = document.createElement("td");
+
+                    const kmPLTextNode = document.createTextNode(kmSum);
+                    const kmPL1TextNode = document.createTextNode("TOTAL");
+                    const kmPL2TextNode = document.createTextNode("");
+                    const kmPL3TextNode = document.createTextNode("");
+                    const kmPL4TextNode = document.createTextNode("");
+                    const kmPL5TextNode = document.createTextNode("");
+                    kmPL.classList.add("infoP9");
+                    kmPL1.classList.add("infoP9");
+                    kmPL2.classList.add("infoP9");
+                    kmPL3.classList.add("infoP9");
+                    kmPL4.classList.add("infoP9");
+                    kmPL5.classList.add("infoP9");
+                    kmPL.appendChild(kmPLTextNode);
+                    kmPL1.appendChild(kmPL1TextNode);
+                    kmPL2.appendChild(kmPL2TextNode);
+                    kmPL3.appendChild(kmPL3TextNode);
+                    kmPL4.appendChild(kmPL4TextNode);
+                    kmPL5.appendChild(kmPL5TextNode);
+                    tableP8.appendChild(kmPL1);
+                    tableP8.appendChild(kmPL2);
+                    tableP8.appendChild(kmPL3);
+                    tableP8.appendChild(kmPL4);
+                    tableP8.appendChild(kmPL5);
+                    tableP8.appendChild(kmPL);
+
+                }
+                if (roa9.length > 0) {
+                    
+                    result[sheetName] = roa9;
+                }
+        })
+    }
+            
+    } catch (e) {
+        console.error(e);
+    }
+}
+
+function upload10() {
+    var files = document.getElementById('file_upload10').files;
+    if (files.length == 0) {
+        alert("Please choose any file...");
+        return;
+    }
+    var filename = files[0].name;
+    var extension = filename.substring(filename.lastIndexOf(".")).toUpperCase();
+    if (extension == '.XLS' || extension == '.XLSX'|| extension == '.DBF') {
+        excelFileToJSON10(files[0]);
+    } else {
+        alert("Please select a valid excel file.");
+    }
+}
+
+let roa10;
+
+let tableP10 = document.getElementById("tableP10");
+
+function excelFileToJSON10(file) {
+    try {
+        var reader = new FileReader();
+        reader.readAsBinaryString(file);
+        reader.onload = function(e) {
+
+            var data = e.target.result;
+            var workbook = XLSX.read(data, {
+                type: 'binary'
+            });
+            workbook.SheetNames.forEach(function(sheetName) {
+                roa10 = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
+
+
+                for (const elem of roa10) {
+
+                    elem.FECHA = ExcelDateToJSDate2(elem.FECHA);
+                    delete elem.HSALE;
+                    delete elem.HLLEGA;
+                    delete elem.HCITA;
+                    delete elem.LEGAJO;
+                    delete elem.RECA;
+                }
+
+                let fechasDispKM = [];
+
+                for (const elem of roa10) {
+                    fechasDispKM.push(elem.FECHA);
+                }
+                
+                const fechasDispKM1 = [...new Set(fechasDispKM)];
+                
+
+                fechasDispKM1.sort((a, b) => (a > b) ? 1 : -1);
+
+                
+                
+                let dropKM = document.getElementsByClassName("dropdown-itemKM");
+                let dropIndexKM = 0;
+                let dropArKM = [];
+
+                for (const elem of fechasDispKM1) {
+
+                    dropKM[dropIndexKM].innerText = elem;
+                    dropArKM.push("kmSUbeDrop" + dropIndexKM);
+                    dropIndexKM++;
+                }
+
+                for (i = 0; i < fechasDispKM1.length; i++) {
+                    let wKM = document.getElementById(dropArKM[i])
+                    wKM.addEventListener("click", () => {
+                        Write(wKM.textContent);
+                    });
+                }
+
+                    
+                function Write(a) {
+                    let infoP10 = document.getElementsByClassName("infoP10");
+
+                    if (infoP10.length > 0) {
+                        do {
+                            tableP10.removeChild(infoP10[0]);
+
+                        } while (infoP10.length != 0);
+                    }
+                    
+                    let arrayKM = roa10.filter((elem) => a == elem.FECHA);
+
+                    let arrayKM2=[];
+
+                    for (const e of arrayKM){
+                        arrayKM2.push(e.COCHE);
+                    }
+
+
+                    arrayKM2 = [...new Set (arrayKM2)];
+
+                    let arrayKM3 = arrayKM2.sort((a,b)=>(a > b)? 1 : -1);
+
+
+                    for (const e of arrayKM3){
+                        x = arrayKM.filter((el)=>el.COCHE == e);
+                        iv = 0;
+                        xx = x.reduce((elem,value)=> elem + value.KMTS, iv);
+                        arrayKM4.push({coche:e, kms:xx})
+
+                    }
+
+
+                }
+                   
+                if (roa10.length > 0) {
+                    
+                    result[sheetName] = roa10;
+                }
+        })
+    }
+            
+    } catch (e) {
+        console.error(e);
+    }
+}
+function upload11() {
+    var files = document.getElementById('file_upload11').files;
+    if (files.length == 0) {
+        alert("Please choose any file...");
+        return;
+    }
+    var filename = files[0].name;
+    var extension = filename.substring(filename.lastIndexOf(".")).toUpperCase();
+    if (extension == '.XLS' || extension == '.XLSX'|| extension == '.DBF') {
+        excelFileToJSON11(files[0]);
+    } else {
+        alert("Please select a valid excel file.");
+    }
+}
+
+let roa11;
+
+let tableP11 = document.getElementById("tableP11");
+
+function excelFileToJSON11(file) {
+    try {
+        var reader = new FileReader();
+        reader.readAsBinaryString(file);
+        reader.onload = function(e) {
+
+            var data = e.target.result;
+            var workbook = XLSX.read(data, {
+                type: 'binary'
+            });
+            workbook.SheetNames.forEach(function(sheetName) {
+                roa11 = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
+            
+                for (const e of roa11){
+                    e.coche = e.__EMPTY_2;
+                    e.kms = e.__EMPTY_4;
+
+                    delete e.__EMPTY;
+                    delete e.__EMPTY_1;
+                    delete e.__EMPTY_2;
+                    delete e.__EMPTY_3;
+                    delete e.__EMPTY_4;
+                }
+                roa11.shift();
+
+
+                let kms2 = arrayKM4;
+
+                for (const e of kms2){
+                    x = roa11.filter((el)=> el.coche == e.coche);
+                    if (x.length>0){
+                    e.kmSube = x[0].kms;
+                    }else{
+                        e.kmSube = "0";
+                        e.nov = "*";
+                    } 
+                }
+                for (const e of roa11){
+                    x = kms2.filter((el)=> el.coche == e.coche);
+                    if (x.length<1 && e.kms>15){
+                        kms2.push({coche:e.coche, kms:"0",kmSube:e.kms, nov:"x"});
+                    }
+                } 
+
+                for (const e of kms2){
+                    x = e.kms - e.kmSube;
+                    e.dif = x.toFixed(2);
+                }
+
+                console.log(kms2);
+
+                for (const elem of kms2) {
+                    const node = document.createElement("tr");
+                    node.classList.add("infoP10");
+                    const subNode = document.createElement("td");
+                    const subNode1 = document.createElement("td");
+                    const subNode2 = document.createElement("td");
+                    const subNode3 = document.createElement("td");
+                    const subNode4 = document.createElement("td");
+
+                    const textnode = document.createTextNode(elem.coche);
+                    const textnode1 = document.createTextNode(elem.kms);
+                    const textnode2 = document.createTextNode(elem.kmSube);
+                    const textnode3 = document.createTextNode(elem.dif);
+                    const textnode4 = document.createTextNode(elem.nov);
+                    subNode.appendChild(textnode);
+                    subNode1.appendChild(textnode1);
+                    subNode2.appendChild(textnode2);
+                    subNode3.appendChild(textnode3);
+                    subNode4.appendChild(textnode4);
+                    node.appendChild(subNode);
+                    node.appendChild(subNode1);
+                    node.appendChild(subNode2);
+                    node.appendChild(subNode3);
+                    node.appendChild(subNode4);
+                    tableP10.appendChild(node);
+
+                } 
+            }
+        
+    )};
+                
             
     } catch (e) {
         console.error(e);
