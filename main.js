@@ -1255,6 +1255,9 @@ function excelFileToJSON7(file) {
 
                 na1 = roa7.filter((el) => el.__EMPTY_1 > 0);
 
+                let arrayPresent = roa7;
+
+
                 for (const elem of roa7) {
 
                     elem.interno = elem.__EMPTY;
@@ -1340,10 +1343,6 @@ function excelFileToJSON7(file) {
                     elem.chofer = x[0];
                 }
 
-                console.log(na1)
-
-
-
                 let francos = [];
 
                 for (i = 0; i < na1.length; i++) {
@@ -1381,11 +1380,12 @@ function excelFileToJSON7(file) {
                         if (value == "F ") {
                             value = "F";
                         }
+                        if (value == "F *") {
+                            value = "F";
+                        }
 
 
                         if (value != undefined && value != "6" && value != "7" && value != "8" && value != "**" && value != "*" && value != "V" && value != " " && value != "9" && value != "10") {
-
-
 
                             pr.push(key, value);
 
@@ -1398,11 +1398,67 @@ function excelFileToJSON7(file) {
                     });
                 }
 
+                arrayPresent = arrayPresent.filter((e) => e.legajo > 1000);
+
+                let pr2 = [];
+                for (const e of arrayPresent){
+                    e.xx31 = e.__EMPTY_33;
+                
+                }
+
+                arrayPresent.sort((a,b)=>(a.legajo > b.legajo)? 1 : -1);
+
+                for (i = 0; i < arrayPresent.length; i++) {
+
+
+                    let pr3 = [];
+                    Object.entries(arrayPresent[i]).forEach(pair => {
+                       pr3.push(pair[1]);
+
+                        });
+                        pr2.push(pr3);
+                    }
+
+                for (const e of pr2){
+                    for (i=0;i<e.length;i++){
+                        if (e[i] == undefined || e[i] == "V" || e[i] == "*"){
+                            e[i] = "";
+                        }
+                        if (e[i] == "FV" || e[i] == "F*" || e[i] == " F*"){
+                            e[i] = "";
+                        }
+                
+                    }
+                }
+
+
+                let dropFR = document.getElementsByClassName("dropdown-itemFR");
+
+                let dropArFR = [0,1,2,3];
+                let dropArFR2 = ["francosDrop0","francosDrop1","francosDrop2","francosDrop3"];
+
+                for (i = 0; i < dropArFR.length; i++) {
+                    dropFR[i].innerText = dropArFR[i];
+                }
+
+                for (i = 0; i < dropArFR.length; i++) {
+                    let j = document.getElementById(dropArFR2[i])
+                    j.addEventListener("click", () => {
+                        WriteFR(j.textContent)
+                    });
+                }
+
+                function WriteFR(a) {
+
+                let frDM = document.getElementsByClassName("tableCH");
+
+                for (const el of frDM){
+                    el.style.visibility = "visible";
+                }
+
                 let francosLess = francos.filter((e) => e.length < 8);
-                let francosMore = francos.filter((e) => e.length > 8);
-
-
-
+                let francosMore = francos.filter((e) => e.length > 8 + a);
+                
 
                 for (const elem of francosMore) {
                     const node = document.createElement("tr");
@@ -1417,7 +1473,7 @@ function excelFileToJSON7(file) {
                 for (const elem of francosLess) {
                     const node = document.createElement("tr");
                     const subNode = document.createElement("td");
-                    node.classList.add("detailP7");
+                    node.classList.add("detail2P7");
                     const textnode = document.createTextNode(elem[0]);
                     subNode.appendChild(textnode);
                     node.appendChild(subNode);
@@ -1439,7 +1495,62 @@ function excelFileToJSON7(file) {
 
                 }
 
+            }
 
+    let presentismo = document.getElementById("presentismo");
+    
+    presentismo.addEventListener('click', ()=>{upload7Bis()});
+
+    function upload7Bis(){
+        let borrarFR = document.getElementsByClassName("detailP7");
+        let borrarFR2 = document.getElementsByClassName("infoP7");
+        let borrarFR1 = document.getElementsByClassName("detail2P7");
+
+                    if (borrarFR2.length > 0) {
+                        do {
+                            tableP7.removeChild(borrarFR2[0]);
+
+                        } while (borrarFR2.length != 0);
+                    }
+                    if (borrarFR.length > 0) {
+                        do {
+                            francosMoreTR.removeChild(borrarFR[0]);
+
+                        } while (borrarFR.length != 0);
+                    }
+                    if (borrarFR1.length > 0) {
+                        do {
+                            francosLessTR.removeChild(borrarFR1[0]);
+
+                        } while (borrarFR1.length != 0);
+                    }
+                    let frDM = document.getElementsByClassName("tableCH");
+
+                    for (const el of frDM){
+                        el.style.visibility = "hidden";
+                    }
+
+                    let tablaPresentismo = document.getElementById("tablaPresentismo");
+
+
+                    tablaPresentismo.style.visibility = "visible";
+
+
+                    for (const elem of pr2) {
+                        const node = document.createElement("tr");
+                        node.classList.add("presentP7");
+                        for (const e of elem) {
+                            const subNode = document.createElement("td");
+                            const textnode = document.createTextNode(e);
+                            subNode.appendChild(textnode);
+                            node.appendChild(subNode);
+                            tablaPresentismo.appendChild(node);
+                        }
+    
+                    }
+        
+
+    }
 
 
                 if (roa7.length > 0) {
