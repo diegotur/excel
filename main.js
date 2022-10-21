@@ -1385,7 +1385,7 @@ function excelFileToJSON7(file) {
                         }
 
 
-                        if (value != undefined && value != "6" && value != "7" && value != "8" && value != "**" && value != "*" && value != "V" && value != " " && value != "9" && value != "10") {
+                        if (value != undefined && value != "6" && value != "7" && value != "8" && value != "* " && value != " *" && value != "**" && value != "*" && value != "V" && value != " " && value != "9" && value != "10") {
 
                             pr.push(key, value);
 
@@ -1421,11 +1421,11 @@ function excelFileToJSON7(file) {
 
                 for (const e of pr2){
                     for (i=0;i<e.length;i++){
-                        if (e[i] == undefined || e[i] == "V" || e[i] == "*"){
+                        if (e[i] == undefined || e[i] == "V" || e[i] == "*" || e[i] == " *" || e[i] == "* "){
                             e[i] = "";
                         }
-                        if (e[i] == "FV" || e[i] == "F*" || e[i] == " F*"){
-                            e[i] = "";
+                        if (e[i] == "FV" || e[i] == "F*" || e[i] == " F*" || e[i] == "F* "){
+                            e[i] = "F";
                         }
                 
                     }
