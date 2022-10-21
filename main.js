@@ -1450,6 +1450,8 @@ function excelFileToJSON7(file) {
 
                 function WriteFR(a) {
 
+                    console.log(a);
+
                 let frDM = document.getElementsByClassName("tableCH");
 
                 for (const el of frDM){
@@ -1457,7 +1459,9 @@ function excelFileToJSON7(file) {
                 }
 
                 let francosLess = francos.filter((e) => e.length < 8);
-                let francosMore = francos.filter((e) => e.length > 8 + a);
+                let francosMore = francos.filter((e) => e.length > 8 + parseInt(a));
+
+                console.log(francosMore);
                 
 
                 for (const elem of francosMore) {
