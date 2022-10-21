@@ -2050,7 +2050,6 @@ function excelFileToJSON10(file) {
 
                     }
 
-
                 }
                    
                 if (roa10.length > 0) {
@@ -2115,6 +2114,7 @@ function excelFileToJSON11(file) {
                     x = roa11.filter((el)=> el.coche == e.coche);
                     if (x.length>0){
                     e.kmSube = x[0].kms;
+                    e.nov = "";
                     }else{
                         e.kmSube = "0";
                         e.nov = "*";
@@ -2131,6 +2131,10 @@ function excelFileToJSON11(file) {
                     x = e.kms - e.kmSube;
                     e.dif = x.toFixed(2);
                 }
+
+                /* kms2 = kms2.filter((e)=>e.dif > 9 || e.dif < -9 || e.nov != "");
+
+                kms2.sort((a,b)=>(a.dif < a.dif)? 1 : -1); */
 
                 console.log(kms2);
 
