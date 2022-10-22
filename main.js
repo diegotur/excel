@@ -67,6 +67,8 @@ let roa;
 
 let tableP = document.getElementById("tableP");
 
+
+
 const ExcelDateToJSDate2 = (date) => {
     let converted_date = new Date(Math.round((date - 25568) * 864e5));
     converted_date = String(converted_date).slice(4, 15);
@@ -109,8 +111,68 @@ function excelFileToJSON(file) {
             workbook.SheetNames.forEach(function(sheetName) {
                 roa = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
 
+                
+                roa.shift();
 
-                let roaCortos = roa.filter((elem) => elem.Secciones < 8);
+                //console.log(roa);
+                 for (const elem of roa) {
+                    //let xx = x.split(".");
+                    elem.coche = elem.props;
+                    elem.Legajo = elem.__EMPTY;
+                    elem.chofer = elem.__EMPTY_1;
+                    elem.horaentra = elem.__EMPTY_3;
+                    elem.horasale = elem.__EMPTY_7;
+                    elem.cabecera = elem.__EMPTY_9;
+                    elem.espera = elem.__EMPTY_10;
+
+                    if (elem.horaentra != undefined){
+
+                        let x = elem.horaentra.toString();
+                        elem.horaentra= x;
+                        let xx = elem.horaentra.split(".");
+                        elem.horaentra = xx[1];
+                    }
+                    if (elem.horasale != undefined){
+
+                        let x = elem.horasale.toString();
+                        elem.horasale= x;
+                        let xx = elem.horasale.split(".");
+                        elem.horasale = xx[1];
+                    }
+
+                    delete elem.props;
+                    delete elem.__EMPTY;
+                    delete elem.__EMPTY_1;
+                    delete elem.__EMPTY_2;
+                    delete elem.__EMPTY_3;
+                    delete elem.__EMPTY_4;
+                    delete elem.__EMPTY_5;
+                    delete elem.__EMPTY_6;
+                    delete elem.__EMPTY_7;
+                    delete elem.__EMPTY_8;
+                    delete elem.__EMPTY_9;
+                    delete elem.__EMPTY_10;
+
+                    elem.horaentra = excelDateToJSDate3(elem.horaentra);
+                    elem.horasale = excelDateToJSDate3(elem.horasale);
+                    //console.log(elem.horaentra);
+                } 
+                console.log(roa);
+ 
+                /* for (const el of roa){
+                    let x = el.horaentra.split();
+                    console.log(x);
+                    elem.horaentra = x[1];
+                    /* let xx= elem.horasale.split(".");
+                    elem.horasale = xx[1]; */
+
+                    
+                //} */
+
+
+                //console.log(roa);
+
+               /*  let roaCortos = roa.filter((elem) => elem.Secciones < 8);
                 let roaLargos = roa.filter((elem) => elem.Secciones > 8);
 
                 let newArray = roaLargos.filter((elem) => elem.Diferencia > 7);
@@ -120,6 +182,8 @@ function excelFileToJSON(file) {
                 let newArray7 = newArray6.filter((elem) => elem.Diferencia > 3);
 
                 roaCortos = newArray7;
+
+                console.log(roaCortos);
 
                 for (const elem of newArray2) {
                     roaCortos.push(elem);
@@ -153,6 +217,7 @@ function excelFileToJSON(file) {
                 roa.sort((a, b) => (a.Legajo > b.Legajo) ? 1 : -1);
 
 
+                let tablaPaCopiar = [];
 
 
                 for (const elem of roa) {
@@ -188,11 +253,18 @@ function excelFileToJSON(file) {
                     node.appendChild(subNode6);
                     tableP.appendChild(node);
                 }
-                if (roa.length > 0) {
+ */
 
+
+            
+                
+                
+                if (roa.length > 0) {
+                    
                     result[sheetName] = roa;
                 }
             });
+            
 
         }
     } catch (e) {
@@ -233,10 +305,14 @@ function excelFileToJSON2(file) {
             });
             workbook.SheetNames.forEach(function(sheetName) {
                 roa2 = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
-
+                
+                
                 roa2.shift();
+                
 
-
+                console.log(roa2);
+                
+                
                 for (const elem of roa2) {
                     elem.Legajo = elem.__EMPTY;
                     elem.Interno = elem.__EMPTY_1;
@@ -247,7 +323,7 @@ function excelFileToJSON2(file) {
                     elem.Ramal = elem.__EMPTY_7;
                     elem.Recorrido = elem.__EMPTY_9;
                     elem.Kms = elem.__EMPTY_10;
-
+                    
                     delete elem.__EMPTY;
                     delete elem.__EMPTY_1;
                     delete elem.__EMPTY_2;
@@ -261,9 +337,10 @@ function excelFileToJSON2(file) {
                     delete elem.__EMPTY_10;
                     delete elem.__EMPTY_11;
                     delete elem.__EMPTY_12;
+
+
                 }
                 
-
                 for (const elem of roa2) {
 
                     elem.FechaInicio = ExcelDateToJSDate2(elem.FechaInicio);
@@ -387,7 +464,7 @@ function excelFileToJSON2(file) {
                         tableP2.appendChild(node);
 
                     }
-                }
+                 } 
                 if (roa2.length > 0) {
                     result[sheetName] = roa2;
                 }
