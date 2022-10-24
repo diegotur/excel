@@ -112,67 +112,8 @@ function excelFileToJSON(file) {
                 roa = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
 
                 
-                roa.shift();
 
-                //console.log(roa);
-                 for (const elem of roa) {
-                    //let xx = x.split(".");
-                    elem.coche = elem.props;
-                    elem.Legajo = elem.__EMPTY;
-                    elem.chofer = elem.__EMPTY_1;
-                    elem.horaentra = elem.__EMPTY_3;
-                    elem.horasale = elem.__EMPTY_7;
-                    elem.cabecera = elem.__EMPTY_9;
-                    elem.espera = elem.__EMPTY_10;
-
-                    if (elem.horaentra != undefined){
-
-                        let x = elem.horaentra.toString();
-                        elem.horaentra= x;
-                        let xx = elem.horaentra.split(".");
-                        elem.horaentra = xx[1];
-                    }
-                    if (elem.horasale != undefined){
-
-                        let x = elem.horasale.toString();
-                        elem.horasale= x;
-                        let xx = elem.horasale.split(".");
-                        elem.horasale = xx[1];
-                    }
-
-                    delete elem.props;
-                    delete elem.__EMPTY;
-                    delete elem.__EMPTY_1;
-                    delete elem.__EMPTY_2;
-                    delete elem.__EMPTY_3;
-                    delete elem.__EMPTY_4;
-                    delete elem.__EMPTY_5;
-                    delete elem.__EMPTY_6;
-                    delete elem.__EMPTY_7;
-                    delete elem.__EMPTY_8;
-                    delete elem.__EMPTY_9;
-                    delete elem.__EMPTY_10;
-
-                    elem.horaentra = excelDateToJSDate3(elem.horaentra);
-                    elem.horasale = excelDateToJSDate3(elem.horasale);
-                    //console.log(elem.horaentra);
-                } 
-                console.log(roa);
- 
-                /* for (const el of roa){
-                    let x = el.horaentra.split();
-                    console.log(x);
-                    elem.horaentra = x[1];
-                    /* let xx= elem.horasale.split(".");
-                    elem.horasale = xx[1]; */
-
-                    
-                //} */
-
-
-                //console.log(roa);
-
-               /*  let roaCortos = roa.filter((elem) => elem.Secciones < 8);
+                let roaCortos = roa.filter((elem) => elem.Secciones < 8);
                 let roaLargos = roa.filter((elem) => elem.Secciones > 8);
 
                 let newArray = roaLargos.filter((elem) => elem.Diferencia > 7);
@@ -253,10 +194,10 @@ function excelFileToJSON(file) {
                     node.appendChild(subNode6);
                     tableP.appendChild(node);
                 }
- */
 
 
-            
+
+                console.log(tablaPaCopiar);
                 
                 
                 if (roa.length > 0) {
@@ -337,8 +278,6 @@ function excelFileToJSON2(file) {
                     delete elem.__EMPTY_10;
                     delete elem.__EMPTY_11;
                     delete elem.__EMPTY_12;
-
-
                 }
                 
                 for (const elem of roa2) {
@@ -1460,9 +1399,12 @@ function excelFileToJSON7(file) {
                         if (value == "F *") {
                             value = "F";
                         }
+                        if (value == "FV*") {
+                            value = "F";
+                        }
 
 
-                        if (value != undefined && value != "6" && value != "7" && value != "8" && value != "* " && value != " *" && value != "**" && value != "*" && value != "V" && value != " " && value != "9" && value != "10") {
+                        if (value != undefined && value != "6" && value != "7" && value != "8" && value != "e" && value != "* " && value != " *" && value != "**" && value != "*" && value != "V" && value != " " && value != "9" && value != "10") {
 
                             pr.push(key, value);
 
@@ -1538,7 +1480,6 @@ function excelFileToJSON7(file) {
                 let francosLess = francos.filter((e) => e.length < 8);
                 let francosMore = francos.filter((e) => e.length > 8 + parseInt(a));
 
-                console.log(francosMore);
                 
 
                 for (const elem of francosMore) {
@@ -1562,8 +1503,33 @@ function excelFileToJSON7(file) {
 
                 }
 
+                
+                let francosMasL = [];
+                
+                for (const e of francos){
+                    francosMasL.push(e);
+                }
+                
+                francosMasL.push([1625,"Gimenez"]);
+                francosMasL.push([1677,  "Soto"]);
+                francosMasL.push([1986,  "Rodriguez"]);
+                francosMasL.push([2079,  "Robert"]);
+                francosMasL.push([2443,  "Diaz"]);
+                francosMasL.push([2448,  "Beninatti"]);
+                francosMasL.push([2599,  "Aliz"]);
+                francosMasL.push([2678,  "Palacio"]);
+                francosMasL.push([2680,  "Muntada"]);
+                francosMasL.push([2682,  "Fazzari"]);
+                francosMasL.push([2752,  "Olivieri"]);
+                francosMasL.push([2975,  "Pereson"]);
 
-                for (const elem of francos) {
+
+                francosMasL.sort((a,b)=> (a > b)? 1 : -1);
+
+                console.log(francosMasL);
+
+
+                for (const elem of francosMasL) {
                     const node = document.createElement("tr");
                     node.classList.add("infoP7");
                     for (const e of elem) {
