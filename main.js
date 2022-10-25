@@ -1480,7 +1480,8 @@ function excelFileToJSON7(file) {
                 let francosLess = francos.filter((e) => e.length < 8);
                 let francosMore = francos.filter((e) => e.length > 8 + parseInt(a));
 
-                
+                let amountFR = (8 + parseInt(a));
+
 
                 for (const elem of francosMore) {
                     const node = document.createElement("tr");
@@ -1510,36 +1511,47 @@ function excelFileToJSON7(file) {
                     francosMasL.push(e);
                 }
                 
-                francosMasL.push([1625,"Gimenez"]);
-                francosMasL.push([1677,  "Soto"]);
-                francosMasL.push([1986,  "Rodriguez"]);
-                francosMasL.push([2079,  "Robert"]);
-                francosMasL.push([2443,  "Diaz"]);
-                francosMasL.push([2448,  "Beninatti"]);
-                francosMasL.push([2599,  "Aliz"]);
-                francosMasL.push([2678,  "Palacio"]);
-                francosMasL.push([2680,  "Muntada"]);
-                francosMasL.push([2682,  "Fazzari"]);
-                francosMasL.push([2752,  "Olivieri"]);
-                francosMasL.push([2975,  "Pereson"]);
+                francosMasL.push([1625,"GIMENEZ"]);
+                francosMasL.push([1677,"SOTO"]);
+                francosMasL.push([1986,"RODRIGUEZ"]);
+                francosMasL.push([2079,"ROBERT"]);
+                francosMasL.push([2443,"DIAZ"]);
+                francosMasL.push([2448,"BENINATTI"]);
+                francosMasL.push([2599,"ALIZ"]);
+                francosMasL.push([2678,"PALACIO"]);
+                francosMasL.push([2680,"MUNTADA"]);
+                francosMasL.push([2682,"FAZZARI"]);
+                francosMasL.push([2752,"OLIVIERI"]);
+                francosMasL.push([2975,"PERESON"]);
 
-
-                francosMasL.sort((a,b)=> (a > b)? 1 : -1);
+                for (const el of francosMasL){
+                    if (el.length < amountFR){
+                        do{
+                            el.push("");
+                        } while (el.length!=amountFR);
+                    }
+                }
 
                 console.log(francosMasL);
 
+                francosMasL.sort((a,b)=> (a > b)? 1 : -1);
 
-                for (const elem of francosMasL) {
-                    const node = document.createElement("tr");
-                    node.classList.add("infoP7");
-                    for (const e of elem) {
-                        const subNode = document.createElement("td");
-                        const textnode = document.createTextNode(e);
-                        subNode.appendChild(textnode);
-                        node.appendChild(subNode);
-                        tableP7.appendChild(node);
+
+
+                if (francos.length > 25){
+
+                    for (const elem of francosMasL) {
+                        const node = document.createElement("tr");
+                        node.classList.add("infoP7");
+                        for (const e of elem) {
+                            const subNode = document.createElement("td");
+                            const textnode = document.createTextNode(e);
+                            subNode.appendChild(textnode);
+                            node.appendChild(subNode);
+                            tableP7.appendChild(node);
+                        }
+                        
                     }
-
                 }
 
             }
