@@ -1678,8 +1678,6 @@ function excelFileToJSON8(file) {
 
                 fechasDispPL1.sort((a, b) => (a > b) ? 1 : -1);
 
-                
-                
                 let dropPL = document.getElementsByClassName("dropdown-itemPL");
                 let dropIndexPL = 0;
                 let dropArPL = [];
@@ -1693,6 +1691,7 @@ function excelFileToJSON8(file) {
 
                 for (i = 0; i < fechasDispPL1.length; i++) {
                     let wPL = document.getElementById(dropArPL[i])
+                    console.log(dropArPL[i]);
                     wPL.addEventListener("click", () => {
                         Write(wPL.textContent);
                     });
@@ -2229,3 +2228,4 @@ function excelFileToJSON11(file) {
         console.error(e);
     }
 }
+
