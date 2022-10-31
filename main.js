@@ -2105,6 +2105,8 @@ function excelFileToJSON10(file) {
                     }
 
                 }
+
+                console.log(arrayKM4);
                    
                 if (roa10.length > 0) {
                     
@@ -2163,6 +2165,8 @@ function excelFileToJSON11(file) {
 
 
                 let kms2 = arrayKM4;
+
+
 
                 for (const e of kms2){
                     x = roa11.filter((el)=> el.coche == e.coche);
