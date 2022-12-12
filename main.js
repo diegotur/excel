@@ -55,7 +55,7 @@ function upload() {
     }
     var filename = files[0].name;
     var extension = filename.substring(filename.lastIndexOf(".")).toUpperCase();
-    if (extension == '.XLS' || extension == '.XLSX') {
+    if (extension == '.XLS' || extension == '.XLSX'|| extension == '.TXT') {
         excelFileToJSON(files[0]);
     } else {
         alert("Please select a valid excel file.");
@@ -112,6 +112,8 @@ function excelFileToJSON(file) {
                 roa = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
 
                 
+                console.log(roa);
+
 
                 let roaCortos = roa.filter((elem) => elem.Secciones < 8);
                 let roaLargos = roa.filter((elem) => elem.Secciones > 8);
@@ -921,13 +923,11 @@ function excelFileToJSON6(file) {
             workbook.SheetNames.forEach(function(sheetName) {
                 roa6 = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
 
-
+                
                 let numberMalUso = roa6.findIndex((elem) => elem.props == "CONTROL MAL USO DEL SUBE");
                 let numberCortados = roa6.findIndex((elem) => elem.props == "SERVICIOS CORTADOS");
                 let numberSecCorridos = roa6.findIndex((elem) => elem.props == "CONTROL SECCIONAMIENTO CORRIDO");
-
-
-
+                
                 let arraySeccionamiento = [];
                 let arrayMalUso = [];
                 let arrayCortados = [];
