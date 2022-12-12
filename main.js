@@ -120,10 +120,41 @@ function excelFileToJSON(file) {
             workbook.SheetNames.forEach(function(sheetName) {
                 roa = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
 
+                if (roa.length > 0){
+
+
                 
+                let inter = 0;
+
+                 for (const elem of roa) {
+                    elem.Interno = roa[inter][Object.keys(roa[inter])[0]];
+                    elem.Ramal = elem.__EMPTY_2;
+                    elem.Legajo = elem.__EMPTY_6;
+                    elem.Kms = elem.__EMPTY_9;
+                    elem.Secciones = elem.__EMPTY_10;
+                    elem.Chofer = elem.__EMPTY_11;
+                    elem.Diferencia = elem.__EMPTY_12;
+                    
+                    delete elem.__EMPTY;
+                    delete elem.__EMPTY_1;
+                    delete elem.__EMPTY_2;
+                    delete elem.__EMPTY_3;
+                    delete elem.__EMPTY_4;
+                    delete elem.__EMPTY_5;
+                    delete elem.__EMPTY_6;
+                    delete elem.__EMPTY_7;
+                    delete elem.__EMPTY_8;
+                    delete elem.__EMPTY_9;
+                    delete elem.__EMPTY_10;
+                    delete elem.__EMPTY_11;
+                    delete elem.__EMPTY_12;
+
+                    inter++;
+                }
+
                 console.log(roa);
-
-
+                
+                
                 let roaCortos = roa.filter((elem) => elem.Secciones < 8);
                 let roaLargos = roa.filter((elem) => elem.Secciones > 8);
 
@@ -169,9 +200,6 @@ function excelFileToJSON(file) {
                 roa.sort((a, b) => (a.Legajo > b.Legajo) ? 1 : -1);
 
 
-                let tablaPaCopiar = [];
-
-
                 for (const elem of roa) {
                     const node = document.createElement("tr");
                     const subNode = document.createElement("td");
@@ -206,15 +234,11 @@ function excelFileToJSON(file) {
                     tableP.appendChild(node);
                 }
 
-
-
-                console.log(tablaPaCopiar);
-
-
                 if (roa.length > 0) {
 
                     result[sheetName] = roa;
                 }
+            }
             });
 
 
