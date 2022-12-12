@@ -22,29 +22,38 @@ function VerControl(a, b, c, d, e, f, g, h, i) {
 
 }
 
-let arrLinks = [l1,l2,l3,l4,l5,l6,l7,l8,l9];
+let arrLinks = [l1, l2, l3, l4, l5, l6, l7, l8, l9];
 
 document.getElementById("controlSeccionamiento").addEventListener("click", () => {
-    VerControl(l1, l2, l3, l4, l5, l6, l7, l8, l9)});
+    VerControl(l1, l2, l3, l4, l5, l6, l7, l8, l9)
+});
 document.getElementById("controlMalUsoDelSube").addEventListener("click", () => {
-    VerControl(l2, l1, l3, l4, l5, l6, l7, l8, l9)});
+    VerControl(l2, l1, l3, l4, l5, l6, l7, l8, l9)
+});
 document.getElementById("controlCortados").addEventListener("click", () => {
-    VerControl(l3, l2, l1, l4, l5, l6, l7, l8, l9)});
+    VerControl(l3, l2, l1, l4, l5, l6, l7, l8, l9)
+});
 document.getElementById("controlSeccCorrido").addEventListener("click", () => {
-    VerControl(l4, l2, l3, l1, l5, l6, l7, l8, l9)});
+    VerControl(l4, l2, l3, l1, l5, l6, l7, l8, l9)
+});
 document.getElementById("controlKmPorRamal").addEventListener("click", () => {
-    VerControl(l5, l2, l3, l4, l1, l6, l7, l8, l9)});
+    VerControl(l5, l2, l3, l4, l1, l6, l7, l8, l9)
+});
 document.getElementById("controlMensual").addEventListener("click", () => {
-    VerControl(l6, l2, l3, l4, l5, l1, l7, l8, l9)});
+    VerControl(l6, l2, l3, l4, l5, l1, l7, l8, l9)
+});
 document.getElementById("controlFrancos").addEventListener("click", () => {
-    VerControl(l7, l2, l3, l4, l5, l6, l1, l8, l9)});
+    VerControl(l7, l2, l3, l4, l5, l6, l1, l8, l9)
+});
 document.getElementById("controlPlanillas").addEventListener("click", () => {
-    VerControl(l8, l2, l3, l4, l5, l6, l7, l1, l9)});
+    VerControl(l8, l2, l3, l4, l5, l6, l7, l1, l9)
+});
 document.getElementById("controlKMSube").addEventListener("click", () => {
-    VerControl(l9, l2, l3, l4, l5, l6, l7, l8, l1)});
+    VerControl(l9, l2, l3, l4, l5, l6, l7, l8, l1)
+});
 
 
-    let arrayKM4=[];
+let arrayKM4 = [];
 
 
 function upload() {
@@ -200,14 +209,14 @@ function excelFileToJSON(file) {
 
 
                 console.log(tablaPaCopiar);
-                
-                
+
+
                 if (roa.length > 0) {
-                    
+
                     result[sheetName] = roa;
                 }
             });
-            
+
 
         }
     } catch (e) {
@@ -248,14 +257,14 @@ function excelFileToJSON2(file) {
             });
             workbook.SheetNames.forEach(function(sheetName) {
                 roa2 = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
-                
-                
+
+
                 roa2.shift();
-                
+
 
                 console.log(roa2);
-                
-                
+
+
                 for (const elem of roa2) {
                     elem.Legajo = elem.__EMPTY;
                     elem.Interno = elem.__EMPTY_1;
@@ -266,7 +275,7 @@ function excelFileToJSON2(file) {
                     elem.Ramal = elem.__EMPTY_7;
                     elem.Recorrido = elem.__EMPTY_9;
                     elem.Kms = elem.__EMPTY_10;
-                    
+
                     delete elem.__EMPTY;
                     delete elem.__EMPTY_1;
                     delete elem.__EMPTY_2;
@@ -281,7 +290,7 @@ function excelFileToJSON2(file) {
                     delete elem.__EMPTY_11;
                     delete elem.__EMPTY_12;
                 }
-                
+
                 for (const elem of roa2) {
 
                     elem.FechaInicio = ExcelDateToJSDate2(elem.FechaInicio);
@@ -299,9 +308,9 @@ function excelFileToJSON2(file) {
                 for (const elem of roa2) {
                     fechasDisp.push(elem.FechaInicio);
                 }
-                
+
                 const fechasDisp3 = [...new Set(fechasDisp)];
-                
+
                 fechasDisp = fechasDisp3;
 
                 fechasDisp.sort((a, b) => (a > b) ? 1 : -1);
@@ -327,7 +336,7 @@ function excelFileToJSON2(file) {
                     });
                 }
 
-                    
+
                 function Write(a) {
                     let infoP2 = document.getElementsByClassName("infoP2");
 
@@ -337,10 +346,10 @@ function excelFileToJSON2(file) {
 
                         } while (infoP2.length != 0);
                     }
-                    
-                    console.log (roa2)
+
+                    console.log(roa2)
                     let newArray10 = roa2.filter((elem) => a == elem.FechaInicio);
-                    
+
 
                     let newPP = newArray10.filter((elem) => a !== elem.FechaFin);
                     let newPPP = newPP.filter((elem) => elem.HoraFin > "02:00:00");
@@ -405,7 +414,7 @@ function excelFileToJSON2(file) {
                         tableP2.appendChild(node);
 
                     }
-                 } 
+                }
                 if (roa2.length > 0) {
                     result[sheetName] = roa2;
                 }
@@ -1180,10 +1189,13 @@ function excelFileToJSON6(file) {
 
             corridos.sort((a, b) => (a.legajo > b.legajo) ? 1 : -1);
 
-            for (i=0;i<corridos.length;i++){
+            for (i = 0; i < corridos.length; i++) {
                 let x = corridos[i].seccionamiento + corridos[i].cortes + corridos[i].malUso + corridos[i].seccCorridos;
-                corridos[i] = {...corridos[i], total:x};
-                }
+                corridos[i] = {
+                    ...corridos[i],
+                    total: x
+                };
+            }
 
             console.log(corridos);
 
@@ -1269,6 +1281,8 @@ function excelFileToJSON7(file) {
             workbook.SheetNames.forEach(function(sheetName) {
                 roa7 = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
 
+                console.log(roa7);
+
                 na1 = roa7.filter((el) => el.__EMPTY_1 > 0);
 
                 let arrayPresent = roa7;
@@ -1309,6 +1323,7 @@ function excelFileToJSON7(file) {
                     elem.xx28 = elem.__EMPTY_30;
                     elem.xx29 = elem.__EMPTY_31;
                     elem.xx30 = elem.__EMPTY_32;
+                    elem.xx31 = elem.__EMPTY_33;
 
 
                     delete elem.__EMPTY;
@@ -1387,6 +1402,9 @@ function excelFileToJSON7(file) {
                         if (value == "FV") {
                             value = "F";
                         }
+                        if (value == "VF") {
+                            value = "F";
+                        }
                         if (value == " F") {
                             value = "F";
                         }
@@ -1420,41 +1438,43 @@ function excelFileToJSON7(file) {
                 arrayPresent = arrayPresent.filter((e) => e.legajo > 1000);
 
                 let pr2 = [];
-                for (const e of arrayPresent){
+                /* for (const e of arrayPresent){
                     e.xx31 = e.__EMPTY_33;
                 
-                }
+                } */
 
-                arrayPresent.sort((a,b)=>(a.legajo > b.legajo)? 1 : -1);
+                console.log(arrayPresent);
+
+                arrayPresent.sort((a, b) => (a.legajo > b.legajo) ? 1 : -1);
 
                 for (i = 0; i < arrayPresent.length; i++) {
 
 
                     let pr3 = [];
                     Object.entries(arrayPresent[i]).forEach(pair => {
-                       pr3.push(pair[1]);
+                        pr3.push(pair[1]);
 
-                        });
-                        pr2.push(pr3);
-                    }
+                    });
+                    pr2.push(pr3);
+                }
 
-                for (const e of pr2){
-                    for (i=0;i<e.length;i++){
-                        if (e[i] == undefined || e[i] == "V" || e[i] == "V*" || e[i] == "e" || e[i] == "*" || e[i] == " *" || e[i] == "* "){
+                for (const e of pr2) {
+                    for (i = 0; i < e.length; i++) {
+                        if (e[i] == undefined || e[i] == "V" || e[i] == "V*" || e[i] == "e" || e[i] == "*" || e[i] == " *" || e[i] == "* ") {
                             e[i] = "";
                         }
-                        if (e[i] == "FV" || e[i] == "F*" || e[i] == " F*" || e[i] == "FV*" || e[i] == "F* "){
+                        if (e[i] == "FV" || e[i] == "F*" || e[i] == "VF" || e[i] == "F *" || e[i] == " F*" || e[i] == "FV*" || e[i] == "F* ") {
                             e[i] = "F";
                         }
-                
+
                     }
                 }
 
 
                 let dropFR = document.getElementsByClassName("dropdown-itemFR");
 
-                let dropArFR = [0,1,2,3];
-                let dropArFR2 = ["francosDrop0","francosDrop1","francosDrop2","francosDrop3"];
+                let dropArFR = [0, 1, 2, 3];
+                let dropArFR2 = ["francosDrop0", "francosDrop1", "francosDrop2", "francosDrop3"];
 
                 for (i = 0; i < dropArFR.length; i++) {
                     dropFR[i].innerText = dropArFR[i];
@@ -1471,99 +1491,101 @@ function excelFileToJSON7(file) {
 
                     console.log(a);
 
-                let frDM = document.getElementsByClassName("tableCH");
+                    let frDM = document.getElementsByClassName("tableCH");
 
-                for (const el of frDM){
-                    el.style.visibility = "visible";
-                }
-
-                let francosLess = francos.filter((e) => e.length < 8);
-                let francosMore = francos.filter((e) => e.length > 8 + parseInt(a));
-
-                let amountFR = (8 + parseInt(a));
-
-
-                for (const elem of francosMore) {
-                    const node = document.createElement("tr");
-                    const subNode = document.createElement("td");
-                    node.classList.add("detailP7");
-                    const textnode = document.createTextNode(elem[0]);
-                    subNode.appendChild(textnode);
-                    node.appendChild(subNode);
-                    francosMoreTR.appendChild(node);
-
-                }
-                for (const elem of francosLess) {
-                    const node = document.createElement("tr");
-                    const subNode = document.createElement("td");
-                    node.classList.add("detail2P7");
-                    const textnode = document.createTextNode(elem[0]);
-                    subNode.appendChild(textnode);
-                    node.appendChild(subNode);
-                    francosLessTR.appendChild(node);
-
-                }
-
-                
-                let francosMasL = [];
-                
-                for (const e of francos){
-                    francosMasL.push(e);
-                }
-                
-                francosMasL.push([1625,"GIMENEZ"]);
-                francosMasL.push([1677,"SOTO"]);
-                francosMasL.push([1986,"RODRIGUEZ"]);
-                francosMasL.push([2079,"ROBERT"]);
-                francosMasL.push([2443,"DIAZ"]);
-                francosMasL.push([2448,"BENINATTI"]);
-                francosMasL.push([2599,"ALIZ"]);
-                francosMasL.push([2678,"PALACIO"]);
-                francosMasL.push([2680,"MUNTADA"]);
-                francosMasL.push([2682,"FAZZARI"]);
-                francosMasL.push([2752,"OLIVIERI"]);
-                francosMasL.push([2975,"PERESON"]);
-
-                for (const el of francosMasL){
-                    if (el.length < amountFR){
-                        do{
-                            el.push("");
-                        } while (el.length!=amountFR);
+                    for (const el of frDM) {
+                        el.style.visibility = "visible";
                     }
-                }
 
-                console.log(francosMasL);
+                    let francosLess = francos.filter((e) => e.length < 8);
+                    let francosMore = francos.filter((e) => e.length > 8 + parseInt(a));
 
-                francosMasL.sort((a,b)=> (a > b)? 1 : -1);
+                    let amountFR = (8 + parseInt(a));
 
 
-
-                if (francos.length > 25){
-
-                    for (const elem of francosMasL) {
+                    for (const elem of francosMore) {
                         const node = document.createElement("tr");
-                        node.classList.add("infoP7");
-                        for (const e of elem) {
-                            const subNode = document.createElement("td");
-                            const textnode = document.createTextNode(e);
-                            subNode.appendChild(textnode);
-                            node.appendChild(subNode);
-                            tableP7.appendChild(node);
-                        }
-                        
+                        const subNode = document.createElement("td");
+                        node.classList.add("detailP7");
+                        const textnode = document.createTextNode(elem[0]);
+                        subNode.appendChild(textnode);
+                        node.appendChild(subNode);
+                        francosMoreTR.appendChild(node);
+
                     }
+                    for (const elem of francosLess) {
+                        const node = document.createElement("tr");
+                        const subNode = document.createElement("td");
+                        node.classList.add("detail2P7");
+                        const textnode = document.createTextNode(elem[0]);
+                        subNode.appendChild(textnode);
+                        node.appendChild(subNode);
+                        francosLessTR.appendChild(node);
+
+                    }
+
+
+                    let francosMasL = [];
+
+                    for (const e of francos) {
+                        francosMasL.push(e);
+                    }
+
+                    francosMasL.push([1625, "GIMENEZ"]);
+                    francosMasL.push([1677, "SOTO"]);
+                    francosMasL.push([1986, "RODRIGUEZ"]);
+                    francosMasL.push([2079, "ROBERT"]);
+                    francosMasL.push([2443, "DIAZ"]);
+                    francosMasL.push([2448, "BENINATTI"]);
+                    francosMasL.push([2599, "ALIZ"]);
+                    francosMasL.push([2678, "PALACIO"]);
+                    francosMasL.push([2680, "MUNTADA"]);
+                    francosMasL.push([2682, "FAZZARI"]);
+                    francosMasL.push([2752, "OLIVIERI"]);
+                    francosMasL.push([2975, "PERESON"]);
+
+                    for (const el of francosMasL) {
+                        if (el.length < amountFR) {
+                            do {
+                                el.push("");
+                            } while (el.length != amountFR);
+                        }
+                    }
+
+                    console.log(francosMasL);
+
+                    francosMasL.sort((a, b) => (a > b) ? 1 : -1);
+
+
+
+                    if (francos.length > 25) {
+
+                        for (const elem of francosMasL) {
+                            const node = document.createElement("tr");
+                            node.classList.add("infoP7");
+                            for (const e of elem) {
+                                const subNode = document.createElement("td");
+                                const textnode = document.createTextNode(e);
+                                subNode.appendChild(textnode);
+                                node.appendChild(subNode);
+                                tableP7.appendChild(node);
+                            }
+
+                        }
+                    }
+
                 }
 
-            }
+                let presentismo = document.getElementById("presentismo");
 
-    let presentismo = document.getElementById("presentismo");
-    
-    presentismo.addEventListener('click', ()=>{upload7Bis()});
+                presentismo.addEventListener('click', () => {
+                    upload7Bis()
+                });
 
-    function upload7Bis(){
-        let borrarFR = document.getElementsByClassName("detailP7");
-        let borrarFR2 = document.getElementsByClassName("infoP7");
-        let borrarFR1 = document.getElementsByClassName("detail2P7");
+                function upload7Bis() {
+                    let borrarFR = document.getElementsByClassName("detailP7");
+                    let borrarFR2 = document.getElementsByClassName("infoP7");
+                    let borrarFR1 = document.getElementsByClassName("detail2P7");
 
                     if (borrarFR2.length > 0) {
                         do {
@@ -1585,7 +1607,7 @@ function excelFileToJSON7(file) {
                     }
                     let frDM = document.getElementsByClassName("tableCH");
 
-                    for (const el of frDM){
+                    for (const el of frDM) {
                         el.style.visibility = "hidden";
                     }
 
@@ -1605,11 +1627,11 @@ function excelFileToJSON7(file) {
                             node.appendChild(subNode);
                             tablaPresentismo.appendChild(node);
                         }
-    
-                    }
-        
 
-    }
+                    }
+
+
+                }
 
 
                 if (roa7.length > 0) {
@@ -1633,7 +1655,7 @@ function upload8() {
     }
     var filename = files[0].name;
     var extension = filename.substring(filename.lastIndexOf(".")).toUpperCase();
-    if (extension == '.XLS' || extension == '.XLSX'|| extension == '.DBF') {
+    if (extension == '.XLS' || extension == '.XLSX' || extension == '.DBF') {
         excelFileToJSON8(files[0]);
     } else {
         alert("Please select a valid excel file.");
@@ -1663,18 +1685,18 @@ function excelFileToJSON8(file) {
                     elem.FECHA = ExcelDateToJSDate2(elem.FECHA);
                     delete elem.RECA;
                 }
-            
-                
-                
-                
+
+
+
+
                 let fechasDispPL = [];
 
                 for (const elem of roa8) {
                     fechasDispPL.push(elem.FECHA);
                 }
-                
+
                 const fechasDispPL1 = [...new Set(fechasDispPL)];
-                
+
 
                 fechasDispPL1.sort((a, b) => (a > b) ? 1 : -1);
 
@@ -1697,7 +1719,7 @@ function excelFileToJSON8(file) {
                     });
                 }
 
-                    
+
                 function Write(a) {
                     let infoP8 = document.getElementsByClassName("infoP8");
 
@@ -1707,44 +1729,43 @@ function excelFileToJSON8(file) {
 
                         } while (infoP8.length != 0);
                     }
-                    
+
                     let arrayPL = roa8.filter((elem) => a == elem.FECHA);
-                    
-                    arrayPL = arrayPL.sort((a, b)=>(a.COCHE > b.COCHE)? 1:-1);
+
+                    arrayPL = arrayPL.sort((a, b) => (a.COCHE > b.COCHE) ? 1 : -1);
 
                     let cochesPL = [];
 
-                    for (const el of arrayPL){
+                    for (const el of arrayPL) {
                         cochesPL.push(el.COCHE);
                     }
 
-                    cochesPL = [... new Set(cochesPL)];
+                    cochesPL = [...new Set(cochesPL)];
 
-                    let tempPL=[];
+                    let tempPL = [];
 
-                    for (const el of cochesPL){
-                        tx = arrayPL.filter((e)=> e.COCHE == el);
-                        tx  = tx.sort((a,b)=>(a.HSALE > b.HSALE)? 1:-1);
+                    for (const el of cochesPL) {
+                        tx = arrayPL.filter((e) => e.COCHE == el);
+                        tx = tx.sort((a, b) => (a.HSALE > b.HSALE) ? 1 : -1);
                         tempPL.push(tx);
                     }
-                    
-                    for (i=0;i<tempPL.length;i++){
-                        if (i & 1 == true){
-                        for (const el of tempPL[i]){
-                                    el.COLOR = "red";
+
+                    for (i = 0; i < tempPL.length; i++) {
+                        if (i & 1 == true) {
+                            for (const el of tempPL[i]) {
+                                el.COLOR = "red";
                             }
-                        } 
+                        }
                     }
                     finalPL = [];
 
-                    for (i=0;i<tempPL.length;i++){
-                        for (const el of tempPL[i]){
-                            finalPL.push(el);        
+                    for (i = 0; i < tempPL.length; i++) {
+                        for (const el of tempPL[i]) {
+                            finalPL.push(el);
                         }
-                    } 
+                    }
                     console.log(finalPL);
 
-                
 
 
 
@@ -1782,25 +1803,25 @@ function excelFileToJSON8(file) {
                         node.appendChild(subNode6);
                         tableP8.appendChild(node);
 
-                    } 
+                    }
                 }
-                
-                
-                
 
-                
+
+
+
                 if (roa8.length > 0) {
-                    
+
                     result[sheetName] = roa8;
                 }
-        })
-    }
-        
-            
+            })
+        }
+
+
     } catch (e) {
         console.error(e);
     }
 }
+
 function upload9() {
     var files = document.getElementById('file_upload9').files;
     if (files.length == 0) {
@@ -1809,7 +1830,7 @@ function upload9() {
     }
     var filename = files[0].name;
     var extension = filename.substring(filename.lastIndexOf(".")).toUpperCase();
-    if (extension == '.XLS' || extension == '.XLSX'|| extension == '.DBF') {
+    if (extension == '.XLS' || extension == '.XLSX' || extension == '.DBF') {
         excelFileToJSON9(files[0]);
     } else {
         alert("Please select a valid excel file.");
@@ -1838,23 +1859,23 @@ function excelFileToJSON9(file) {
                     elem.FECHA = ExcelDateToJSDate2(elem.FECHA);
                     delete elem.RECA;
                 }
-            
-                
-                
-                
+
+
+
+
                 let fechasDispPL = [];
 
                 for (const elem of roa9) {
                     fechasDispPL.push(elem.FECHA);
                 }
-                
+
                 const fechasDispPL1 = [...new Set(fechasDispPL)];
-                
+
 
                 fechasDispPL1.sort((a, b) => (a > b) ? 1 : -1);
 
-                
-                
+
+
                 let dropPL = document.getElementsByClassName("dropdown-itemPL");
                 let dropIndexPL = 0;
                 let dropArPL = [];
@@ -1873,7 +1894,7 @@ function excelFileToJSON9(file) {
                     });
                 }
 
-                    
+
                 function Write(a) {
                     let infoP9 = document.getElementsByClassName("infoP9");
 
@@ -1883,42 +1904,42 @@ function excelFileToJSON9(file) {
 
                         } while (infoP9.length != 0);
                     }
-                    
+
                     let arrayPL = roa9.filter((elem) => a == elem.FECHA);
-                    
-                    arrayPL = arrayPL.sort((a, b)=>(a.COCHE > b.COCHE)? 1:-1);
+
+                    arrayPL = arrayPL.sort((a, b) => (a.COCHE > b.COCHE) ? 1 : -1);
 
                     let cochesPL = [];
 
-                    for (const el of arrayPL){
+                    for (const el of arrayPL) {
                         cochesPL.push(el.COCHE);
                     }
 
-                    cochesPL = [... new Set(cochesPL)];
+                    cochesPL = [...new Set(cochesPL)];
 
-                    let tempPL=[];
+                    let tempPL = [];
 
-                    for (const el of cochesPL){
-                        tx = arrayPL.filter((e)=> e.COCHE == el);
-                        tx  = tx.sort((a,b)=>(a.HSALE > b.HSALE)? 1:-1);
+                    for (const el of cochesPL) {
+                        tx = arrayPL.filter((e) => e.COCHE == el);
+                        tx = tx.sort((a, b) => (a.HSALE > b.HSALE) ? 1 : -1);
                         tempPL.push(tx);
                     }
-                    
-                    
+
+
                     finalPL = [];
 
-                    for (i=0;i<tempPL.length;i++){
-                        for (const el of tempPL[i]){
-                            finalPL.push(el);        
+                    for (i = 0; i < tempPL.length; i++) {
+                        for (const el of tempPL[i]) {
+                            finalPL.push(el);
                         }
-                    } 
+                    }
 
-                    finalPL = finalPL.filter((el)=> el.KMTS != 0);
+                    finalPL = finalPL.filter((el) => el.KMTS != 0);
                     console.log(finalPL);
 
                     let initialValue = 0
 
-                    let kmSum = finalPL.reduce((acc, value)=> acc + value.KMTS, initialValue);
+                    let kmSum = finalPL.reduce((acc, value) => acc + value.KMTS, initialValue);
 
 
                     for (const elem of finalPL) {
@@ -1951,7 +1972,7 @@ function excelFileToJSON9(file) {
                         node.appendChild(subNode5);
                         tableP8.appendChild(node);
 
-                    } 
+                    }
                     const kmPL = document.createElement("td");
                     const kmPL1 = document.createElement("td");
                     const kmPL2 = document.createElement("td");
@@ -1986,12 +2007,12 @@ function excelFileToJSON9(file) {
 
                 }
                 if (roa9.length > 0) {
-                    
+
                     result[sheetName] = roa9;
                 }
-        })
-    }
-            
+            })
+        }
+
     } catch (e) {
         console.error(e);
     }
@@ -2005,7 +2026,7 @@ function upload10() {
     }
     var filename = files[0].name;
     var extension = filename.substring(filename.lastIndexOf(".")).toUpperCase();
-    if (extension == '.XLS' || extension == '.XLSX'|| extension == '.DBF') {
+    if (extension == '.XLS' || extension == '.XLSX' || extension == '.DBF') {
         excelFileToJSON10(files[0]);
     } else {
         alert("Please select a valid excel file.");
@@ -2045,14 +2066,14 @@ function excelFileToJSON10(file) {
                 for (const elem of roa10) {
                     fechasDispKM.push(elem.FECHA);
                 }
-                
+
                 const fechasDispKM1 = [...new Set(fechasDispKM)];
-                
+
 
                 fechasDispKM1.sort((a, b) => (a > b) ? 1 : -1);
 
-                
-                
+
+
                 let dropKM = document.getElementsByClassName("dropdown-itemKM");
                 let dropIndexKM = 0;
                 let dropArKM = [];
@@ -2071,7 +2092,7 @@ function excelFileToJSON10(file) {
                     });
                 }
 
-                    
+
                 function Write(a) {
                     let infoP10 = document.getElementsByClassName("infoP10");
 
@@ -2081,44 +2102,48 @@ function excelFileToJSON10(file) {
 
                         } while (infoP10.length != 0);
                     }
-                    
+
                     let arrayKM = roa10.filter((elem) => a == elem.FECHA);
 
-                    let arrayKM2=[];
+                    let arrayKM2 = [];
 
-                    for (const e of arrayKM){
+                    for (const e of arrayKM) {
                         arrayKM2.push(e.COCHE);
                     }
 
 
-                    arrayKM2 = [...new Set (arrayKM2)];
+                    arrayKM2 = [...new Set(arrayKM2)];
 
-                    let arrayKM3 = arrayKM2.sort((a,b)=>(a > b)? 1 : -1);
+                    let arrayKM3 = arrayKM2.sort((a, b) => (a > b) ? 1 : -1);
 
 
-                    for (const e of arrayKM3){
-                        x = arrayKM.filter((el)=>el.COCHE == e);
+                    for (const e of arrayKM3) {
+                        x = arrayKM.filter((el) => el.COCHE == e);
                         iv = 0;
-                        xx = x.reduce((elem,value)=> elem + value.KMTS, iv);
-                        arrayKM4.push({coche:e, kms:xx})
+                        xx = x.reduce((elem, value) => elem + value.KMTS, iv);
+                        arrayKM4.push({
+                            coche: e,
+                            kms: xx
+                        })
 
                     }
 
                 }
 
                 console.log(arrayKM4);
-                   
+
                 if (roa10.length > 0) {
-                    
+
                     result[sheetName] = roa10;
                 }
-        })
-    }
-            
+            })
+        }
+
     } catch (e) {
         console.error(e);
     }
 }
+
 function upload11() {
     var files = document.getElementById('file_upload11').files;
     if (files.length == 0) {
@@ -2127,7 +2152,7 @@ function upload11() {
     }
     var filename = files[0].name;
     var extension = filename.substring(filename.lastIndexOf(".")).toUpperCase();
-    if (extension == '.XLS' || extension == '.XLSX'|| extension == '.DBF') {
+    if (extension == '.XLS' || extension == '.XLSX' || extension == '.DBF') {
         excelFileToJSON11(files[0]);
     } else {
         alert("Please select a valid excel file.");
@@ -2149,87 +2174,92 @@ function excelFileToJSON11(file) {
                 type: 'binary'
             });
             workbook.SheetNames.forEach(function(sheetName) {
-                roa11 = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
-            
-                for (const e of roa11){
-                    e.coche = e.__EMPTY_2;
-                    e.kms = e.__EMPTY_4;
+                    roa11 = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
 
-                    delete e.__EMPTY;
-                    delete e.__EMPTY_1;
-                    delete e.__EMPTY_2;
-                    delete e.__EMPTY_3;
-                    delete e.__EMPTY_4;
-                }
-                roa11.shift();
+                    for (const e of roa11) {
+                        e.coche = e.__EMPTY_2;
+                        e.kms = e.__EMPTY_4;
 
-
-                let kms2 = arrayKM4;
-
-
-
-                for (const e of kms2){
-                    x = roa11.filter((el)=> el.coche == e.coche);
-                    if (x.length>0){
-                    e.kmSube = x[0].kms;
-                    e.nov = "";
-                    }else{
-                        e.kmSube = "0";
-                        e.nov = "*";
-                    } 
-                }
-                for (const e of roa11){
-                    x = kms2.filter((el)=> el.coche == e.coche);
-                    if (x.length<1 && e.kms>15){
-                        kms2.push({coche:e.coche, kms:"0",kmSube:e.kms, nov:"x"});
+                        delete e.__EMPTY;
+                        delete e.__EMPTY_1;
+                        delete e.__EMPTY_2;
+                        delete e.__EMPTY_3;
+                        delete e.__EMPTY_4;
                     }
-                } 
+                    roa11.shift();
 
-                for (const e of kms2){
-                    x = e.kms - e.kmSube;
-                    e.dif = x.toFixed(2);
+
+                    let kms2 = arrayKM4;
+
+
+
+                    for (const e of kms2) {
+                        x = roa11.filter((el) => el.coche == e.coche);
+                        if (x.length > 0) {
+                            e.kmSube = x[0].kms;
+                            e.nov = "";
+                        } else {
+                            e.kmSube = "0";
+                            e.nov = "*";
+                        }
+                    }
+                    for (const e of roa11) {
+                        x = kms2.filter((el) => el.coche == e.coche);
+                        if (x.length < 1 && e.kms > 15) {
+                            kms2.push({
+                                coche: e.coche,
+                                kms: "0",
+                                kmSube: e.kms,
+                                nov: "x"
+                            });
+                        }
+                    }
+
+                    for (const e of kms2) {
+                        x = e.kms - e.kmSube;
+                        e.dif = x.toFixed(2);
+                    }
+
+                    /* kms2 = kms2.filter((e)=>e.dif > 9 || e.dif < -9 || e.nov != "");
+
+                    kms2.sort((a,b)=>(a.dif < a.dif)? 1 : -1); */
+
+                    console.log(kms2);
+
+                    for (const elem of kms2) {
+                        const node = document.createElement("tr");
+                        node.classList.add("infoP10");
+                        const subNode = document.createElement("td");
+                        const subNode1 = document.createElement("td");
+                        const subNode2 = document.createElement("td");
+                        const subNode3 = document.createElement("td");
+                        const subNode4 = document.createElement("td");
+
+                        const textnode = document.createTextNode(elem.coche);
+                        const textnode1 = document.createTextNode(elem.kms);
+                        const textnode2 = document.createTextNode(elem.kmSube);
+                        const textnode3 = document.createTextNode(elem.dif);
+                        const textnode4 = document.createTextNode(elem.nov);
+                        subNode.appendChild(textnode);
+                        subNode1.appendChild(textnode1);
+                        subNode2.appendChild(textnode2);
+                        subNode3.appendChild(textnode3);
+                        subNode4.appendChild(textnode4);
+                        node.appendChild(subNode);
+                        node.appendChild(subNode1);
+                        node.appendChild(subNode2);
+                        node.appendChild(subNode3);
+                        node.appendChild(subNode4);
+                        tableP10.appendChild(node);
+
+                    }
                 }
 
-                /* kms2 = kms2.filter((e)=>e.dif > 9 || e.dif < -9 || e.nov != "");
+            )
+        };
 
-                kms2.sort((a,b)=>(a.dif < a.dif)? 1 : -1); */
 
-                console.log(kms2);
-
-                for (const elem of kms2) {
-                    const node = document.createElement("tr");
-                    node.classList.add("infoP10");
-                    const subNode = document.createElement("td");
-                    const subNode1 = document.createElement("td");
-                    const subNode2 = document.createElement("td");
-                    const subNode3 = document.createElement("td");
-                    const subNode4 = document.createElement("td");
-
-                    const textnode = document.createTextNode(elem.coche);
-                    const textnode1 = document.createTextNode(elem.kms);
-                    const textnode2 = document.createTextNode(elem.kmSube);
-                    const textnode3 = document.createTextNode(elem.dif);
-                    const textnode4 = document.createTextNode(elem.nov);
-                    subNode.appendChild(textnode);
-                    subNode1.appendChild(textnode1);
-                    subNode2.appendChild(textnode2);
-                    subNode3.appendChild(textnode3);
-                    subNode4.appendChild(textnode4);
-                    node.appendChild(subNode);
-                    node.appendChild(subNode1);
-                    node.appendChild(subNode2);
-                    node.appendChild(subNode3);
-                    node.appendChild(subNode4);
-                    tableP10.appendChild(node);
-
-                } 
-            }
-        
-    )};
-                
-            
     } catch (e) {
         console.error(e);
     }
 }
-
