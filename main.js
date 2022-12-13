@@ -2200,23 +2200,27 @@ function excelFileToJSON11(file) {
             workbook.SheetNames.forEach(function(sheetName) {
                     roa11 = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
 
-                    for (const e of roa11) {
-                        e.coche = e.__EMPTY_2;
-                        e.kms = e.__EMPTY_4;
+                    if (roa11.length > 0){
 
-                        delete e.__EMPTY;
-                        delete e.__EMPTY_1;
-                        delete e.__EMPTY_2;
-                        delete e.__EMPTY_3;
-                        delete e.__EMPTY_4;
+                        console.log(roa11);
+
+                        for (const e of roa11) {
+                            e.coche = e.__EMPTY_1;
+                            e.kms = e.__EMPTY_3;
+                            
+                            delete e.__EMPTY;
+                            delete e.__EMPTY_1;
+                            delete e.__EMPTY_2;
+                            delete e.__EMPTY_3;
+                            delete e.__EMPTY_4;
                     }
-                    roa11.shift();
-
-
+                     roa11.shift(); 
+                    
+                    
                     let kms2 = arrayKM4;
-
-
-
+                    
+                    
+                    
                     for (const e of kms2) {
                         x = roa11.filter((el) => el.coche == e.coche);
                         if (x.length > 0) {
@@ -2238,18 +2242,14 @@ function excelFileToJSON11(file) {
                             });
                         }
                     }
-
+                    
                     for (const e of kms2) {
                         x = e.kms - e.kmSube;
                         e.dif = x.toFixed(2);
                     }
-
-                    /* kms2 = kms2.filter((e)=>e.dif > 9 || e.dif < -9 || e.nov != "");
-
-                    kms2.sort((a,b)=>(a.dif < a.dif)? 1 : -1); */
-
-                    console.log(kms2);
-
+                    
+                    
+                    
                     for (const elem of kms2) {
                         const node = document.createElement("tr");
                         node.classList.add("infoP10");
@@ -2258,7 +2258,7 @@ function excelFileToJSON11(file) {
                         const subNode2 = document.createElement("td");
                         const subNode3 = document.createElement("td");
                         const subNode4 = document.createElement("td");
-
+                        
                         const textnode = document.createTextNode(elem.coche);
                         const textnode1 = document.createTextNode(elem.kms);
                         const textnode2 = document.createTextNode(elem.kmSube);
@@ -2275,8 +2275,13 @@ function excelFileToJSON11(file) {
                         node.appendChild(subNode3);
                         node.appendChild(subNode4);
                         tableP10.appendChild(node);
-
+                        
                     }
+                    if (roa11.length > 0) {
+
+                        result[sheetName] = roa11;
+                    }
+                }
                 }
 
             )
