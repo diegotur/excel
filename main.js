@@ -283,167 +283,167 @@ function excelFileToJSON2(file) {
                 roa2 = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
 
 
-                roa2.shift();
+                if (roa2.length > 0){
 
-
-                console.log(roa2);
-
-
-                for (const elem of roa2) {
-                    elem.Legajo = elem.__EMPTY;
-                    elem.Interno = elem.__EMPTY_1;
-                    elem.HoraInicio = elem.__EMPTY_4;
-                    elem.FechaInicio = elem.__EMPTY_3;
-                    elem.FechaFin = elem.__EMPTY_5;
-                    elem.HoraFin = elem.__EMPTY_6;
-                    elem.Ramal = elem.__EMPTY_7;
-                    elem.Recorrido = elem.__EMPTY_9;
-                    elem.Kms = elem.__EMPTY_10;
-
-                    delete elem.__EMPTY;
-                    delete elem.__EMPTY_1;
-                    delete elem.__EMPTY_2;
-                    delete elem.__EMPTY_3;
-                    delete elem.__EMPTY_4;
-                    delete elem.__EMPTY_5;
-                    delete elem.__EMPTY_6;
-                    delete elem.__EMPTY_7;
-                    delete elem.__EMPTY_8;
-                    delete elem.__EMPTY_9;
-                    delete elem.__EMPTY_10;
-                    delete elem.__EMPTY_11;
-                    delete elem.__EMPTY_12;
-                }
-
-                for (const elem of roa2) {
-
-                    elem.FechaInicio = ExcelDateToJSDate2(elem.FechaInicio);
-                    elem.FechaFin = ExcelDateToJSDate2(elem.FechaFin);
-                }
-
-                for (const elem of roa2) {
-
-                    elem.HoraInicio = excelDateToJSDate3(elem.HoraInicio);
-                    elem.HoraFin = excelDateToJSDate3(elem.HoraFin);
-                }
-
-                let fechasDisp = [];
-
-                for (const elem of roa2) {
-                    fechasDisp.push(elem.FechaInicio);
-                }
-
-                const fechasDisp3 = [...new Set(fechasDisp)];
-
-                fechasDisp = fechasDisp3;
-
-                fechasDisp.sort((a, b) => (a > b) ? 1 : -1);
-
-
-
-                let drop = document.getElementsByClassName("dropdown-item");
-                let dropIndex = 0;
-                let dropAr = [];
-
-                for (const elem of fechasDisp) {
-
-                    drop[dropIndex].innerText = elem;
-                    dropAr.push("drop" + dropIndex);
-                    dropIndex++;
-                }
-
-
-                for (i = 0; i < fechasDisp.length; i++) {
-                    let w = document.getElementById(dropAr[i])
-                    w.addEventListener("click", () => {
-                        Write(w.textContent);
-                    });
-                }
-
-
-                function Write(a) {
-                    let infoP2 = document.getElementsByClassName("infoP2");
-
-                    if (infoP2.length > 0) {
-                        do {
-                            tableP2.removeChild(infoP2[0]);
-
-                        } while (infoP2.length != 0);
+                    let inter = 0;
+    
+                    for (const elem of roa2) {
+                        elem.Legajo = roa2[inter][Object.keys(roa2[inter])[0]];
+                        elem.Interno = elem.__EMPTY;
+                        elem.HoraInicio = elem.__EMPTY_3;
+                        elem.FechaInicio = elem.__EMPTY_2;
+                        elem.FechaFin = elem.__EMPTY_4;
+                        elem.HoraFin = elem.__EMPTY_5;
+                        elem.Ramal = elem.__EMPTY_6;
+                        elem.Recorrido = elem.__EMPTY_8;
+                        elem.Kms = elem.__EMPTY_9;
+                        
+                        delete roa2[inter][Object.keys(roa2[inter])[0]];
+                        delete elem.__EMPTY;
+                        delete elem.__EMPTY_1;
+                        delete elem.__EMPTY_2;
+                        delete elem.__EMPTY_3;
+                        delete elem.__EMPTY_4;
+                        delete elem.__EMPTY_5;
+                        delete elem.__EMPTY_6;
+                        delete elem.__EMPTY_7;
+                        delete elem.__EMPTY_8;
+                        delete elem.__EMPTY_9;
+                        delete elem.__EMPTY_10;
+                        delete elem.__EMPTY_11;
+                        delete elem.__EMPTY_12;
+    
+                        inter++;
                     }
 
-                    console.log(roa2)
-                    let newArray10 = roa2.filter((elem) => a == elem.FechaInicio);
+                    roa2.shift();
 
-
-                    let newPP = newArray10.filter((elem) => a !== elem.FechaFin);
-                    let newPPP = newPP.filter((elem) => elem.HoraFin > "02:00:00");
-                    let newArray11 = newPPP.filter((elem) => elem.Kms > 15);
-
-
-
-                    let newArray20 = newArray10.filter((elem) => a == elem.FechaFin);
-                    let kmDeMas63 = newArray20.filter((elem) => elem.Kms > "63" && elem.Recorrido.includes("BEN"));
-                    let pcoMasde48 = newArray20.filter((elem) => elem.Kms > "48" && elem.Recorrido == "PCO COM");
-                    let pcoRapMasde48 = newArray20.filter((elem) => elem.Kms > "48" && elem.Recorrido == "PCO RAP");
-                    let fonMasde54 = newArray20.filter((elem) => elem.Kms > "54" && elem.Recorrido == "FON COM");
-                    let fonRapMasde54 = newArray20.filter((elem) => elem.Kms > "54" && elem.Recorrido == "FON RAP");
-
-                    let new2 = newArray11.concat(kmDeMas63);
-                    let new3 = new2.concat(pcoMasde48);
-
-                    let new4 = new3.concat(pcoRapMasde48);
-                    let new5 = new4.concat(fonMasde54);
-                    let new6 = new5.concat(fonRapMasde54);
-
-                    new6.sort((a, b) => (a.Legajo > b.Legajo) ? 1 : -1);
-
-
-
-                    for (const elem of new6) {
-                        const node = document.createElement("tr");
-                        node.classList.add("infoP2");
-                        const subNode = document.createElement("td");
-                        const subNode1 = document.createElement("td");
-                        const subNode2 = document.createElement("td");
-                        const subNode3 = document.createElement("td");
-                        const subNode4 = document.createElement("td");
-                        const subNode5 = document.createElement("td");
-                        const subNode6 = document.createElement("td");
-                        const subNode7 = document.createElement("td");
-
-                        const textnode = document.createTextNode(elem.Legajo);
-                        const textnode1 = document.createTextNode(elem.Interno);
-                        const textnode2 = document.createTextNode(elem.FechaInicio);
-                        const textnode3 = document.createTextNode(elem.FechaFin);
-                        const textnode4 = document.createTextNode(elem.HoraInicio);
-                        const textnode5 = document.createTextNode(elem.HoraFin);
-                        const textnode6 = document.createTextNode(elem.Recorrido);
-                        const textnode7 = document.createTextNode(elem.Kms);
-                        subNode.appendChild(textnode);
-                        subNode1.appendChild(textnode1);
-                        subNode2.appendChild(textnode2);
-                        subNode3.appendChild(textnode3);
-                        subNode4.appendChild(textnode4);
-                        subNode5.appendChild(textnode5);
-                        subNode6.appendChild(textnode6);
-                        subNode7.appendChild(textnode7);
-                        node.appendChild(subNode);
-                        node.appendChild(subNode1);
-                        node.appendChild(subNode2);
-                        node.appendChild(subNode3);
-                        node.appendChild(subNode4);
-                        node.appendChild(subNode5);
-                        node.appendChild(subNode6);
-                        node.appendChild(subNode7);
-                        tableP2.appendChild(node);
-
+                    
+                    for (const elem of roa2) {
+    
+                        elem.FechaInicio = ExcelDateToJSDate2(elem.FechaInicio);
+                        elem.FechaFin = ExcelDateToJSDate2(elem.FechaFin);
+                    }
+                    
+                    for (const elem of roa2) {
+                        
+                        elem.HoraInicio = excelDateToJSDate3(elem.HoraInicio);
+                        elem.HoraFin = excelDateToJSDate3(elem.HoraFin);
+                    }
+                    
+                    let fechasDisp = [];
+    
+                    for (const elem of roa2) {
+                        fechasDisp.push(elem.FechaInicio);
+                    }
+                    
+                    const fechasDisp3 = [...new Set(fechasDisp)];
+                    
+                    fechasDisp = fechasDisp3;
+                    
+                    fechasDisp.sort((a, b) => (a > b) ? 1 : -1);
+                    
+                    const roaBis = roa2;
+                    
+                    
+                    let drop = document.getElementsByClassName("dropdown-item");
+                    let dropIndex = 0;
+                    let dropAr = [];
+    
+                    for (const elem of fechasDisp) {
+    
+                        drop[dropIndex].innerText = elem;
+                        dropAr.push("drop" + dropIndex);
+                        dropIndex++;
+                    }
+    
+    
+                    for (i = 0; i < fechasDisp.length; i++) {
+                        let w = document.getElementById(dropAr[i])
+                        w.addEventListener("click", () => {
+                            Write(w.textContent);
+                        });
+                    }
+    
+                    
+                    function Write(a) {
+                        let infoP2 = document.getElementsByClassName("infoP2");
+                        
+                        if (infoP2.length > 0) {
+                            do {
+                                tableP2.removeChild(infoP2[0]);
+    
+                            } while (infoP2.length != 0);
+                        }
+                        
+                        let newArray10 = roaBis.filter((elem) => a == elem.FechaInicio);
+                        let newPP = newArray10.filter((elem) => a !== elem.FechaFin);
+                        let newPPP = newPP.filter((elem) => elem.HoraFin > "02:00:00");
+                        let newArray11 = newPPP.filter((elem) => elem.Kms > 15);
+                        let newArray20 = newArray10.filter((elem) => a == elem.FechaFin);
+                        let kmDeMas63 = newArray20.filter((elem) => elem.Kms > "63" && elem.Recorrido.includes("BEN"));
+                        let pcoMasde48 = newArray20.filter((elem) => elem.Kms > "48" && elem.Recorrido == "PCO COM");
+                        let pcoRapMasde48 = newArray20.filter((elem) => elem.Kms > "48" && elem.Recorrido == "PCO RAP");
+                        let fonMasde54 = newArray20.filter((elem) => elem.Kms > "54" && elem.Recorrido == "FON COM");
+                        let fonRapMasde54 = newArray20.filter((elem) => elem.Kms > "54" && elem.Recorrido == "FON RAP");
+    
+                        let new2 = newArray11.concat(kmDeMas63);
+                        let new3 = new2.concat(pcoMasde48);
+    
+                        let new4 = new3.concat(pcoRapMasde48);
+                        let new5 = new4.concat(fonMasde54);
+                        let new6 = new5.concat(fonRapMasde54);
+    
+                        new6.sort((a, b) => (a.Legajo > b.Legajo) ? 1 : -1);
+    
+    
+    
+                        for (const elem of new6) {
+                            const node = document.createElement("tr");
+                            node.classList.add("infoP2");
+                            const subNode = document.createElement("td");
+                            const subNode1 = document.createElement("td");
+                            const subNode2 = document.createElement("td");
+                            const subNode3 = document.createElement("td");
+                            const subNode4 = document.createElement("td");
+                            const subNode5 = document.createElement("td");
+                            const subNode6 = document.createElement("td");
+                            const subNode7 = document.createElement("td");
+    
+                            const textnode = document.createTextNode(elem.Legajo);
+                            const textnode1 = document.createTextNode(elem.Interno);
+                            const textnode2 = document.createTextNode(elem.FechaInicio);
+                            const textnode3 = document.createTextNode(elem.FechaFin);
+                            const textnode4 = document.createTextNode(elem.HoraInicio);
+                            const textnode5 = document.createTextNode(elem.HoraFin);
+                            const textnode6 = document.createTextNode(elem.Recorrido);
+                            const textnode7 = document.createTextNode(elem.Kms);
+                            subNode.appendChild(textnode);
+                            subNode1.appendChild(textnode1);
+                            subNode2.appendChild(textnode2);
+                            subNode3.appendChild(textnode3);
+                            subNode4.appendChild(textnode4);
+                            subNode5.appendChild(textnode5);
+                            subNode6.appendChild(textnode6);
+                            subNode7.appendChild(textnode7);
+                            node.appendChild(subNode);
+                            node.appendChild(subNode1);
+                            node.appendChild(subNode2);
+                            node.appendChild(subNode3);
+                            node.appendChild(subNode4);
+                            node.appendChild(subNode5);
+                            node.appendChild(subNode6);
+                            node.appendChild(subNode7);
+                            tableP2.appendChild(node);
+    
+                        }
                     }
                 }
-                if (roa2.length > 0) {
-                    result[sheetName] = roa2;
-                }
-            });
-        }
+                    if (roa2.length > 0) {
+                        result[sheetName] = roa2;
+                    }
+                });
+            }
     } catch (e) {
         console.error(e);
     }
