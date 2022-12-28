@@ -7,8 +7,9 @@ let l6 = document.getElementById("controlMensualH1");
 let l7 = document.getElementById("controlFrancosH1");
 let l8 = document.getElementById("controlPlanillasH1");
 let l9 = document.getElementById("controlKMSubeH1");
+let l10 = document.getElementById("controlEsperasH1");
 
-function VerControl(a, b, c, d, e, f, g, h, i) {
+function VerControl(a, b, c, d, e, f, g, h, i,j) {
     a.style.visibility = "visible";
     b.style.visibility = "hidden";
     c.style.visibility = "hidden";
@@ -18,38 +19,42 @@ function VerControl(a, b, c, d, e, f, g, h, i) {
     g.style.visibility = "hidden";
     h.style.visibility = "hidden";
     i.style.visibility = "hidden";
+    j.style.visibility = "hidden";
 
 
 }
 
-let arrLinks = [l1, l2, l3, l4, l5, l6, l7, l8, l9];
+let arrLinks = [l1, l2, l3, l4, l5, l6, l7, l8, l9,l10];
 
 document.getElementById("controlSeccionamiento").addEventListener("click", () => {
-    VerControl(l1, l2, l3, l4, l5, l6, l7, l8, l9)
+    VerControl(l1, l2, l3, l4, l5, l6, l7, l8, l9, l10)
 });
 document.getElementById("controlMalUsoDelSube").addEventListener("click", () => {
-    VerControl(l2, l1, l3, l4, l5, l6, l7, l8, l9)
+    VerControl(l2, l1, l3, l4, l5, l6, l7, l8, l9, l10)
 });
 document.getElementById("controlCortados").addEventListener("click", () => {
-    VerControl(l3, l2, l1, l4, l5, l6, l7, l8, l9)
+    VerControl(l3, l2, l1, l4, l5, l6, l7, l8, l9, l10)
 });
 document.getElementById("controlSeccCorrido").addEventListener("click", () => {
-    VerControl(l4, l2, l3, l1, l5, l6, l7, l8, l9)
+    VerControl(l4, l2, l3, l1, l5, l6, l7, l8, l9, l10)
 });
 document.getElementById("controlKmPorRamal").addEventListener("click", () => {
-    VerControl(l5, l2, l3, l4, l1, l6, l7, l8, l9)
+    VerControl(l5, l2, l3, l4, l1, l6, l7, l8, l9, l10)
 });
 document.getElementById("controlMensual").addEventListener("click", () => {
-    VerControl(l6, l2, l3, l4, l5, l1, l7, l8, l9)
+    VerControl(l6, l2, l3, l4, l5, l1, l7, l8, l9, l10)
 });
 document.getElementById("controlFrancos").addEventListener("click", () => {
-    VerControl(l7, l2, l3, l4, l5, l6, l1, l8, l9)
+    VerControl(l7, l2, l3, l4, l5, l6, l1, l8, l9, l10)
 });
 document.getElementById("controlPlanillas").addEventListener("click", () => {
-    VerControl(l8, l2, l3, l4, l5, l6, l7, l1, l9)
+    VerControl(l8, l2, l3, l4, l5, l6, l7, l1, l9, l10)
 });
 document.getElementById("controlKMSube").addEventListener("click", () => {
-    VerControl(l9, l2, l3, l4, l5, l6, l7, l8, l1)
+    VerControl(l9, l2, l3, l4, l5, l6, l7, l8, l1, l10)
+});
+document.getElementById("controlEsperas").addEventListener("click", () => {
+    VerControl(l10, l1, l2, l3, l4, l5, l6, l7, l8, l9)
 });
 
 
@@ -80,6 +85,20 @@ let tableP = document.getElementById("tableP");
 
 const ExcelDateToJSDate2 = (date) => {
     let converted_date = new Date(Math.round((date - 25568) * 864e5));
+    converted_date = String(converted_date).slice(4, 15);
+    date = converted_date.split(" ");
+    let day = date[1];
+    let month = date[0];
+    month = "JanFebMarAprMayJunJulAugSepOctNovDec".indexOf(month) / 3 + 1;
+    if (month.toString().length <= 1) {
+        month = '0' + month;
+    }
+    let year = date[2];
+    return String(day + '/' + month + '/' + year);
+};
+
+const ExcelDateToJSDate4 = (date) => {
+    let converted_date = new Date(Math.round((date - 25569) * 864e5));
     converted_date = String(converted_date).slice(4, 15);
     date = converted_date.split(" ");
     let day = date[1];
@@ -2288,6 +2307,199 @@ function excelFileToJSON11(file) {
         };
 
 
+    } catch (e) {
+        console.error(e);
+    }
+}
+function upload12() {
+    var files = document.getElementById('file_upload12').files;
+    if (files.length == 0) {
+        alert("Please choose any file...");
+        return;
+    }
+    var filename = files[0].name;
+    var extension = filename.substring(filename.lastIndexOf(".")).toUpperCase();
+    if (extension == '.XLS' || extension == '.XLSX') {
+        excelFileToJSON12(files[0]);
+    } else {
+        alert("Please select a valid excel file.");
+    }
+}
+let roa12;
+
+let tableP12 = document.getElementById("tableP12");
+
+function excelFileToJSON12(file) {
+    try {
+        var reader = new FileReader();
+        reader.readAsBinaryString(file);
+        reader.onload = function(e) {
+
+            var data = e.target.result;
+            var workbook = XLSX.read(data, {
+                type: 'binary'
+            });
+            workbook.SheetNames.forEach(function(sheetName) {
+                roa12 = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
+
+                if (roa12.length>0){
+
+                    
+                    for (const elem of roa12) {
+                        
+                        
+                        elem.coche = elem.ESPERAS;
+                        elem.legajo = elem.__EMPTY;
+                        elem.chofer = elem.__EMPTY_1;
+                        elem.recorrido = elem.__EMPTY_5;
+                        elem.espera = excelDateToJSDate3(elem.__EMPTY_6);
+                        elem.horaEntrada = excelDateToJSDate3(elem.__EMPTY_3);
+                        elem.fechaEntrada = ExcelDateToJSDate4(elem.__EMPTY_3);
+                        elem.horaSalida = excelDateToJSDate3(elem.__EMPTY_4);
+                        elem.fechaSalida = ExcelDateToJSDate4(elem.__EMPTY_4);
+                        
+                        delete elem.ESPERAS;
+                        delete elem.__EMPTY;
+                        delete elem.__EMPTY_1;
+                        delete elem.__EMPTY_2;
+                        delete elem.__EMPTY_3;
+                        delete elem.__EMPTY_4;
+                        delete elem.__EMPTY_5;
+                        delete elem.__EMPTY_6;
+                        delete elem.__EMPTY_7;
+                        delete elem.__EMPTY_8;
+                    }
+
+                    let serv = [];
+
+                    for (const elem of roa12){
+                        let x = elem.espera.split(":");
+                        if (x[0]<1 && x[1]<10){
+                            delete elem.espera;
+                        }
+                    }
+                    for (const elem of roa12){
+                        
+                        if (elem.espera!=undefined){
+                            serv.push(elem);
+                        }
+                    }
+
+                    let servBcas = serv.filter((elem) => elem.recorrido == "BARRANCAS");
+                    let servRiv = serv.filter((elem) => elem.recorrido == "EST. RIVADAVIA");
+                    let servResto = serv.filter((elem) => elem.recorrido != "EST. RIVADAVIA" && elem.recorrido !="BARRANCAS");
+                   
+
+                    for (const elem of servResto){
+                        let x = elem.espera.split(":");
+                        if (x[0]<1 && x[1]<26){
+                            delete elem.espera;
+                        }
+                    }
+
+                    let servTotal = [];
+                    for (const elem of servResto){
+                        
+                        if (elem.espera!=undefined){
+                            servTotal.push(elem);
+                        }
+                    }
+                    for (const elem of servBcas){
+                        servTotal.push(elem);
+                    }
+                    for (const elem of servRiv){
+                        servTotal.push(elem);
+                    }
+                    console.log(servTotal);
+
+                    
+
+                    let titleList = ["Coche", "Legajo", "Chofer", "Fecha", "Entrada", "Salida", "Ramal", "Espera"];
+
+                    const nodeP = document.createElement("tr");
+                    const subNodeP = document.createElement("th");
+                    const subNodeP1 = document.createElement("th");
+                    const subNodeP2 = document.createElement("th");
+                    const subNodeP3 = document.createElement("th");
+                    const subNodeP4 = document.createElement("th");
+                    const subNodeP5 = document.createElement("th");
+                    const subNodeP6 = document.createElement("th");
+                    const subNodeP7 = document.createElement("th");
+                    nodeP.classList.add("infoP12");
+                    const textnodeP = document.createTextNode(titleList[0]);
+                    const textnodeP1 = document.createTextNode(titleList[1]);
+                    const textnodeP2 = document.createTextNode(titleList[2]);
+                    const textnodeP3 = document.createTextNode(titleList[3]);
+                    const textnodeP4 = document.createTextNode(titleList[4]);
+                    const textnodeP5 = document.createTextNode(titleList[5]);
+                    const textnodeP6 = document.createTextNode(titleList[6]);
+                    const textnodeP7 = document.createTextNode(titleList[7]);
+                    subNodeP.appendChild(textnodeP);
+                    subNodeP1.appendChild(textnodeP1);
+                    subNodeP2.appendChild(textnodeP2);
+                    subNodeP3.appendChild(textnodeP3);
+                    subNodeP4.appendChild(textnodeP4);
+                    subNodeP5.appendChild(textnodeP5);
+                    subNodeP6.appendChild(textnodeP6);
+                    subNodeP7.appendChild(textnodeP7);
+                    nodeP.appendChild(subNodeP);
+                    nodeP.appendChild(subNodeP1);
+                    nodeP.appendChild(subNodeP2);
+                    nodeP.appendChild(subNodeP3);
+                    nodeP.appendChild(subNodeP4);
+                    nodeP.appendChild(subNodeP5);
+                    nodeP.appendChild(subNodeP6);
+                    nodeP.appendChild(subNodeP7);
+                    tableP12.appendChild(nodeP);
+
+
+                for (const elem of servTotal) {
+                    const node = document.createElement("tr");
+                    node.classList.add("infoP12");
+                    const subNode = document.createElement("td");
+                    const subNode1 = document.createElement("td");
+                    const subNode2 = document.createElement("td");
+                    const subNode3 = document.createElement("td");
+                    const subNode4 = document.createElement("td");
+                    const subNode6 = document.createElement("td");
+                    const subNode7 = document.createElement("td");
+                    const subNode8 = document.createElement("td");
+                    
+                    const textnode = document.createTextNode(elem.coche);
+                    const textnode1 = document.createTextNode(elem.legajo);
+                    const textnode2 = document.createTextNode(elem.chofer);
+                    const textnode3 = document.createTextNode(elem.fechaEntrada);
+                    const textnode4 = document.createTextNode(elem.horaEntrada);
+                    const textnode6 = document.createTextNode(elem.horaSalida);
+                    const textnode7 = document.createTextNode(elem.recorrido);
+                    const textnode8 = document.createTextNode(elem.espera);
+                    subNode.appendChild(textnode);
+                    subNode1.appendChild(textnode1);
+                    subNode2.appendChild(textnode2);
+                    subNode3.appendChild(textnode3);
+                    subNode4.appendChild(textnode4);
+                    subNode6.appendChild(textnode6);
+                    subNode7.appendChild(textnode7);
+                    subNode8.appendChild(textnode8);
+                    node.appendChild(subNode);
+                    node.appendChild(subNode1);
+                    node.appendChild(subNode2);
+                    node.appendChild(subNode3);
+                    node.appendChild(subNode4);
+                    node.appendChild(subNode6);
+                    node.appendChild(subNode7);
+                    node.appendChild(subNode8);
+                    tableP12.appendChild(node);
+            } 
+            
+        }
+
+                if (roa12.length > 0) {
+
+                    result[sheetName] = roa12;
+                }
+            });
+        }
     } catch (e) {
         console.error(e);
     }
