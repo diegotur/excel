@@ -2264,38 +2264,65 @@ function excelFileToJSON11(file) {
                     
                     for (const e of kms2) {
                         x = e.kms - e.kmSube;
-                        e.dif = x.toFixed(2);
+                        if (x < 10 && x >-10){
+                            delete e;
+                        } else{
+                            e.dif = x.toFixed(2);
+                        }
                     }
-                    
-                    
-                    
-                    for (const elem of kms2) {
-                        const node = document.createElement("tr");
-                        node.classList.add("infoP10");
-                        const subNode = document.createElement("td");
-                        const subNode1 = document.createElement("td");
-                        const subNode2 = document.createElement("td");
-                        const subNode3 = document.createElement("td");
-                        const subNode4 = document.createElement("td");
-                        
-                        const textnode = document.createTextNode(elem.coche);
-                        const textnode1 = document.createTextNode(elem.kms);
-                        const textnode2 = document.createTextNode(elem.kmSube);
-                        const textnode3 = document.createTextNode(elem.dif);
-                        const textnode4 = document.createTextNode(elem.nov);
-                        subNode.appendChild(textnode);
-                        subNode1.appendChild(textnode1);
-                        subNode2.appendChild(textnode2);
-                        subNode3.appendChild(textnode3);
-                        subNode4.appendChild(textnode4);
-                        node.appendChild(subNode);
-                        node.appendChild(subNode1);
-                        node.appendChild(subNode2);
-                        node.appendChild(subNode3);
-                        node.appendChild(subNode4);
-                        tableP10.appendChild(node);
-                        
+
+                    let kms3 = [];
+
+                    for (const e of kms2) {
+                        if (e.dif != undefined){
+                            kms3.push(e);
+                        }
                     }
+
+                kms3 = kms3.sort((a, b) => (a.dif < b.dif) ? 1 : -1);
+                    
+                console.log(kms3);
+
+                let titleList = ["Coche", "KM Tráfico", "KM Sube", "Diferencia", "Novedad"];
+
+                const nodeP = document.createElement("tr");
+                nodeP.classList.add("infoP12");
+               
+                for (i=0; i<titleList.length; i++){
+                    let subNode = document.createElement("th");
+                    let textnode = document.createTextNode(titleList[i]);
+                    subNode.appendChild(textnode);
+                    nodeP.appendChild(subNode);
+                }
+                tableP10.appendChild(nodeP);
+                
+                for (const elem of kms3) {
+                    const node = document.createElement("tr");
+                    node.classList.add("infoP10");
+                    const subNode = document.createElement("td");
+                    const subNode1 = document.createElement("td");
+                    const subNode2 = document.createElement("td");
+                    const subNode3 = document.createElement("td");
+                    const subNode4 = document.createElement("td");
+                    
+                    const textnode = document.createTextNode(elem.coche);
+                    const textnode1 = document.createTextNode(elem.kms);
+                    const textnode2 = document.createTextNode(elem.kmSube);
+                    const textnode3 = document.createTextNode(elem.dif);
+                    const textnode4 = document.createTextNode(elem.nov);
+                    subNode.appendChild(textnode);
+                    subNode1.appendChild(textnode1);
+                    subNode2.appendChild(textnode2);
+                    subNode3.appendChild(textnode3);
+                    subNode4.appendChild(textnode4);
+                    node.appendChild(subNode);
+                    node.appendChild(subNode1);
+                    node.appendChild(subNode2);
+                    node.appendChild(subNode3);
+                    node.appendChild(subNode4);
+                    tableP10.appendChild(node);
+                    
+                }
                     if (roa11.length > 0) {
 
                         result[sheetName] = roa11;
@@ -2417,39 +2444,15 @@ function excelFileToJSON12(file) {
                     let titleList = ["Coche", "Legajo", "Chofer", "Fecha", "Entrada", "Salida", "Ramal", "Espera"];
 
                     const nodeP = document.createElement("tr");
-                    const subNodeP = document.createElement("th");
-                    const subNodeP1 = document.createElement("th");
-                    const subNodeP2 = document.createElement("th");
-                    const subNodeP3 = document.createElement("th");
-                    const subNodeP4 = document.createElement("th");
-                    const subNodeP5 = document.createElement("th");
-                    const subNodeP6 = document.createElement("th");
-                    const subNodeP7 = document.createElement("th");
                     nodeP.classList.add("infoP12");
-                    const textnodeP = document.createTextNode(titleList[0]);
-                    const textnodeP1 = document.createTextNode(titleList[1]);
-                    const textnodeP2 = document.createTextNode(titleList[2]);
-                    const textnodeP3 = document.createTextNode(titleList[3]);
-                    const textnodeP4 = document.createTextNode(titleList[4]);
-                    const textnodeP5 = document.createTextNode(titleList[5]);
-                    const textnodeP6 = document.createTextNode(titleList[6]);
-                    const textnodeP7 = document.createTextNode(titleList[7]);
-                    subNodeP.appendChild(textnodeP);
-                    subNodeP1.appendChild(textnodeP1);
-                    subNodeP2.appendChild(textnodeP2);
-                    subNodeP3.appendChild(textnodeP3);
-                    subNodeP4.appendChild(textnodeP4);
-                    subNodeP5.appendChild(textnodeP5);
-                    subNodeP6.appendChild(textnodeP6);
-                    subNodeP7.appendChild(textnodeP7);
-                    nodeP.appendChild(subNodeP);
-                    nodeP.appendChild(subNodeP1);
-                    nodeP.appendChild(subNodeP2);
-                    nodeP.appendChild(subNodeP3);
-                    nodeP.appendChild(subNodeP4);
-                    nodeP.appendChild(subNodeP5);
-                    nodeP.appendChild(subNodeP6);
-                    nodeP.appendChild(subNodeP7);
+
+                    for (i=0; i<titleList.length; i++){
+                        let subNode = document.createElement("th");
+                        let textnode = document.createTextNode(titleList[i]);
+                        subNode.appendChild(textnode);
+                        nodeP.appendChild(subNode);
+                    }
+                    
                     tableP12.appendChild(nodeP);
 
 
