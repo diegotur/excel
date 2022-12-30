@@ -957,6 +957,14 @@ let choferesCortados = [];
 let tempChoferesCortados = [];
 let corridos = [];
 let tempCorridos = [];
+let tempChoferesSpeed = [];
+let tempChoferesEsperas = [];
+let choferesSpeed = [];
+let choferesEsperas = [];
+
+
+
+
 
 let tableP6 = document.getElementById("tableP6");
 
@@ -979,11 +987,17 @@ function excelFileToJSON6(file) {
                 let numberMalUso = roa6.findIndex((elem) => elem.props == "CONTROL MAL USO DEL SUBE");
                 let numberCortados = roa6.findIndex((elem) => elem.props == "SERVICIOS CORTADOS");
                 let numberSecCorridos = roa6.findIndex((elem) => elem.props == "CONTROL SECCIONAMIENTO CORRIDO");
+                let numberSpeed = roa6.findIndex((elem) => elem.props == "CONTROL EXCESO DE VELOCIDAD");
+                let numberEsperas = roa6.findIndex((elem) => elem.props == "ESPERAS EXCESIVAS");
                 
+
                 let arraySeccionamiento = [];
                 let arrayMalUso = [];
                 let arrayCortados = [];
                 let arrayCorridos = [];
+                let arraySpeed = [];
+                let arrayEsperas = [];
+
 
                 for (i = 2; i < numberMalUso; i++) {
                     arraySeccionamiento.push(roa6[i]);
@@ -994,8 +1008,14 @@ function excelFileToJSON6(file) {
                 for (i = numberCortados + 2; i < numberSecCorridos; i++) {
                     arrayCortados.push(roa6[i]);
                 }
-                for (i = numberSecCorridos + 2; i < roa6.length; i++) {
+                for (i = numberSecCorridos + 2; i < numberSpeed; i++) {
                     arrayCorridos.push(roa6[i]);
+                }
+                for (i = numberSpeed + 2; i < numberEsperas; i++) {
+                    arraySpeed.push(roa6[i]);
+                }
+                for (i = numberEsperas + 2; i < roa6.length; i++) {
+                    arrayEsperas.push(roa6[i]);
                 }
 
                 for (const elem of arraySeccionamiento) {
@@ -1016,9 +1036,6 @@ function excelFileToJSON6(file) {
                         legajo: xx
                     });
                 }
-
-                let pija = [];
-
                 for (const elem of arrayCorridos) {
                     let leg = elem.props,
                         xx = elem.__EMPTY;
@@ -1027,8 +1044,18 @@ function excelFileToJSON6(file) {
                         xx
                     });
                 }
-
-
+                for (const elem of arraySpeed) {
+                    let xx = elem.__EMPTY_3;
+                    tempChoferesSpeed.push({
+                        legajo: xx
+                    });
+                }
+                for (const elem of arrayEsperas) {
+                    let xx = parseInt(elem.__EMPTY);
+                    tempChoferesEsperas.push({
+                        legajo: xx
+                    });
+                }
 
                 if (roa6.length > 0) {
                     result[sheetName] = roa6;
@@ -1088,6 +1115,22 @@ function excelFileToJSON6(file) {
 
             choferesMalUso = choferesMalUso.filter((e) => e.malUso > 5);
 
+            for (const elem of tempChoferesSpeed) {
+                xx = elem.legajo;
+                let x = tempChoferesSpeed.filter((el) => el.legajo == elem.legajo);
+                choferesSpeed.push({
+                    legajo: xx,
+                    velocidad: x.length
+                });
+            }
+            for (const elem of tempChoferesEsperas) {
+                xx = elem.legajo;
+                let x = tempChoferesEsperas.filter((el) => el.legajo == elem.legajo);
+                choferesEsperas.push({
+                    legajo: xx,
+                    espera: x.length
+                });
+            }
             for (const elem of tempChoferesCortados) {
                 xx = elem.legajo;
                 let x = tempChoferesCortados.filter((el) => el.legajo == elem.legajo);
@@ -1099,11 +1142,7 @@ function excelFileToJSON6(file) {
 
             choferesCortados = choferesCortados.filter((e) => e.cortes > 2);
 
-            let corr4 = corr3.filter((e) => e.seccCorridos > 5);
-
-            corridos = corr4;
-
-
+            corridos = corr3.filter((e) => e.seccCorridos > 5);
 
             let pene = [];
             let pene2 = [];
@@ -1114,6 +1153,42 @@ function excelFileToJSON6(file) {
             let pene7 = [];
             let pene8 = [];
             let pene9 = [];
+            let pene10 = [];
+            let pene11 = [];
+            let pene12 = [];
+            let pene13 = [];
+            let pene14 = [];
+            let pene15 = [];
+
+
+
+           /*  let propiedades  = ["seccionamiento", "malUso", "cortes", "velocidad", "espera"];
+
+            function Deal(a,b,c) {
+                let deal1 = [];
+                let deal2 = [];
+                let deal3 = [];
+
+
+                for (i = 0; i < a.length; i++) {
+                    deal1.push(a[i].legajo);
+                }
+    
+                for (const el of deal1) {
+                    if (deal2.includes(el) == false) {
+                        deal2.push(el);
+                    }
+                }
+                for (const elem of deal2) {
+                    x = b.filter((el) => el.legajo == elem);
+                    deal3.push({
+                        legajo: elem,
+                        propiedades[c]: x.length
+                    });
+                }
+                a = deal3;
+            }
+ */
 
             for (i = 0; i < choferesSeccionamiento.length; i++) {
                 pene.push(choferesSeccionamiento[i].legajo);
@@ -1131,7 +1206,7 @@ function excelFileToJSON6(file) {
                     seccionamiento: x.length
                 });
             }
-            choferesSeccionamiento = pene3;
+            choferesSeccionamiento = pene3; 
 
 
             for (i = 0; i < choferesMalUso.length; i++) {
@@ -1171,6 +1246,42 @@ function excelFileToJSON6(file) {
                 });
             }
             choferesCortados = pene9;
+
+            for (i = 0; i < choferesSpeed.length; i++) {
+                pene10.push(choferesSpeed[i].legajo);
+            }
+            for (const el of pene10) {
+                if (pene11.includes(el) == false) {
+                    pene11.push(el);
+                }
+            }
+            for (const elem of pene11) {
+                x = tempChoferesSpeed.filter((el) => el.legajo == elem);
+                pene12.push({
+                    legajo: elem,
+                    velocidad: x.length
+                });
+            }
+            choferesSpeed = pene12;
+
+
+
+            for (i = 0; i < choferesEsperas.length; i++) {
+                pene13.push(choferesEsperas[i].legajo);
+            }
+            for (const el of pene13) {
+                if (pene14.includes(el) == false) {
+                    pene14.push(el);
+                }
+            }
+            for (const elem of pene14) {
+                x = tempChoferesEsperas.filter((el) => el.legajo == elem);
+                pene15.push({
+                    legajo: elem,
+                    espera: x.length
+                });
+            }
+            choferesEsperas = pene15;
 
             for (const e of corridos) {
                 x = choferesSeccionamiento.filter((n) => n.legajo == e.legajo);
@@ -1229,19 +1340,73 @@ function excelFileToJSON6(file) {
                     })
                 }
             }
+            for (const e of corridos) {
+                x = choferesSpeed.filter((n) => n.legajo == e.legajo);
+                if (x.length > 0 == true) {
+                    e.velocidad = x[0].velocidad;
+                } else {
+                    e.velocidad = 0;
+                }
+            }
+            for (const e of choferesSpeed) {
+                x = corridos.filter((n) => n.legajo == e.legajo);
+                if (x.length < 1 == true) {
+                    corridos.push({
+                        ...e,
+                        seccCorridos: 0,
+                        seccionamiento: 0,
+                        malUso: 0,
+                        cortes: 0,
+                    })
+                }
+            }
+            for (const e of corridos) {
+                x = choferesEsperas.filter((n) => n.legajo == e.legajo);
+                if (x.length > 0 == true) {
+                    e.espera = x[0].espera;
+                } else {
+                    e.espera = 0;
+                }
+            }
+            for (const e of choferesEsperas) {
+                x = corridos.filter((n) => n.legajo == e.legajo);
+                if (x.length < 1 == true) {
+                    corridos.push({
+                        ...e,
+                        seccCorridos: 0,
+                        seccionamiento: 0,
+                        malUso: 0,
+                        cortes: 0,
+                        velocidad: 0,
+                    })
+                }
+            }
 
             corridos.sort((a, b) => (a.legajo > b.legajo) ? 1 : -1);
 
+
             for (i = 0; i < corridos.length; i++) {
-                let x = corridos[i].seccionamiento + corridos[i].cortes + corridos[i].malUso + corridos[i].seccCorridos;
+                let x = corridos[i].seccionamiento + corridos[i].cortes + corridos[i].malUso + corridos[i].seccCorridos + corridos[i].velocidad + corridos[i].espera;
                 corridos[i] = {
                     ...corridos[i],
                     total: x
                 };
             }
 
-            console.log(corridos);
+            let titleList = ["Legajo", "Seccionamiento", "Mal Uso Del Sube", "Servicios Cortados", "Secc. Corrido", "Exceso De Velocidad", "Esperas Excesivas", "Total Por Chofer"];
 
+                const nodeP = document.createElement("tr");
+                nodeP.classList.add("infoP6");
+               
+                for (i=0; i<titleList.length; i++){
+                    let subNode = document.createElement("th");
+                    let textnode = document.createTextNode(titleList[i]);
+                    subNode.appendChild(textnode);
+                    nodeP.appendChild(subNode);
+                }
+                tableP6.appendChild(nodeP);
+
+                
             for (const elem of corridos) {
                 const node = document.createElement("tr");
                 node.classList.add("infoP6");
@@ -1251,25 +1416,33 @@ function excelFileToJSON6(file) {
                 const subNode3 = document.createElement("td");
                 const subNode4 = document.createElement("td");
                 const subNode5 = document.createElement("td");
+                const subNode6 = document.createElement("td");
+                const subNode7 = document.createElement("td");
 
                 const textnode = document.createTextNode(elem.legajo);
                 const textnode1 = document.createTextNode(elem.seccionamiento);
                 const textnode2 = document.createTextNode(elem.malUso);
                 const textnode3 = document.createTextNode(elem.cortes);
                 const textnode4 = document.createTextNode(elem.seccCorridos);
-                const textnode5 = document.createTextNode(elem.total);
+                const textnode5 = document.createTextNode(elem.velocidad);
+                const textnode6 = document.createTextNode(elem.espera);
+                const textnode7 = document.createTextNode(elem.total);
                 subNode.appendChild(textnode);
                 subNode1.appendChild(textnode1);
                 subNode2.appendChild(textnode2);
                 subNode3.appendChild(textnode3);
                 subNode4.appendChild(textnode4);
                 subNode5.appendChild(textnode5);
+                subNode6.appendChild(textnode6);
+                subNode7.appendChild(textnode7);
                 node.appendChild(subNode);
                 node.appendChild(subNode1);
                 node.appendChild(subNode2);
                 node.appendChild(subNode3);
                 node.appendChild(subNode4);
                 node.appendChild(subNode5);
+                node.appendChild(subNode6);
+                node.appendChild(subNode7);
                 tableP6.appendChild(node);
 
             }
@@ -2281,7 +2454,6 @@ function excelFileToJSON11(file) {
 
                 kms3 = kms3.sort((a, b) => (a.dif < b.dif) ? 1 : -1);
                     
-                console.log(kms3);
 
                 let titleList = ["Coche", "KM Tráfico", "KM Sube", "Diferencia", "Novedad"];
 
