@@ -57,6 +57,17 @@ document.getElementById("controlEsperas").addEventListener("click", () => {
     VerControl(l10, l1, l2, l3, l4, l5, l6, l7, l8, l9)
 });
 
+function WriteTable (elem, htmlTable, node){
+
+    for(i=0; i<Object.keys(elem).length;i++){
+        const subNode = document.createElement("td");
+        let textnode;
+        textnode = document.createTextNode(elem[i]);
+        subNode.appendChild(textnode);
+        node.appendChild(subNode);
+        htmlTable.appendChild(node);
+    }
+}
 
 let arrayKM4 = [];
 
@@ -145,7 +156,7 @@ function excelFileToJSON(file) {
                 
                 let inter = 0;
 
-                 for (const elem of roa) {
+                for (const elem of roa) {
                     elem.Interno = roa[inter][Object.keys(roa[inter])[0]];
                     elem.Ramal = elem.__EMPTY_2;
                     elem.Legajo = elem.__EMPTY_6;
@@ -171,9 +182,6 @@ function excelFileToJSON(file) {
                     inter++;
                 }
 
-                console.log(roa);
-                
-                
                 let roaCortos = roa.filter((elem) => elem.Secciones < 8);
                 let roaLargos = roa.filter((elem) => elem.Secciones > 8);
 
@@ -184,8 +192,6 @@ function excelFileToJSON(file) {
                 let newArray7 = newArray6.filter((elem) => elem.Diferencia > 3);
 
                 roaCortos = newArray7;
-
-                console.log(roaCortos);
 
                 for (const elem of newArray2) {
                     roaCortos.push(elem);
@@ -683,6 +689,7 @@ function excelFileToJSON4(file) {
             workbook.SheetNames.forEach(function(sheetName) {
                 roa4 = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
 
+                if (roa4.length > 0){
 
                 for (const elem of roa4) {
 
@@ -699,7 +706,10 @@ function excelFileToJSON4(file) {
                         fechasDisp2.push(elem.Fecha);
                     }
                 }
+
                 fechasDisp2.sort((a, b) => (a > b) ? 1 : -1);
+                console.log(fechasDisp2);
+
 
                 let drop2 = document.getElementsByClassName("dropdown-item2");
                 let dropIndex2 = 0;
@@ -711,13 +721,15 @@ function excelFileToJSON4(file) {
                     dropAr2.push("cortadosDrop" + dropIndex2);
                     dropIndex2++;
                 }
+                console.log(dropAr2);
 
-                for (i = 0; i < fechasDisp2.length; i++) {
+                for (i = 0; i < dropAr2.length; i++) {
                     let j = document.getElementById(dropAr2[i])
                     j.addEventListener("click", () => {
                         Write2(j.textContent)
                     });
                 }
+                
 
                 function Write2(a) {
                     let infoP4 = document.getElementsByClassName("infoP4");
@@ -733,45 +745,22 @@ function excelFileToJSON4(file) {
 
                     soloFecha.sort((a, b) => (a.Legajo > b.Legajo) ? 1 : -1);
 
-                    for (const elem of soloFecha) {
+                    let soloFechaFinal = [];
+
+                    for(const elem of soloFecha){
+                    
+                    let {Coche, Legajo, Apellido, Hora, Recorrido, MotivoCorte} = elem;
+                    
+                    soloFechaFinal.push([Coche, Legajo, Apellido, Hora, Recorrido, MotivoCorte]);
+                    }
+                    for (const elem of soloFechaFinal){
                         const node = document.createElement("tr");
                         node.classList.add("infoP4");
-                        const subNode = document.createElement("td");
-                        const subNode1 = document.createElement("td");
-                        const subNode2 = document.createElement("td");
-                        const subNode3 = document.createElement("td");
-                        const subNode4 = document.createElement("td");
-                        const subNode5 = document.createElement("td");
-
-
-                        const textnode = document.createTextNode(elem.Coche);
-                        const textnode1 = document.createTextNode(elem.Legajo);
-                        const textnode5 = document.createTextNode(elem.Apellido);
-                        const textnode2 = document.createTextNode(elem.Hora);
-                        const textnode3 = document.createTextNode(elem.Recorrido);
-                        const textnode4 = document.createTextNode(elem.MotivoCorte);
-
-
-                        subNode.appendChild(textnode);
-                        subNode1.appendChild(textnode1);
-                        subNode2.appendChild(textnode2);
-                        subNode3.appendChild(textnode3);
-                        subNode4.appendChild(textnode4);
-                        subNode5.appendChild(textnode5);
-
-                        node.appendChild(subNode);
-                        node.appendChild(subNode1);
-                        node.appendChild(subNode5);
-                        node.appendChild(subNode2);
-                        node.appendChild(subNode3);
-                        node.appendChild(subNode4);
-
-                        tableP4.appendChild(node);
-
+                        WriteTable(elem, tableP4, node);
                     }
                 }
 
-
+                }
 
                 if (roa4.length > 0) {
 
