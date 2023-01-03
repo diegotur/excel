@@ -1373,6 +1373,8 @@ function excelFileToJSON6(file) {
 
             corridos.sort((a, b) => (a.legajo > b.legajo) ? 1 : -1);
 
+            console.log(corridos);
+
 
             for (i = 0; i < corridos.length; i++) {
                 let x = corridos[i].seccionamiento + corridos[i].cortes + corridos[i].malUso + corridos[i].seccCorridos + corridos[i].velocidad + corridos[i].espera;
@@ -2532,19 +2534,20 @@ function excelFileToJSON12(file) {
 
                 if (roa12.length>0){
 
-                    
+                console.log(roa12);
+
                     for (const elem of roa12) {
                         
                         
                         elem.coche = elem.ESPERAS;
                         elem.legajo = elem.__EMPTY;
                         elem.chofer = elem.__EMPTY_1;
-                        elem.recorrido = elem.__EMPTY_5;
-                        elem.espera = excelDateToJSDate3(elem.__EMPTY_6);
+                        elem.recorrido = elem.__EMPTY_9;
+                        elem.espera = excelDateToJSDate3(elem.__EMPTY_10);
                         elem.horaEntrada = excelDateToJSDate3(elem.__EMPTY_3);
                         elem.fechaEntrada = ExcelDateToJSDate4(elem.__EMPTY_3);
-                        elem.horaSalida = excelDateToJSDate3(elem.__EMPTY_4);
-                        elem.fechaSalida = ExcelDateToJSDate4(elem.__EMPTY_4);
+                        elem.horaSalida = excelDateToJSDate3(elem.__EMPTY_7);
+                        elem.fechaSalida = ExcelDateToJSDate4(elem.__EMPTY_7);
                         
                         delete elem.ESPERAS;
                         delete elem.__EMPTY;
@@ -2556,6 +2559,8 @@ function excelFileToJSON12(file) {
                         delete elem.__EMPTY_6;
                         delete elem.__EMPTY_7;
                         delete elem.__EMPTY_8;
+                        delete elem.__EMPTY_9;
+                        delete elem.__EMPTY_10;
                     }
 
                     let serv = [];
