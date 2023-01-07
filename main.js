@@ -1,61 +1,18 @@
-let l1 = document.getElementById("controlSeccionamientoH1");
-let l2 = document.getElementById("controlMalUsoDelSubeH1");
-let l3 = document.getElementById("controlSeccCorridoH1");
-let l4 = document.getElementById("controlCortadosH1");
-let l5 = document.getElementById("controlKmPorRamalH1");
-let l6 = document.getElementById("controlMensualH1");
-let l7 = document.getElementById("controlFrancosH1");
-let l8 = document.getElementById("controlPlanillasH1");
-let l9 = document.getElementById("controlKMSubeH1");
-let l10 = document.getElementById("controlEsperasH1");
+let linkVis = document.getElementsByClassName("linkVis"); 
+let elementsById = document.getElementsByClassName("dropdown-item3"); 
 
-function VerControl(a, b, c, d, e, f, g, h, i,j) {
-    a.style.visibility = "visible";
-    b.style.visibility = "hidden";
-    c.style.visibility = "hidden";
-    d.style.visibility = "hidden";
-    e.style.visibility = "hidden";
-    f.style.visibility = "hidden";
-    g.style.visibility = "hidden";
-    h.style.visibility = "hidden";
-    i.style.visibility = "hidden";
-    j.style.visibility = "hidden";
+let arrLinks = [];
 
-
+for (i=0;i<linkVis.length;i++){
+    arrLinks.push([elementsById[i],linkVis[i]]);
 }
-
-let arrLinks = [l1, l2, l3, l4, l5, l6, l7, l8, l9,l10];
-
-document.getElementById("controlSeccionamiento").addEventListener("click", () => {
-    VerControl(l1, l2, l3, l4, l5, l6, l7, l8, l9, l10)
-});
-document.getElementById("controlMalUsoDelSube").addEventListener("click", () => {
-    VerControl(l2, l1, l3, l4, l5, l6, l7, l8, l9, l10)
-});
-document.getElementById("controlCortados").addEventListener("click", () => {
-    VerControl(l3, l2, l1, l4, l5, l6, l7, l8, l9, l10)
-});
-document.getElementById("controlSeccCorrido").addEventListener("click", () => {
-    VerControl(l4, l2, l3, l1, l5, l6, l7, l8, l9, l10)
-});
-document.getElementById("controlKmPorRamal").addEventListener("click", () => {
-    VerControl(l5, l2, l3, l4, l1, l6, l7, l8, l9, l10)
-});
-document.getElementById("controlMensual").addEventListener("click", () => {
-    VerControl(l6, l2, l3, l4, l5, l1, l7, l8, l9, l10)
-});
-document.getElementById("controlFrancos").addEventListener("click", () => {
-    VerControl(l7, l2, l3, l4, l5, l6, l1, l8, l9, l10)
-});
-document.getElementById("controlPlanillas").addEventListener("click", () => {
-    VerControl(l8, l2, l3, l4, l5, l6, l7, l1, l9, l10)
-});
-document.getElementById("controlKMSube").addEventListener("click", () => {
-    VerControl(l9, l2, l3, l4, l5, l6, l7, l8, l1, l10)
-});
-document.getElementById("controlEsperas").addEventListener("click", () => {
-    VerControl(l10, l1, l2, l3, l4, l5, l6, l7, l8, l9)
-});
+for (const elem of arrLinks){
+    elem[0].addEventListener("click", () => {
+        for (ii=0; ii<linkVis.length; ii++)
+        {linkVis[ii].style.visibility = "hidden";}
+        elem[1].style.visibility = "visible";
+    })
+    }
 
 function WriteTable (elem, htmlTable, node){
 
@@ -69,7 +26,34 @@ function WriteTable (elem, htmlTable, node){
     }
 }
 
-let arrayKM4 = [];
+const cambioFecha = (date, quantity) => {
+    let converted_date = new Date(Math.round((date - quantity) * 864e5));
+    converted_date = String(converted_date).slice(4, 15);
+    date = converted_date.split(" ");
+    let day = date[1];
+    let month = date[0];
+    month = "JanFebMarAprMayJunJulAugSepOctNovDec".indexOf(month) / 3 + 1;
+    if (month.toString().length <= 1) {
+        month = '0' + month;
+    }
+    let year = date[2];
+    return String(day + '/' + month + '/' + year);
+};
+
+function cambioHora(excel_date, time = false) {
+    let day_time = excel_date % 1
+    let meridiem = "AMPM"
+    let hour = Math.floor(day_time * 24)
+    let minute = Math.floor(Math.abs(day_time * 24 * 60) % 60)
+    let second = Math.floor(Math.abs(day_time * 24 * 60 * 60) % 60)
+    hour >= 12 ? meridiem = meridiem.slice(2, 4) : meridiem = meridiem.slice(0, 2)
+    hour > 12 ? hour = hour : hour = hour
+    hour = hour < 10 ? "0" + hour : hour
+    minute = minute < 10 ? "0" + minute : minute
+    second = second < 10 ? "0" + second : second
+    let daytime = "" + hour + ":" + minute + ":" + second
+    return time ? daytime : daytime
+};
 
 
 function upload() {
@@ -94,48 +78,7 @@ let tableP = document.getElementById("tableP");
 
 
 
-const ExcelDateToJSDate2 = (date) => {
-    let converted_date = new Date(Math.round((date - 25568) * 864e5));
-    converted_date = String(converted_date).slice(4, 15);
-    date = converted_date.split(" ");
-    let day = date[1];
-    let month = date[0];
-    month = "JanFebMarAprMayJunJulAugSepOctNovDec".indexOf(month) / 3 + 1;
-    if (month.toString().length <= 1) {
-        month = '0' + month;
-    }
-    let year = date[2];
-    return String(day + '/' + month + '/' + year);
-};
 
-const ExcelDateToJSDate4 = (date) => {
-    let converted_date = new Date(Math.round((date - 25569) * 864e5));
-    converted_date = String(converted_date).slice(4, 15);
-    date = converted_date.split(" ");
-    let day = date[1];
-    let month = date[0];
-    month = "JanFebMarAprMayJunJulAugSepOctNovDec".indexOf(month) / 3 + 1;
-    if (month.toString().length <= 1) {
-        month = '0' + month;
-    }
-    let year = date[2];
-    return String(day + '/' + month + '/' + year);
-};
-
-function excelDateToJSDate3(excel_date, time = false) {
-    let day_time = excel_date % 1
-    let meridiem = "AMPM"
-    let hour = Math.floor(day_time * 24)
-    let minute = Math.floor(Math.abs(day_time * 24 * 60) % 60)
-    let second = Math.floor(Math.abs(day_time * 24 * 60 * 60) % 60)
-    hour >= 12 ? meridiem = meridiem.slice(2, 4) : meridiem = meridiem.slice(0, 2)
-    hour > 12 ? hour = hour : hour = hour
-    hour = hour < 10 ? "0" + hour : hour
-    minute = minute < 10 ? "0" + minute : minute
-    second = second < 10 ? "0" + second : second
-    let daytime = "" + hour + ":" + minute + ":" + second
-    return time ? daytime : daytime
-};
 
 function excelFileToJSON(file) {
     try {
@@ -346,14 +289,14 @@ function excelFileToJSON2(file) {
                     
                     for (const elem of roa2) {
     
-                        elem.FechaInicio = ExcelDateToJSDate2(elem.FechaInicio);
-                        elem.FechaFin = ExcelDateToJSDate2(elem.FechaFin);
+                        elem.FechaInicio = cambioFecha(elem.FechaInicio, 25568);
+                        elem.FechaFin = cambioFecha(elem.FechaFin, 25568);
                     }
                     
                     for (const elem of roa2) {
                         
-                        elem.HoraInicio = excelDateToJSDate3(elem.HoraInicio);
-                        elem.HoraFin = excelDateToJSDate3(elem.HoraFin);
+                        elem.HoraInicio = cambioHora(elem.HoraInicio);
+                        elem.HoraFin = cambioHora(elem.HoraFin);
                     }
                     
                     let fechasDisp = [];
@@ -538,8 +481,8 @@ function excelFileToJSON3(file) {
 
 
                 for (const elem of soloCambio2) {
-                    elem.fechaInicio = ExcelDateToJSDate2(elem.fechaInicio);
-                    elem.horaInicio = excelDateToJSDate3(elem.horaInicio);
+                    elem.fechaInicio = cambioFecha(elem.fechaInicio, 25568);
+                    elem.horaInicio = cambioHora(elem.horaInicio, 25568);
                     let e = elem.horaInicio.split(':');
                     elem.horaSinSec = (`${e[0]}:${e[1]}`);
 
@@ -693,8 +636,8 @@ function excelFileToJSON4(file) {
 
                 for (const elem of roa4) {
 
-                    elem.Fecha = ExcelDateToJSDate2(elem.Fecha);
-                    elem.Hora = excelDateToJSDate3(elem.Hora);
+                    elem.Fecha = cambioFecha(elem.Fecha, 25568);
+                    elem.Hora = cambioHora(elem.Hora);
                 }
                 let temp1 = roa4.filter((elem) => elem.Cabecera != "Estación Benavidez");
                 let temp2 = temp1.filter((elem) => elem.MotivoCorte != "VUELTA ANULADA");
@@ -1889,7 +1832,7 @@ function excelFileToJSON8(file) {
 
                 for (const elem of roa8) {
 
-                    elem.FECHA = ExcelDateToJSDate2(elem.FECHA);
+                    elem.FECHA = cambioFecha(elem.FECHA, 25568);
                     delete elem.RECA;
                 }
 
@@ -2063,7 +2006,7 @@ function excelFileToJSON9(file) {
 
                 for (const elem of roa9) {
 
-                    elem.FECHA = ExcelDateToJSDate2(elem.FECHA);
+                    elem.FECHA = cambioFecha(elem.FECHA, 25568);
                     delete elem.RECA;
                 }
 
@@ -2224,6 +2167,7 @@ function excelFileToJSON9(file) {
         console.error(e);
     }
 }
+let arrayKM4=[];
 
 function upload10() {
     var files = document.getElementById('file_upload10').files;
@@ -2260,7 +2204,7 @@ function excelFileToJSON10(file) {
 
                 for (const elem of roa10) {
 
-                    elem.FECHA = ExcelDateToJSDate2(elem.FECHA);
+                    elem.FECHA = cambioFecha(elem.FECHA, 25568);
                     delete elem.HSALE;
                     delete elem.HLLEGA;
                     delete elem.HCITA;
@@ -2323,6 +2267,7 @@ function excelFileToJSON10(file) {
 
                     let arrayKM3 = arrayKM2.sort((a, b) => (a > b) ? 1 : -1);
 
+                    
 
                     for (const e of arrayKM3) {
                         x = arrayKM.filter((el) => el.COCHE == e);
@@ -2336,9 +2281,6 @@ function excelFileToJSON10(file) {
                     }
 
                 }
-
-                console.log(arrayKM4);
-
                 if (roa10.length > 0) {
 
                     result[sheetName] = roa10;
@@ -2543,11 +2485,11 @@ function excelFileToJSON12(file) {
                         elem.legajo = elem.__EMPTY;
                         elem.chofer = elem.__EMPTY_1;
                         elem.recorrido = elem.__EMPTY_9;
-                        elem.espera = excelDateToJSDate3(elem.__EMPTY_10);
-                        elem.horaEntrada = excelDateToJSDate3(elem.__EMPTY_3);
-                        elem.fechaEntrada = ExcelDateToJSDate4(elem.__EMPTY_3);
-                        elem.horaSalida = excelDateToJSDate3(elem.__EMPTY_7);
-                        elem.fechaSalida = ExcelDateToJSDate4(elem.__EMPTY_7);
+                        elem.espera = cambioHora(elem.__EMPTY_10);
+                        elem.horaEntrada = cambioHora(elem.__EMPTY_3);
+                        elem.fechaEntrada = cambioFecha(elem.__EMPTY_3, 25569);
+                        elem.horaSalida = cambioHora(elem.__EMPTY_7);
+                        elem.fechaSalida = cambioFecha(elem.__EMPTY_7, 25569);
                         
                         delete elem.ESPERAS;
                         delete elem.__EMPTY;
