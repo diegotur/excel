@@ -34,24 +34,13 @@
     <div id="controlSeccionamientoH1" class="linkVis">
         <div class="inputsBT">
             <h1>Control de Seccionamiento</h1>
-            <input type="file" id="file_upload" />
-            <button onclick="upload()">Cargar</button>
+            <input type="file" id="inputSeccionamiento" />
+            <button onclick="upload('inputSeccionamiento', Func1)">Cargar</button>
         </div>
         <br><br>
         <br><br>
         <div>
-            <table class="tabla" id="tableP">
-                <tr>
-                    <th>Interno</th>
-                    <th>Ramal</th>
-                    <th>Legajo</th>
-                    <th>Kms</th>
-                    <th>Secciones</th>
-                    <th>Chofer</th>
-                    <th>Diferencia</th>
-                </tr>
-
-            </table>
+            <table class="tabla" id="tableP"></table>
         </div>
     </div>
 
@@ -59,8 +48,8 @@
 
         <div class="inputsBT">
             <h1>Control de Uso del SUBE</h1>
-            <input type="file" id="file_upload2" />
-        <button onclick="upload2()">Upload</button>
+            <input type="file" id="inputMalUso" />
+        <button onclick="upload('inputMalUso', Func2)">Cargar</button>
         <div class="dropdown">
             <button class="btn fechaBT btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Fecha</button>
             <ul id="drop" class="dropdown-menu">
@@ -87,19 +76,7 @@
 
 
         <div>
-            <table class="tabla" id="tableP2">
-                <tr>
-                    <th>Legajo</th>
-                    <th>Interno</th>
-                    <th>Fecha Inicio</th>
-                    <th>Fecha Fin</th>
-                    <th>Hora Inicio</th>
-                    <th>Hora Fin</th>
-                    <th>Recorrido</th>
-                    <th>Kms</th>
-                </tr>
-
-            </table>
+            <table class="tabla" id="tableP2"></table>
         </div>
 
         <br><br>
@@ -110,20 +87,14 @@
 
         <div class="inputsBT">
         <h1>Control de Seccionamiento Corrido</h1>
-        <input type="file" id="file_upload3" />
-        <button onclick="upload3()">Upload</button>
+        <input type="file" id="inputSeccCorrido" />
+        <button onclick="upload('inputSeccCorrido', Func3)">Upload</button>
         </div>
 
         <br><br>
 
         <div>
-            <table class="tabla" id="tableP3">
-                <tr>
-                    <th>Legajo</th>
-                    <th>Seccionamiento de Corrido</th>
-                </tr>
-
-            </table>
+            <table class="tabla" id="tableP3"></table>
         </div>
 
         <br><br>
@@ -134,8 +105,8 @@
         <div class="inputsBT">
 
             <h1>Control Cortados </h1>
-            <input type="file" id="file_upload4" />
-            <button onclick="upload4()">Upload</button>
+            <input type="file" id="inputCortados" />
+            <button onclick="upload('inputCortados', Func4)">Upload</button>
             
             <div class="dropdown">
                 <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Fecha</button>
@@ -175,17 +146,7 @@
             <br><br>
 
             <div>
-                <table class="tabla" id="tableP4">
-                    <tr>
-                        <th>Interno</th>
-                        <th>Legajo</th>
-                        <th>Apellido</th>
-                        <th>Hora</th>
-                        <th>Recorrido</th>
-                        <th>Motivo Corte</th>
-                    </tr>
-
-                </table>
+                <table class="tabla" id="tableP4"></table>
             </div>
     </div>
 
@@ -193,8 +154,8 @@
         <div class="inputsBT">
 
             <h1>Km por Ramal Mensual</h1>
-            <input type="file" id="file_upload5" />
-            <button onclick="upload5()">Upload</button>
+            <input type="file" id="inputKmPorRamal" />
+            <button onclick="upload('inputKmPorRamal', Func5)">Upload</button>
         </div>
 
 
@@ -217,8 +178,8 @@
         <div class="inputsBT">
 
             <h1>Control Mensual</h1>
-            <input type="file" id="file_upload6" />
-            <button onclick="upload6()">Upload</button>
+            <input type="file" id="inputControlMensual" />
+            <button onclick="upload('inputControlMensual', Func6)">Upload</button>
         </div>
 
 
@@ -236,8 +197,8 @@
         <div class="inputsBT">
 
             <h1>Control Francos</h1>
-            <input type="file" id="file_upload7" />
-            <button onclick="upload7()">FRANCOS</button>
+            <input type="file" id="inputFrancos" />
+            <button onclick="upload('inputFrancos', Func7)">FRANCOS</button>
 
             <div class="dropdown">
                 <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">FERIADOS</button>
@@ -326,10 +287,10 @@
         <div class="inputsBT">
 
             <h1>Control Planillas</h1>
-            <input type="file" id="file_upload8" />
-            <input type="file" id="file_upload9" />
-            <button onclick="upload8()">Upload</button>
-            <button onclick="upload9()">Upload</button>
+            <input type="file" id="inputPlanillas1" />
+            <input type="file" id="inputPlanillas2" />
+            <button onclick="upload('inputPlanillas1', Func8)">Upload</button>
+            <button onclick="upload('inputPlanillas2', Func9)">Upload</button>
             
             <div class="dropdown">
                 <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Fecha</button>
@@ -394,10 +355,10 @@
         <div class="inputsBT">
 
             <h1>Control KM Sube</h1>
-            <input type="file" id="file_upload10" />
-            <input type="file" id="file_upload11" />
-            <button onclick="upload10()">Upload</button>
-            <button onclick="upload11()">Upload</button>
+            <input type="file" id="inputKmSube1" />
+            <input type="file" id="inputKmSube2" />
+            <button onclick="upload('inputKmSube1', Func10)">Upload</button>
+            <button onclick="upload('inputKmSube2', Func11)">Upload</button>
             
             <div class="dropdown">
                 <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Fecha</button>
@@ -453,8 +414,8 @@
 
         <div class="inputsBT">
         <h1>Control de Esperas</h1>
-        <input type="file" id="file_upload12" />
-        <button onclick="upload12()">Upload</button>
+        <input type="file" id="inputEsperas" />
+        <button onclick="upload('inputEsperas', Func12)">Upload</button>
         </div>
 
         <br><br>

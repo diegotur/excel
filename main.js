@@ -55,21 +55,46 @@ function cambioHora(excel_date, time = false) {
     return time ? daytime : daytime
 };
 
+function Limpiar (a, b){
+    if (a.length > 0) {
+        do {
+            b.removeChild(a[0]);
 
-function upload() {
-    var files = document.getElementById('file_upload').files;
+        } while (a.length != 0);
+    }
+}
+
+function TitleList (info, titleList, table ){
+    const nodeP = document.createElement("tr");
+    nodeP.classList.add(info);
+               
+        for (i=0; i<titleList.length; i++){
+            let subNode = document.createElement("th");
+            let textnode = document.createTextNode(titleList[i]);
+            subNode.appendChild(textnode);
+            nodeP.appendChild(subNode);
+            }
+        table.appendChild(nodeP);
+}
+
+
+
+function upload(source, func) {
+    var files = document.getElementById(source).files;
     if (files.length == 0) {
-        alert("Please choose any file...");
+        alert("Seleccione Archivo");
         return;
     }
     var filename = files[0].name;
     var extension = filename.substring(filename.lastIndexOf(".")).toUpperCase();
     if (extension == '.XLS' || extension == '.XLSX'|| extension == '.TXT') {
-        excelFileToJSON(files[0]);
+        func(files[0]);
     } else {
-        alert("Please select a valid excel file.");
+        alert("No se puede leer el archivo");
     }
 }
+
+
 
 let result = {};
 let roa;
@@ -79,8 +104,7 @@ let tableP = document.getElementById("tableP");
 
 
 
-
-function excelFileToJSON(file) {
+function Func1(file) {
     try {
         var reader = new FileReader();
         reader.readAsBinaryString(file);
@@ -91,48 +115,45 @@ function excelFileToJSON(file) {
                 type: 'binary'
             });
             workbook.SheetNames.forEach(function(sheetName) {
-                roa = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
+            roa = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
 
-                if (roa.length > 0){
+            if (roa.length > 0){
+            
+            let inter = 0;
 
-
+            for (const elem of roa) {
+                elem.Interno = roa[inter][Object.keys(roa[inter])[0]];
+                elem.Ramal = elem.__EMPTY_2;
+                elem.Legajo = elem.__EMPTY_6;
+                elem.Kms = elem.__EMPTY_9;
+                elem.Secciones = elem.__EMPTY_10;
+                elem.Chofer = elem.__EMPTY_11;
+                elem.Diferencia = elem.__EMPTY_12;
                 
-                let inter = 0;
+                delete elem.__EMPTY;
+                delete elem.__EMPTY_1;
+                delete elem.__EMPTY_2;
+                delete elem.__EMPTY_3;
+                delete elem.__EMPTY_4;
+                delete elem.__EMPTY_5;
+                delete elem.__EMPTY_6;
+                delete elem.__EMPTY_7;
+                delete elem.__EMPTY_8;
+                delete elem.__EMPTY_9;
+                delete elem.__EMPTY_10;
+                delete elem.__EMPTY_11;
+                delete elem.__EMPTY_12;
 
-                for (const elem of roa) {
-                    elem.Interno = roa[inter][Object.keys(roa[inter])[0]];
-                    elem.Ramal = elem.__EMPTY_2;
-                    elem.Legajo = elem.__EMPTY_6;
-                    elem.Kms = elem.__EMPTY_9;
-                    elem.Secciones = elem.__EMPTY_10;
-                    elem.Chofer = elem.__EMPTY_11;
-                    elem.Diferencia = elem.__EMPTY_12;
-                    
-                    delete elem.__EMPTY;
-                    delete elem.__EMPTY_1;
-                    delete elem.__EMPTY_2;
-                    delete elem.__EMPTY_3;
-                    delete elem.__EMPTY_4;
-                    delete elem.__EMPTY_5;
-                    delete elem.__EMPTY_6;
-                    delete elem.__EMPTY_7;
-                    delete elem.__EMPTY_8;
-                    delete elem.__EMPTY_9;
-                    delete elem.__EMPTY_10;
-                    delete elem.__EMPTY_11;
-                    delete elem.__EMPTY_12;
+                inter++;
+            }
 
-                    inter++;
-                }
-
-                let roaCortos = roa.filter((elem) => elem.Secciones < 8);
-                let roaLargos = roa.filter((elem) => elem.Secciones > 8);
-
-                let newArray = roaLargos.filter((elem) => elem.Diferencia > 7);
-                let newArray1 = newArray.filter((elem) => elem.Ramal < 316);
-                let newArray2 = newArray1.filter((elem) => elem.Kms > 30);
-                let newArray6 = roaCortos.filter((elem) => elem.Kms > 12);
-                let newArray7 = newArray6.filter((elem) => elem.Diferencia > 3);
+            let roaCortos = roa.filter((elem) => elem.Secciones < 8);
+            let roaLargos = roa.filter((elem) => elem.Secciones > 8);
+            let newArray = roaLargos.filter((elem) => elem.Diferencia > 7);
+            let newArray1 = newArray.filter((elem) => elem.Ramal < 316);
+            let newArray2 = newArray1.filter((elem) => elem.Kms > 30);
+            let newArray6 = roaCortos.filter((elem) => elem.Kms > 12);
+            let newArray7 = newArray6.filter((elem) => elem.Diferencia > 3);
 
                 roaCortos = newArray7;
 
@@ -167,40 +188,27 @@ function excelFileToJSON(file) {
 
                 roa.sort((a, b) => (a.Legajo > b.Legajo) ? 1 : -1);
 
+                let roaFinal=[];
 
-                for (const elem of roa) {
-                    const node = document.createElement("tr");
-                    const subNode = document.createElement("td");
-                    const subNode1 = document.createElement("td");
-                    const subNode2 = document.createElement("td");
-                    const subNode3 = document.createElement("td");
-                    const subNode4 = document.createElement("td");
-                    const subNode5 = document.createElement("td");
-                    const subNode6 = document.createElement("td");
+                let infoP = document.getElementsByClassName("infoP");
 
-                    const textnode = document.createTextNode(elem.Interno);
-                    const textnode1 = document.createTextNode(elem.Ramal);
-                    const textnode2 = document.createTextNode(elem.Legajo);
-                    const textnode3 = document.createTextNode(elem.Kms);
-                    const textnode4 = document.createTextNode(elem.Secciones);
-                    const textnode5 = document.createTextNode(elem.Chofer);
-                    const textnode6 = document.createTextNode(elem.Diferencia);
-                    subNode.appendChild(textnode);
-                    subNode1.appendChild(textnode1);
-                    subNode2.appendChild(textnode2);
-                    subNode3.appendChild(textnode3);
-                    subNode4.appendChild(textnode4);
-                    subNode5.appendChild(textnode5);
-                    subNode6.appendChild(textnode6);
-                    node.appendChild(subNode);
-                    node.appendChild(subNode1);
-                    node.appendChild(subNode2);
-                    node.appendChild(subNode3);
-                    node.appendChild(subNode4);
-                    node.appendChild(subNode5);
-                    node.appendChild(subNode6);
-                    tableP.appendChild(node);
-                }
+                Limpiar(infoP, tableP);
+
+                let titleList = ["Interno", "Ramal", "Legajo", "Kms", "Secciones", "Chofer", "Diferencia"];
+               
+                TitleList("infoP", titleList, tableP);
+
+                for(const elem of roa){
+                    
+                    let {Interno, Ramal, Legajo, Kms, Secciones, Chofer, Diferencia} = elem;
+                    
+                    roaFinal.push([Interno, Ramal, Legajo, Kms, Secciones, Chofer, Diferencia]);
+                    }
+                    for (const elem of roaFinal){
+                        const node = document.createElement("tr");
+                        node.classList.add("infoP");
+                        WriteTable(elem, tableP, node);
+                    }
 
                 if (roa.length > 0) {
 
@@ -217,27 +225,13 @@ function excelFileToJSON(file) {
 }
 
 
-function upload2() {
-    var files = document.getElementById('file_upload2').files;
-    if (files.length == 0) {
-        alert("Please choose any file...");
-        return;
-    }
-    var filename = files[0].name;
-    var extension = filename.substring(filename.lastIndexOf(".")).toUpperCase();
-    if (extension == '.XLS' || extension == '.XLSX') {
-        excelFileToJSON2(files[0]);
-    } else {
-        alert("Please select a valid excel file.");
-    }
-}
 
 let result2 = {};
 let roa2;
 
 let tableP2 = document.getElementById("tableP2");
 
-function excelFileToJSON2(file) {
+function Func2(file) {
     try {
         var reader = new FileReader();
         reader.readAsBinaryString(file);
@@ -337,12 +331,7 @@ function excelFileToJSON2(file) {
                     function Write(a) {
                         let infoP2 = document.getElementsByClassName("infoP2");
                         
-                        if (infoP2.length > 0) {
-                            do {
-                                tableP2.removeChild(infoP2[0]);
-    
-                            } while (infoP2.length != 0);
-                        }
+                        Limpiar(infoP2, tableP2);
                         
                         let newArray10 = roaBis.filter((elem) => a == elem.FechaInicio);
                         let newPP = newArray10.filter((elem) => a !== elem.FechaFin);
@@ -357,54 +346,30 @@ function excelFileToJSON2(file) {
     
                         let new2 = newArray11.concat(kmDeMas63);
                         let new3 = new2.concat(pcoMasde48);
-    
                         let new4 = new3.concat(pcoRapMasde48);
                         let new5 = new4.concat(fonMasde54);
                         let new6 = new5.concat(fonRapMasde54);
     
                         new6.sort((a, b) => (a.Legajo > b.Legajo) ? 1 : -1);
+
+                    let roaFinal=[];
+
+                    let titleList = ["Legajo", "Interno", "FechaInicio", "FechaFin", "HoraInicio", "HoraFin", "Recorrido", "Kms"];
+               
+                    TitleList("infoP2", titleList, tableP2);
+
+                    for(const elem of new6){
+                    
+                        let {Legajo, Interno, FechaInicio, FechaFin, HoraInicio, HoraFin, Recorrido, Kms} = elem;
+                    
+                        roaFinal.push([Legajo, Interno, FechaInicio, FechaFin, HoraInicio, HoraFin, Recorrido, Kms]);
+                    }
+                    for (const elem of roaFinal){
+                        const node = document.createElement("tr");
+                        node.classList.add("infoP2");
+                        WriteTable(elem, tableP2, node);
+                    }
     
-    
-    
-                        for (const elem of new6) {
-                            const node = document.createElement("tr");
-                            node.classList.add("infoP2");
-                            const subNode = document.createElement("td");
-                            const subNode1 = document.createElement("td");
-                            const subNode2 = document.createElement("td");
-                            const subNode3 = document.createElement("td");
-                            const subNode4 = document.createElement("td");
-                            const subNode5 = document.createElement("td");
-                            const subNode6 = document.createElement("td");
-                            const subNode7 = document.createElement("td");
-    
-                            const textnode = document.createTextNode(elem.Legajo);
-                            const textnode1 = document.createTextNode(elem.Interno);
-                            const textnode2 = document.createTextNode(elem.FechaInicio);
-                            const textnode3 = document.createTextNode(elem.FechaFin);
-                            const textnode4 = document.createTextNode(elem.HoraInicio);
-                            const textnode5 = document.createTextNode(elem.HoraFin);
-                            const textnode6 = document.createTextNode(elem.Recorrido);
-                            const textnode7 = document.createTextNode(elem.Kms);
-                            subNode.appendChild(textnode);
-                            subNode1.appendChild(textnode1);
-                            subNode2.appendChild(textnode2);
-                            subNode3.appendChild(textnode3);
-                            subNode4.appendChild(textnode4);
-                            subNode5.appendChild(textnode5);
-                            subNode6.appendChild(textnode6);
-                            subNode7.appendChild(textnode7);
-                            node.appendChild(subNode);
-                            node.appendChild(subNode1);
-                            node.appendChild(subNode2);
-                            node.appendChild(subNode3);
-                            node.appendChild(subNode4);
-                            node.appendChild(subNode5);
-                            node.appendChild(subNode6);
-                            node.appendChild(subNode7);
-                            tableP2.appendChild(node);
-    
-                        }
                     }
                 }
                     if (roa2.length > 0) {
@@ -417,23 +382,11 @@ function excelFileToJSON2(file) {
     }
 }
 
-function upload3() {
-    var files = document.getElementById('file_upload3').files;
-    if (files.length == 0) {
-        alert("Please choose any file...");
-        return;
-    }
-    var filename = files[0].name;
-    var extension = filename.substring(filename.lastIndexOf(".")).toUpperCase();
-    if (extension == '.XLS' || extension == '.XLSX') {
-        excelFileToJSON3(files[0]);
-    } else {
-        alert("Please select a valid excel file.");
-    }
-}
 let roa3;
 
-function excelFileToJSON3(file) {
+let tableP3 = document.getElementById("tableP3");
+
+function Func3(file) {
     try {
         var reader = new FileReader();
         reader.readAsBinaryString(file);
@@ -446,17 +399,19 @@ function excelFileToJSON3(file) {
             workbook.SheetNames.forEach(function(sheetName) {
                 roa3 = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
 
-                for (const elem of roa3) {
+                if (roa3.length > 0){
 
-
-                    elem.interno = elem.__EMPTY;
-                    elem.fechaInicio = elem.__EMPTY_1;
-                    elem.horaInicio = elem.__EMPTY_2;
-                    elem.recorrido = elem.__EMPTY_4;
-                    elem.ramal = elem.__EMPTY_5;
-                    elem.direccion = elem.__EMPTY_6;
-                    elem.seccion = elem.__EMPTY_7;
-                    elem.legajo = elem.__EMPTY_8;
+                    for (const elem of roa3) {
+                        
+                        
+                        elem.interno = elem.__EMPTY;
+                        elem.fechaInicio = elem.__EMPTY_1;
+                        elem.horaInicio = elem.__EMPTY_2;
+                        elem.recorrido = elem.__EMPTY_4;
+                        elem.ramal = elem.__EMPTY_5;
+                        elem.direccion = elem.__EMPTY_6;
+                        elem.seccion = elem.__EMPTY_7;
+                        elem.legajo = elem.__EMPTY_8;
                     elem.tipoDeMarca = elem.__EMPTY_9;
 
                     delete elem.__EMPTY;
@@ -473,39 +428,39 @@ function excelFileToJSON3(file) {
                     delete elem.__EMPTY_11;
                     delete elem.__EMPTY_12;
                 }
-
-
+                
+                
                 let soloCambio = roa3.filter((elem) => elem.tipoDeMarca == "Cambio Seccion");
                 let soloCambio2 = soloCambio.filter((elem) => elem.legajo != "0");
                 let porInterno = [];
-
-
+                
+                
                 for (const elem of soloCambio2) {
                     elem.fechaInicio = cambioFecha(elem.fechaInicio, 25568);
                     elem.horaInicio = cambioHora(elem.horaInicio, 25568);
                     let e = elem.horaInicio.split(':');
                     elem.horaSinSec = (`${e[0]}:${e[1]}`);
-
+                    
                     if (porInterno.some((n) => n == elem.interno) == false) {
                         porInterno.push(elem.interno);
                     }
                 }
-
+                
                 let x2 = [];
                 let x3 = [];
                 let x4 = [];
                 let intArr = [];
-
+                
                 for (const elem of porInterno) {
                     let x = soloCambio2.filter((elem2) => elem2.interno == elem);
                     x2.push(x);
                 }
-
+                
 
                 for (i = 0; i < porInterno.length; i++) {
                     x3[i] = soloCambio2.filter((elem) => elem.interno == porInterno[i]);
                 }
-
+                
                 x4 = [...x3];
                 for (i = 0; i < x4.length; i++) {
                     for (ii = 0; ii < x4[i].length; ii++) {
@@ -520,15 +475,15 @@ function excelFileToJSON3(file) {
                         x4[i] = dup;
                     }
                 }
-
+                
                 for (i = 0; i < x4.length; i++) {
                     let dup = x4[i].filter((item, index) => x4[i].indexOf(item) == index);
                     x4[i] = dup;
                 }
-
+                
                 let finalArr2 = [];
-
-
+                
+                
                 for (i = 0; i < x4.length; i++) {
                     for (ii = 0; ii < x4[i].length; ii++) {
                         let x = soloCambio2.filter((elem) => elem.interno == intArr[i] && elem.horaSinSec == x4[i][ii]);
@@ -537,63 +492,60 @@ function excelFileToJSON3(file) {
                         }
                     }
                 }
-
+                
                 finalArr2.sort((a, b) => (a.legajo > b.legajo) ? 1 : -1);
-
+                
                 let finalArr3 = [];
                 let finalArr4 = [];
-
-
+                
+                
                 for (const s of finalArr2) {
                     finalArr3.push(s.legajo);
                     finalArr4.push(s.horaSinSec);
-
+                    
                 }
-
+                
                 function Duplicados(a) {
                     return [...new Set(a)];
                 }
-
+                
                 let finalArr5 = Duplicados(finalArr3);
-
+                
                 let finalArr6 = [];
                 for (const e of finalArr5) {
                     let x = finalArr2.filter((el) => el.legajo === e);
-
+                    
                     h = [];
                     for (const e of x) {
                         h.push(e.horaSinSec);
                     }
-
+                    
                     let xx = Duplicados(h);
-
+                    
                     finalArr6.push({
                         legajo: e,
                         cantCorridos: xx.length
                     })
                 }
-
-                for (const elem of finalArr6) {
+                
+                let roaFinal=[];
+                
+                let titleList = ["Legajo", "Secc. De Corrido"];
+                
+                TitleList("infoP3", titleList, tableP3);
+                
+                for(const elem of finalArr6){
+                    
+                    let {legajo, cantCorridos} = elem;
+                    
+                    roaFinal.push([legajo, cantCorridos]);
+                }
+                for (const elem of roaFinal){
                     const node = document.createElement("tr");
                     node.classList.add("infoP3");
-                    const subNode = document.createElement("td");
-                    const subNode1 = document.createElement("td");
-
-                    const textnode = document.createTextNode(elem.legajo);
-                    const textnode1 = document.createTextNode(elem.cantCorridos);
-                    subNode.appendChild(textnode);
-                    subNode1.appendChild(textnode1);
-                    node.appendChild(subNode);
-                    node.appendChild(subNode1);
-                    tableP3.appendChild(node);
-
+                    WriteTable(elem, tableP3, node);
                 }
-
-
-                if (roa3.length > 0) {
-
-                    result[sheetName] = roa3;
-                }
+            }
             });
         }
     } catch (e) {
@@ -601,25 +553,9 @@ function excelFileToJSON3(file) {
     }
 }
 
-function upload4() {
-    var files = document.getElementById('file_upload4').files;
-    if (files.length == 0) {
-        alert("Please choose any file...");
-        return;
-    }
-    var filename = files[0].name;
-    var extension = filename.substring(filename.lastIndexOf(".")).toUpperCase();
-    if (extension == '.XLS' || extension == '.XLSX') {
-        excelFileToJSON4(files[0]);
-    } else {
-        alert("Please select a valid excel file.");
-    }
-}
-let roa4;
-
 let tableP4 = document.getElementById("tableP4");
 
-function excelFileToJSON4(file) {
+function Func4(file) {
     try {
         var reader = new FileReader();
         reader.readAsBinaryString(file);
@@ -630,16 +566,16 @@ function excelFileToJSON4(file) {
                 type: 'binary'
             });
             workbook.SheetNames.forEach(function(sheetName) {
-                roa4 = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
+                roa = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
 
-                if (roa4.length > 0){
+                if (roa.length > 0){
 
-                for (const elem of roa4) {
+                for (const elem of roa) {
 
                     elem.Fecha = cambioFecha(elem.Fecha, 25568);
                     elem.Hora = cambioHora(elem.Hora);
                 }
-                let temp1 = roa4.filter((elem) => elem.Cabecera != "Estación Benavidez");
+                let temp1 = roa.filter((elem) => elem.Cabecera != "Estación Benavidez");
                 let temp2 = temp1.filter((elem) => elem.MotivoCorte != "VUELTA ANULADA");
 
                 let fechasDisp2 = [];
@@ -677,18 +613,17 @@ function excelFileToJSON4(file) {
                 function Write2(a) {
                     let infoP4 = document.getElementsByClassName("infoP4");
 
-                    if (infoP4.length > 0) {
-                        do {
-                            tableP4.removeChild(infoP4[0]);
-
-                        } while (infoP4.length != 0);
-                    }
+                    Limpiar(infoP4, tableP4);
 
                     let soloFecha = temp2.filter((elem) => a == elem.Fecha);
 
                     soloFecha.sort((a, b) => (a.Legajo > b.Legajo) ? 1 : -1);
 
                     let soloFechaFinal = [];
+
+                    let titleList = ["Coche", "Legajo", "Apellido", "Hora", "Recorrido", "Motivo De Corte"];
+                
+                    TitleList("infoP4", titleList, tableP4);
 
                     for(const elem of soloFecha){
                     
@@ -703,34 +638,14 @@ function excelFileToJSON4(file) {
                     }
                 }
 
-                }
-
-                if (roa4.length > 0) {
-
-                    result[sheetName] = roa4;
-                }
-            });
-        }
+            }
+        });
+    }
     } catch (e) {
         console.error(e);
     }
 }
 
-
-function upload5() {
-    var files = document.getElementById('file_upload5').files;
-    if (files.length == 0) {
-        alert("Please choose any file...");
-        return;
-    }
-    var filename = files[0].name;
-    var extension = filename.substring(filename.lastIndexOf(".")).toUpperCase();
-    if (extension == '.XLS' || extension == '.XLSX') {
-        excelFileToJSON5(files[0]);
-    } else {
-        alert("Please select a valid excel file.");
-    }
-}
 let roa5;
 let benIda;
 let benVta;
@@ -757,7 +672,7 @@ let pcoATalar;
 let fonATalar;
 
 
-function excelFileToJSON5(file) {
+function Func5(file) {
     try {
         var reader = new FileReader();
         reader.readAsBinaryString(file);
@@ -864,21 +779,6 @@ function excelFileToJSON5(file) {
     }
 }
 
-function upload6() {
-    var files = document.getElementById('file_upload6').files;
-    if (files.length == 0) {
-        alert("Please choose any file...");
-        return;
-    }
-    var filename = files[0].name;
-    var extension = filename.substring(filename.lastIndexOf(".")).toUpperCase();
-    if (extension == '.XLS' || extension == '.XLSX') {
-        excelFileToJSON6(files[0]);
-    } else {
-        alert("Please select a valid excel file.");
-    }
-}
-
 let result6 = {};
 let roa6;
 let choferesSeccionamiento = [];
@@ -894,13 +794,9 @@ let tempChoferesEsperas = [];
 let choferesSpeed = [];
 let choferesEsperas = [];
 
-
-
-
-
 let tableP6 = document.getElementById("tableP6");
 
-function excelFileToJSON6(file) {
+function Func6(file) {
     try {
         var reader = new FileReader();
         reader.readAsBinaryString(file);
@@ -1398,27 +1294,14 @@ function excelFileToJSON6(file) {
 
 // if (tiempo > "6"==true){ masHoras.push(elem);}
 
-function upload7() {
-    var files = document.getElementById('file_upload7').files;
-    if (files.length == 0) {
-        alert("Please choose any file...");
-        return;
-    }
-    var filename = files[0].name;
-    var extension = filename.substring(filename.lastIndexOf(".")).toUpperCase();
-    if (extension == '.XLS' || extension == '.XLSX') {
-        excelFileToJSON7(files[0]);
-    } else {
-        alert("Please select a valid excel file.");
-    }
-}
+
 let roa7;
 
 let tableP7 = document.getElementById("tableP7");
 let francosMoreTR = document.getElementById("francosDeMas");
 let francosLessTR = document.getElementById("francosDeMenos");
 
-function excelFileToJSON7(file) {
+function Func7(file) {
     try {
         var reader = new FileReader();
         reader.readAsBinaryString(file);
@@ -1797,26 +1680,11 @@ function excelFileToJSON7(file) {
 
 
 
-function upload8() {
-    var files = document.getElementById('file_upload8').files;
-    if (files.length == 0) {
-        alert("Please choose any file...");
-        return;
-    }
-    var filename = files[0].name;
-    var extension = filename.substring(filename.lastIndexOf(".")).toUpperCase();
-    if (extension == '.XLS' || extension == '.XLSX' || extension == '.DBF') {
-        excelFileToJSON8(files[0]);
-    } else {
-        alert("Please select a valid excel file.");
-    }
-}
-
 let roa8;
 
 let tableP8 = document.getElementById("tableP8");
 
-function excelFileToJSON8(file) {
+function Func8(file) {
     try {
         var reader = new FileReader();
         reader.readAsBinaryString(file);
@@ -1972,25 +1840,10 @@ function excelFileToJSON8(file) {
     }
 }
 
-function upload9() {
-    var files = document.getElementById('file_upload9').files;
-    if (files.length == 0) {
-        alert("Please choose any file...");
-        return;
-    }
-    var filename = files[0].name;
-    var extension = filename.substring(filename.lastIndexOf(".")).toUpperCase();
-    if (extension == '.XLS' || extension == '.XLSX' || extension == '.DBF') {
-        excelFileToJSON9(files[0]);
-    } else {
-        alert("Please select a valid excel file.");
-    }
-}
-
 let roa9;
 
 
-function excelFileToJSON9(file) {
+function Func9(file) {
     try {
         var reader = new FileReader();
         reader.readAsBinaryString(file);
@@ -2167,28 +2020,14 @@ function excelFileToJSON9(file) {
         console.error(e);
     }
 }
-let arrayKM4=[];
-
-function upload10() {
-    var files = document.getElementById('file_upload10').files;
-    if (files.length == 0) {
-        alert("Please choose any file...");
-        return;
-    }
-    var filename = files[0].name;
-    var extension = filename.substring(filename.lastIndexOf(".")).toUpperCase();
-    if (extension == '.XLS' || extension == '.XLSX' || extension == '.DBF') {
-        excelFileToJSON10(files[0]);
-    } else {
-        alert("Please select a valid excel file.");
-    }
-}
 
 let roa10;
 
 let tableP10 = document.getElementById("tableP10");
 
-function excelFileToJSON10(file) {
+let arrayKM4=[];
+
+function Func10(file) {
     try {
         var reader = new FileReader();
         reader.readAsBinaryString(file);
@@ -2293,26 +2132,11 @@ function excelFileToJSON10(file) {
     }
 }
 
-function upload11() {
-    var files = document.getElementById('file_upload11').files;
-    if (files.length == 0) {
-        alert("Please choose any file...");
-        return;
-    }
-    var filename = files[0].name;
-    var extension = filename.substring(filename.lastIndexOf(".")).toUpperCase();
-    if (extension == '.XLS' || extension == '.XLSX' || extension == '.DBF') {
-        excelFileToJSON11(files[0]);
-    } else {
-        alert("Please select a valid excel file.");
-    }
-}
-
 let roa11;
 
 let tableP11 = document.getElementById("tableP11");
 
-function excelFileToJSON11(file) {
+function Func11(file) {
     try {
         var reader = new FileReader();
         reader.readAsBinaryString(file);
@@ -2389,17 +2213,8 @@ function excelFileToJSON11(file) {
                     
 
                 let titleList = ["Coche", "KM Tráfico", "KM Sube", "Diferencia", "Novedad"];
-
-                const nodeP = document.createElement("tr");
-                nodeP.classList.add("infoP12");
                
-                for (i=0; i<titleList.length; i++){
-                    let subNode = document.createElement("th");
-                    let textnode = document.createTextNode(titleList[i]);
-                    subNode.appendChild(textnode);
-                    nodeP.appendChild(subNode);
-                }
-                tableP10.appendChild(nodeP);
+                TitleList("infoP12", titleList, tableP10);
                 
                 for (const elem of kms3) {
                     const node = document.createElement("tr");
@@ -2443,25 +2258,12 @@ function excelFileToJSON11(file) {
         console.error(e);
     }
 }
-function upload12() {
-    var files = document.getElementById('file_upload12').files;
-    if (files.length == 0) {
-        alert("Please choose any file...");
-        return;
-    }
-    var filename = files[0].name;
-    var extension = filename.substring(filename.lastIndexOf(".")).toUpperCase();
-    if (extension == '.XLS' || extension == '.XLSX') {
-        excelFileToJSON12(files[0]);
-    } else {
-        alert("Please select a valid excel file.");
-    }
-}
+
 let roa12;
 
 let tableP12 = document.getElementById("tableP12");
 
-function excelFileToJSON12(file) {
+function Func12(file) {
     try {
         var reader = new FileReader();
         reader.readAsBinaryString(file);
