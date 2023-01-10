@@ -625,10 +625,8 @@ function Func5(file) {
                     }
                 }
                 
-                let temp1 = roa.filter((elem) => elem.Cabecera != "Estación Benavidez ");
-                let temp2 = temp1.filter((elem) => elem.Tipo != "C ");
-                let temp3 = temp2.filter((elem) => elem.Tipo != "CE ");
-                let temp4 = temp3.filter((elem) => elem.Legajo != "2743");
+                let temp4 = roa.filter((elem) => elem.Cabecera != "Estación Benavidez " && elem.Tipo != "C " && elem.Tipo != "CE " && elem.Legajo != "2743");
+
                 
                 let arrayRec = [];
 
@@ -687,8 +685,6 @@ function Func5(file) {
     }
 }
 
-let result6 = {};
-let roa6;
 let choferesSeccionamiento = [];
 let tempChoferesSeccionamiento = [];
 let choferesMalUso = [];
@@ -717,316 +713,143 @@ function Func6(file) {
 
 
             workbook.SheetNames.forEach(function(sheetName) {
-                roa6 = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
+                roa = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
 
-                
-                let numberMalUso = roa6.findIndex((elem) => elem.props == "CONTROL MAL USO DEL SUBE");
-                let numberCortados = roa6.findIndex((elem) => elem.props == "SERVICIOS CORTADOS");
-                let numberSecCorridos = roa6.findIndex((elem) => elem.props == "CONTROL SECCIONAMIENTO CORRIDO");
-                let numberSpeed = roa6.findIndex((elem) => elem.props == "CONTROL EXCESO DE VELOCIDAD");
-                let numberEsperas = roa6.findIndex((elem) => elem.props == "ESPERAS EXCESIVAS");
-                
+                if (roa.length > 0 ){
 
-                let arraySeccionamiento = [];
-                let arrayMalUso = [];
-                let arrayCortados = [];
-                let arrayCorridos = [];
-                let arraySpeed = [];
-                let arrayEsperas = [];
-
-
-                for (i = 2; i < numberMalUso; i++) {
-                    arraySeccionamiento.push(roa6[i]);
-                }
-                for (i = numberMalUso + 2; i < numberCortados; i++) {
-                    arrayMalUso.push(roa6[i]);
-                }
-                for (i = numberCortados + 2; i < numberSecCorridos; i++) {
-                    arrayCortados.push(roa6[i]);
-                }
-                for (i = numberSecCorridos + 2; i < numberSpeed; i++) {
-                    arrayCorridos.push(roa6[i]);
-                }
-                for (i = numberSpeed + 2; i < numberEsperas; i++) {
-                    arraySpeed.push(roa6[i]);
-                }
-                for (i = numberEsperas + 2; i < roa6.length; i++) {
-                    arrayEsperas.push(roa6[i]);
-                }
-
-                for (const elem of arraySeccionamiento) {
-                    xx = elem.__EMPTY_1;
-                    tempChoferesSeccionamiento.push({
-                        legajo: xx
-                    });
-                }
-                for (const elem of arrayMalUso) {
-                    xx = elem.props;
-                    tempChoferesMalUso.push({
-                        legajo: xx
-                    });
-                }
-                for (const elem of arrayCortados) {
-                    xx = elem.__EMPTY;
-                    tempChoferesCortados.push({
-                        legajo: xx
-                    });
-                }
-                for (const elem of arrayCorridos) {
-                    let leg = elem.props,
-                        xx = elem.__EMPTY;
-                    tempCorridos.push({
-                        leg,
-                        xx
-                    });
-                }
-                for (const elem of arraySpeed) {
-                    let xx = elem.__EMPTY_3;
-                    tempChoferesSpeed.push({
-                        legajo: xx
-                    });
-                }
-                for (const elem of arrayEsperas) {
-                    let xx = parseInt(elem.__EMPTY);
-                    tempChoferesEsperas.push({
-                        legajo: xx
-                    });
-                }
-
-                if (roa6.length > 0) {
-                    result[sheetName] = roa6;
+                    let numberMalUso = roa.findIndex((elem) => elem.props == "CONTROL MAL USO DEL SUBE");
+                    let numberCortados = roa.findIndex((elem) => elem.props == "SERVICIOS CORTADOS");
+                    let numberSecCorridos = roa.findIndex((elem) => elem.props == "CONTROL SECCIONAMIENTO CORRIDO");
+                    let numberSpeed = roa.findIndex((elem) => elem.props == "CONTROL EXCESO DE VELOCIDAD");
+                    let numberEsperas = roa.findIndex((elem) => elem.props == "ESPERAS EXCESIVAS");
+                    
+                    
+                    let arraySeccionamiento = [];
+                    let arrayMalUso = [];
+                    let arrayCortados = [];
+                    let arrayCorridos = [];
+                    let arraySpeed = [];
+                    let arrayEsperas = [];
+                    
+                    
+                    for (i = 2; i < numberMalUso; i++) {
+                        arraySeccionamiento.push(roa[i]);
+                    }
+                    for (i = numberMalUso + 2; i < numberCortados; i++) {
+                        arrayMalUso.push(roa[i]);
+                    }
+                    for (i = numberCortados + 2; i < numberSecCorridos; i++) {
+                        arrayCortados.push(roa[i]);
+                    }
+                    for (i = numberSecCorridos + 2; i < numberSpeed; i++) {
+                        arrayCorridos.push(roa[i]);
+                    }
+                    for (i = numberSpeed + 2; i < numberEsperas; i++) {
+                        arraySpeed.push(roa[i]);
+                    }
+                    for (i = numberEsperas + 2; i < roa.length; i++) {
+                        arrayEsperas.push(roa[i]);
+                    }
+                    for (const elem of arraySeccionamiento) {
+                        tempChoferesSeccionamiento.push({legajo: elem.__EMPTY_1});
+                    }
+                    for (const elem of arrayMalUso) {
+                        tempChoferesMalUso.push({legajo: elem.props});
+                    }
+                    for (const elem of arrayCortados) {
+                        tempChoferesCortados.push({legajo: elem.__EMPTY});
+                    }
+                    for (const elem of arrayCorridos) {
+                        tempCorridos.push({leg: elem.props, xx: elem.__EMPTY});
+                    }
+                    for (const elem of arraySpeed) {
+                        tempChoferesSpeed.push({legajo: elem.__EMPTY_3});
+                    }
+                    for (const elem of arrayEsperas) {
+                        tempChoferesEsperas.push({legajo: parseInt(elem.__EMPTY)});
+                    }
                 }
             });
-
-
+            
+            
             let corr = [];
             let corr3 = [];
-
-
+            
+            
             for (const el of tempCorridos) {
                 corr.push(el.leg);
             }
-
+            
             const corr2 = [...new Set(corr)];
-
+            
             for (const el of corr2) {
                 let x = tempCorridos.filter((e) => e.leg == el);
 
                 let initialValue = 0
-
+                
                 let ff = x.reduce(function(accumulator, curValue) {
-
+                    
                     return accumulator + curValue.xx
-
+                    
                 }, initialValue);
-
+                
                 corr3.push({
                     legajo: el,
                     seccCorridos: ff
                 });
-
+                
             }
             corr3.sort((a, b) => (a.legajo > b.legajo) ? 1 : -1);
-
-
-            for (const elem of tempChoferesSeccionamiento) {
-                xx = elem.legajo;
-                let x = tempChoferesSeccionamiento.filter((el) => el.legajo == elem.legajo);
-                choferesSeccionamiento.push({
-                    legajo: xx,
-                    seccionamiento: x.length
-                });
+            
+            function FilterArr (var1, var2, var3){
+                for (const elem of var1) {
+                let x = var1.filter((el) => el.legajo == elem.legajo);
+                var2.push({legajo: elem.legajo, [var3]: x.length});
+                }
             }
 
-            choferesSeccionamiento = choferesSeccionamiento.filter((e) => e.seccionamiento > 9);
+            FilterArr(tempChoferesSeccionamiento, choferesSeccionamiento, "seccionamiento");
+            FilterArr(tempChoferesMalUso, choferesMalUso, "malUso");
+            FilterArr(tempChoferesSpeed, choferesSpeed, "velocidad");
+            FilterArr(tempChoferesEsperas, choferesEsperas, "espera");
+            FilterArr(tempChoferesCortados, choferesCortados, "cortes");
 
-            for (const elem of tempChoferesMalUso) {
-                xx = elem.legajo;
-                let x = tempChoferesMalUso.filter((el) => el.legajo == elem.legajo);
-                choferesMalUso.push({
-                    legajo: xx,
-                    malUso: x.length
-                });
-            }
-
-            choferesMalUso = choferesMalUso.filter((e) => e.malUso > 5);
-
-            for (const elem of tempChoferesSpeed) {
-                xx = elem.legajo;
-                let x = tempChoferesSpeed.filter((el) => el.legajo == elem.legajo);
-                choferesSpeed.push({
-                    legajo: xx,
-                    velocidad: x.length
-                });
-            }
-            for (const elem of tempChoferesEsperas) {
-                xx = elem.legajo;
-                let x = tempChoferesEsperas.filter((el) => el.legajo == elem.legajo);
-                choferesEsperas.push({
-                    legajo: xx,
-                    espera: x.length
-                });
-            }
-            for (const elem of tempChoferesCortados) {
-                xx = elem.legajo;
-                let x = tempChoferesCortados.filter((el) => el.legajo == elem.legajo);
-                choferesCortados.push({
-                    legajo: xx,
-                    cortes: x.length
-                });
-            }
-
-            choferesCortados = choferesCortados.filter((e) => e.cortes > 2);
-
-            corridos = corr3.filter((e) => e.seccCorridos > 5);
-
-            let pene = [];
-            let pene2 = [];
-            let pene3 = [];
-            let pene4 = [];
-            let pene5 = [];
-            let pene6 = [];
-            let pene7 = [];
-            let pene8 = [];
-            let pene9 = [];
-            let pene10 = [];
-            let pene11 = [];
-            let pene12 = [];
-            let pene13 = [];
-            let pene14 = [];
-            let pene15 = [];
-
-
-
-           /*  let propiedades  = ["seccionamiento", "malUso", "cortes", "velocidad", "espera"];
-
-            function Deal(a,b,c) {
+            corridos = corr3.filter((e) => e.seccCorridos > 0);
+            
+            function Deal(var1, var2, var3) {
                 let deal1 = [];
                 let deal2 = [];
-                let deal3 = [];
 
-
-                for (i = 0; i < a.length; i++) {
-                    deal1.push(a[i].legajo);
+                for (i = 0; i < var1.length; i++) {
+                    deal1.push(var1[i].legajo);
                 }
-    
-                for (const el of deal1) {
-                    if (deal2.includes(el) == false) {
-                        deal2.push(el);
+                deal1 = [...new Set(deal1)];
+                
+                for (const elem of deal1) {
+                    x = var2.filter((el) => el.legajo == elem);
+                    deal2.push({legajo: elem,[var3]: x.length});
+                }
+                a = deal2;
+            }
+
+            Deal(choferesSeccionamiento, tempChoferesSeccionamiento, "seccionamiento");
+            Deal(choferesMalUso, tempChoferesMalUso, "malUso");
+            Deal(choferesSpeed, tempChoferesSpeed, "velocidad");
+            Deal(choferesEsperas, tempChoferesEsperas, "espera");
+            Deal(choferesCortados, tempChoferesCortados, "cortes");
+
+            function FillCorridos(var1, var2){
+                for (const e of corridos) {
+                    x = var1.filter((n) => n.legajo == e.legajo);
+                    if (x.length > 0 == true) {
+                        e[var2] = x[0][var2];
+                    } else {
+                        e[var2] = 0;
                     }
                 }
-                for (const elem of deal2) {
-                    x = b.filter((el) => el.legajo == elem);
-                    deal3.push({
-                        legajo: elem,
-                        propiedades[c]: x.length
-                    });
-                }
-                a = deal3;
             }
- */
-
-            for (i = 0; i < choferesSeccionamiento.length; i++) {
-                pene.push(choferesSeccionamiento[i].legajo);
-            }
-
-            for (const el of pene) {
-                if (pene2.includes(el) == false) {
-                    pene2.push(el);
-                }
-            }
-            for (const elem of pene2) {
-                x = tempChoferesSeccionamiento.filter((el) => el.legajo == elem);
-                pene3.push({
-                    legajo: elem,
-                    seccionamiento: x.length
-                });
-            }
-            choferesSeccionamiento = pene3; 
-
-
-            for (i = 0; i < choferesMalUso.length; i++) {
-                pene4.push(choferesMalUso[i].legajo);
-            }
-
-            for (const el of pene4) {
-                if (pene5.includes(el) == false) {
-                    pene5.push(el);
-                }
-            }
-            for (const elem of pene5) {
-                x = tempChoferesMalUso.filter((el) => el.legajo == elem);
-                pene6.push({
-                    legajo: elem,
-                    malUso: x.length
-                });
-            }
-            choferesMalUso = pene6;
-
-
-
-
-            for (i = 0; i < choferesCortados.length; i++) {
-                pene7.push(choferesCortados[i].legajo);
-            }
-            for (const el of pene7) {
-                if (pene8.includes(el) == false) {
-                    pene8.push(el);
-                }
-            }
-            for (const elem of pene8) {
-                x = tempChoferesCortados.filter((el) => el.legajo == elem);
-                pene9.push({
-                    legajo: elem,
-                    cortes: x.length
-                });
-            }
-            choferesCortados = pene9;
-
-            for (i = 0; i < choferesSpeed.length; i++) {
-                pene10.push(choferesSpeed[i].legajo);
-            }
-            for (const el of pene10) {
-                if (pene11.includes(el) == false) {
-                    pene11.push(el);
-                }
-            }
-            for (const elem of pene11) {
-                x = tempChoferesSpeed.filter((el) => el.legajo == elem);
-                pene12.push({
-                    legajo: elem,
-                    velocidad: x.length
-                });
-            }
-            choferesSpeed = pene12;
-
-
-
-            for (i = 0; i < choferesEsperas.length; i++) {
-                pene13.push(choferesEsperas[i].legajo);
-            }
-            for (const el of pene13) {
-                if (pene14.includes(el) == false) {
-                    pene14.push(el);
-                }
-            }
-            for (const elem of pene14) {
-                x = tempChoferesEsperas.filter((el) => el.legajo == elem);
-                pene15.push({
-                    legajo: elem,
-                    espera: x.length
-                });
-            }
-            choferesEsperas = pene15;
-
-            for (const e of corridos) {
-                x = choferesSeccionamiento.filter((n) => n.legajo == e.legajo);
-                if (x.length > 0 == true) {
-                    e.seccionamiento = x[0].seccionamiento;
-                } else {
-                    e.seccionamiento = 0;
-                }
-            }
+            
+            FillCorridos(choferesSeccionamiento, "seccionamiento");
 
             for (const e of choferesSeccionamiento) {
                 x = corridos.filter((n) => n.legajo == e.legajo);
@@ -1037,15 +860,8 @@ function Func6(file) {
                     })
                 }
             }
-
-            for (const e of corridos) {
-                x = choferesMalUso.filter((n) => n.legajo == e.legajo);
-                if (x.length > 0 == true) {
-                    e.malUso = x[0].malUso;
-                } else {
-                    e.malUso = 0;
-                }
-            }
+            FillCorridos(choferesMalUso, "malUso");
+            
             for (const e of choferesMalUso) {
                 x = corridos.filter((n) => n.legajo == e.legajo);
                 if (x.length < 1 == true) {
@@ -1056,15 +872,8 @@ function Func6(file) {
                     })
                 }
             }
+            FillCorridos(choferesCortados, "cortes");
 
-            for (const e of corridos) {
-                x = choferesCortados.filter((n) => n.legajo == e.legajo);
-                if (x.length > 0 == true) {
-                    e.cortes = x[0].cortes;
-                } else {
-                    e.cortes = 0;
-                }
-            }
             for (const e of choferesCortados) {
                 x = corridos.filter((n) => n.legajo == e.legajo);
                 if (x.length < 1 == true) {
@@ -1076,14 +885,8 @@ function Func6(file) {
                     })
                 }
             }
-            for (const e of corridos) {
-                x = choferesSpeed.filter((n) => n.legajo == e.legajo);
-                if (x.length > 0 == true) {
-                    e.velocidad = x[0].velocidad;
-                } else {
-                    e.velocidad = 0;
-                }
-            }
+            FillCorridos(choferesSpeed, "velocidad");
+
             for (const e of choferesSpeed) {
                 x = corridos.filter((n) => n.legajo == e.legajo);
                 if (x.length < 1 == true) {
@@ -1096,14 +899,8 @@ function Func6(file) {
                     })
                 }
             }
-            for (const e of corridos) {
-                x = choferesEsperas.filter((n) => n.legajo == e.legajo);
-                if (x.length > 0 == true) {
-                    e.espera = x[0].espera;
-                } else {
-                    e.espera = 0;
-                }
-            }
+            FillCorridos(choferesEsperas, "espera");
+
             for (const e of choferesEsperas) {
                 x = corridos.filter((n) => n.legajo == e.legajo);
                 if (x.length < 1 == true) {
@@ -1120,9 +917,6 @@ function Func6(file) {
 
             corridos.sort((a, b) => (a.legajo > b.legajo) ? 1 : -1);
 
-            console.log(corridos);
-
-
             for (i = 0; i < corridos.length; i++) {
                 let x = corridos[i].seccionamiento + corridos[i].cortes + corridos[i].malUso + corridos[i].seccCorridos + corridos[i].velocidad + corridos[i].espera;
                 corridos[i] = {
@@ -1133,77 +927,28 @@ function Func6(file) {
 
             let titleList = ["Legajo", "Seccionamiento", "Mal Uso Del Sube", "Servicios Cortados", "Secc. Corrido", "Exceso De Velocidad", "Esperas Excesivas", "Total Por Chofer"];
 
-                const nodeP = document.createElement("tr");
-                nodeP.classList.add("infoP6");
-               
-                for (i=0; i<titleList.length; i++){
-                    let subNode = document.createElement("th");
-                    let textnode = document.createTextNode(titleList[i]);
-                    subNode.appendChild(textnode);
-                    nodeP.appendChild(subNode);
+            let roaFinal = [];
+
+            TitleList("infoP6", titleList, tableP6);
+
+                for(const elem of corridos){
+                    
+                    let {legajo, seccionamiento, malUso, cortes, seccCorridos, velocidad, espera, total} = elem;
+                    
+                    roaFinal.push([legajo, seccionamiento, malUso, cortes, seccCorridos, velocidad, espera, total]);
                 }
-                tableP6.appendChild(nodeP);
+                for (const elem of roaFinal){
+                    const node = document.createElement("tr");
+                    node.classList.add("infoP6");
+                    WriteTable(elem, tableP6, node);
+                }
 
-                
-            for (const elem of corridos) {
-                const node = document.createElement("tr");
-                node.classList.add("infoP6");
-                const subNode = document.createElement("td");
-                const subNode1 = document.createElement("td");
-                const subNode2 = document.createElement("td");
-                const subNode3 = document.createElement("td");
-                const subNode4 = document.createElement("td");
-                const subNode5 = document.createElement("td");
-                const subNode6 = document.createElement("td");
-                const subNode7 = document.createElement("td");
-
-                const textnode = document.createTextNode(elem.legajo);
-                const textnode1 = document.createTextNode(elem.seccionamiento);
-                const textnode2 = document.createTextNode(elem.malUso);
-                const textnode3 = document.createTextNode(elem.cortes);
-                const textnode4 = document.createTextNode(elem.seccCorridos);
-                const textnode5 = document.createTextNode(elem.velocidad);
-                const textnode6 = document.createTextNode(elem.espera);
-                const textnode7 = document.createTextNode(elem.total);
-                subNode.appendChild(textnode);
-                subNode1.appendChild(textnode1);
-                subNode2.appendChild(textnode2);
-                subNode3.appendChild(textnode3);
-                subNode4.appendChild(textnode4);
-                subNode5.appendChild(textnode5);
-                subNode6.appendChild(textnode6);
-                subNode7.appendChild(textnode7);
-                node.appendChild(subNode);
-                node.appendChild(subNode1);
-                node.appendChild(subNode2);
-                node.appendChild(subNode3);
-                node.appendChild(subNode4);
-                node.appendChild(subNode5);
-                node.appendChild(subNode6);
-                node.appendChild(subNode7);
-                tableP6.appendChild(node);
-
-            }
-
+            
         }
     } catch (e) {
         console.error(e);
     }
 }
-
-//PARA CUANDO SE ARREGLE EL TEMA DE LA DIFERENCIA DE HORARIO
-//  let masHoras = [];
-//for (const elem of newArray20){
-
-//  let s = elem.HoraInicio.split(':');
-//let e = elem.HoraFin.split(':');
-
-//let tiempo = e[0] - s[0];
-
-// if (tiempo > "6"==true){ masHoras.push(elem);}
-
-
-let roa7;
 
 let tableP7 = document.getElementById("tableP7");
 let francosMoreTR = document.getElementById("francosDeMas");
@@ -1220,16 +965,16 @@ function Func7(file) {
                 type: 'binary'
             });
             workbook.SheetNames.forEach(function(sheetName) {
-                roa7 = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
+                roa = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
 
-                console.log(roa7);
+                console.log(roa);
 
-                na1 = roa7.filter((el) => el.__EMPTY_1 > 0);
+                na1 = roa.filter((el) => el.__EMPTY_1 > 0);
 
-                let arrayPresent = roa7;
+                let arrayPresent = roa;
 
 
-                for (const elem of roa7) {
+                for (const elem of roa) {
 
                     elem.interno = elem.__EMPTY;
                     elem.legajo = elem.__EMPTY_1;
@@ -1575,9 +1320,9 @@ function Func7(file) {
                 }
 
 
-                if (roa7.length > 0) {
+                if (roa.length > 0) {
 
-                    result[sheetName] = roa7;
+                    result[sheetName] = roa;
                 }
             });
         }
