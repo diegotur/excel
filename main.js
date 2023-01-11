@@ -101,7 +101,32 @@ let roa;
 
 let tableP = document.getElementById("tableP");
 
+let choferesPorLegajo = [];
 
+
+function Func0(file) {
+    try {
+        var reader = new FileReader();
+        reader.readAsBinaryString(file);
+        reader.onload = function(e) {
+
+            var data = e.target.result;
+            var workbook = XLSX.read(data, {type: 'binary'});
+            workbook.SheetNames.forEach(function(sheetName) {
+            roa = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
+
+            /* if (roa.length > 0){
+                for (const elem of roa){
+                    choferesPorLegajo.push({legajo: [LEGAJO].elem, chofer: [CHOFER].elem});
+                }
+            }; */
+            })    
+
+    }
+    } catch (e) {
+        console.error(e);
+    }
+}
 
 
 function Func1(file) {
@@ -120,6 +145,7 @@ function Func1(file) {
             if (roa.length > 0){
             
             let inter = 0;
+            console.log(choferesPorLegajo);
 
             for (const elem of roa) {
                 elem.Interno = roa[inter][Object.keys(roa[inter])[0]];
