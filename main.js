@@ -115,12 +115,13 @@ function Func0(file) {
             workbook.SheetNames.forEach(function(sheetName) {
             roa = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
 
-            /* if (roa.length > 0){
+            if (roa.length > 0){
                 for (const elem of roa){
-                    choferesPorLegajo.push({legajo: [LEGAJO].elem, chofer: [CHOFER].elem});
+                    choferesPorLegajo.push({legajo: elem.LEGAJO, chofer: elem.APELLIDO});
                 }
-            }; */
-            })    
+                console.log(choferesPorLegajo);
+            };
+        })    
 
     }
     } catch (e) {
@@ -155,96 +156,67 @@ function Func1(file) {
                 elem.Secciones = elem.__EMPTY_10;
                 elem.Chofer = elem.__EMPTY_11;
                 elem.Diferencia = elem.__EMPTY_12;
-                
-                delete elem.__EMPTY;
-                delete elem.__EMPTY_1;
-                delete elem.__EMPTY_2;
-                delete elem.__EMPTY_3;
-                delete elem.__EMPTY_4;
-                delete elem.__EMPTY_5;
-                delete elem.__EMPTY_6;
-                delete elem.__EMPTY_7;
-                delete elem.__EMPTY_8;
-                delete elem.__EMPTY_9;
-                delete elem.__EMPTY_10;
-                delete elem.__EMPTY_11;
-                delete elem.__EMPTY_12;
-
                 inter++;
             }
 
-            let roaCortos = roa.filter((elem) => elem.Secciones < 8);
-            let roaLargos = roa.filter((elem) => elem.Secciones > 8);
-            let newArray = roaLargos.filter((elem) => elem.Diferencia > 7);
-            let newArray1 = newArray.filter((elem) => elem.Ramal < 316);
-            let newArray2 = newArray1.filter((elem) => elem.Kms > 30);
-            let newArray6 = roaCortos.filter((elem) => elem.Kms > 12);
-            let newArray7 = newArray6.filter((elem) => elem.Diferencia > 3);
+            let roaCortos = roa.filter((elem) => elem.Secciones < 8 && elem.Kms > 12 && elem.Diferencia > 3);
+            let roaLargos = roa.filter((elem) => elem.Secciones > 8 && elem.Diferencia > 7 && elem.Ramal < 316 && elem.Kms > 30);
 
-                roaCortos = newArray7;
+            for (const elem of roaLargos) {
+                roaCortos.push(elem);
+            }
 
-                for (const elem of newArray2) {
-                    roaCortos.push(elem);
+            let newArray3 = [];
+            for (const elem of roaCortos) {
+
+                let result = (({
+                    Interno,
+                    Ramal,
+                    Legajo,
+                    Kms,
+                    Secciones,
+                    Chofer,
+                    Diferencia
+                }) => ({
+                    Interno,
+                    Ramal,
+                    Legajo,
+                    Kms,
+                    Secciones,
+                    Chofer,
+                    Diferencia
+                }))(elem);
+
+                newArray3.push(result);
+            }
+            roa = newArray3;
+
+            roa.sort((a, b) => (a.Legajo > b.Legajo) ? 1 : -1);
+
+            let roaFinal=[];
+
+            let infoP = document.getElementsByClassName("infoP");
+
+            Limpiar(infoP, tableP);
+
+            let titleList = ["Interno", "Ramal", "Legajo", "Kms", "Secciones", "Chofer", "Diferencia"];
+            
+            TitleList("infoP", titleList, tableP);
+
+            for(const elem of roa){
+                
+                let {Interno, Ramal, Legajo, Kms, Secciones, Chofer, Diferencia} = elem;
+                
+                roaFinal.push([Interno, Ramal, Legajo, Kms, Secciones, Chofer, Diferencia]);
                 }
-
-                let newArray3 = [];
-                for (const elem of roaCortos) {
-
-                    let result = (({
-                        Interno,
-                        Ramal,
-                        Legajo,
-                        Kms,
-                        Secciones,
-                        Chofer,
-                        Diferencia
-                    }) => ({
-                        Interno,
-                        Ramal,
-                        Legajo,
-                        Kms,
-                        Secciones,
-                        Chofer,
-                        Diferencia
-                    }))(elem);
-
-                    newArray3.push(result);
-                }
-                roa = newArray3;
-
-                roa.sort((a, b) => (a.Legajo > b.Legajo) ? 1 : -1);
-
-                let roaFinal=[];
-
-                let infoP = document.getElementsByClassName("infoP");
-
-                Limpiar(infoP, tableP);
-
-                let titleList = ["Interno", "Ramal", "Legajo", "Kms", "Secciones", "Chofer", "Diferencia"];
-               
-                TitleList("infoP", titleList, tableP);
-
-                for(const elem of roa){
-                    
-                    let {Interno, Ramal, Legajo, Kms, Secciones, Chofer, Diferencia} = elem;
-                    
-                    roaFinal.push([Interno, Ramal, Legajo, Kms, Secciones, Chofer, Diferencia]);
-                    }
-                    for (const elem of roaFinal){
-                        const node = document.createElement("tr");
-                        node.classList.add("infoP");
-                        WriteTable(elem, tableP, node);
-                    }
-
-                if (roa.length > 0) {
-
-                    result[sheetName] = roa;
+                for (const elem of roaFinal){
+                    const node = document.createElement("tr");
+                    node.classList.add("infoP");
+                    WriteTable(elem, tableP, node);
                 }
             }
-            });
-
-
-        }
+         });
+    }
     } catch (e) {
         console.error(e);
     }
