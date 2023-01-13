@@ -94,9 +94,6 @@ function upload(source, func) {
     }
 }
 
-
-
-let result = {};
 let roa;
 
 let tableP = document.getElementById("tableP");
@@ -166,32 +163,7 @@ function Func1(file) {
                 roaCortos.push(elem);
             }
 
-            let newArray3 = [];
-            for (const elem of roaCortos) {
-
-                let result = (({
-                    Interno,
-                    Ramal,
-                    Legajo,
-                    Kms,
-                    Secciones,
-                    Chofer,
-                    Diferencia
-                }) => ({
-                    Interno,
-                    Ramal,
-                    Legajo,
-                    Kms,
-                    Secciones,
-                    Chofer,
-                    Diferencia
-                }))(elem);
-
-                newArray3.push(result);
-            }
-            roa = newArray3;
-
-            roa.sort((a, b) => (a.Legajo > b.Legajo) ? 1 : -1);
+            roaCortos.sort((a, b) => (a.Legajo > b.Legajo) ? 1 : -1);
 
             let roaFinal=[];
 
@@ -203,18 +175,19 @@ function Func1(file) {
             
             TitleList("infoP", titleList, tableP);
 
-            for(const elem of roa){
+            for(const elem of roaCortos){
                 
                 let {Interno, Ramal, Legajo, Kms, Secciones, Chofer, Diferencia} = elem;
                 
                 roaFinal.push([Interno, Ramal, Legajo, Kms, Secciones, Chofer, Diferencia]);
                 }
-                for (const elem of roaFinal){
-                    const node = document.createElement("tr");
-                    node.classList.add("infoP");
-                    WriteTable(elem, tableP, node);
-                }
+                
+            for (const elem of roaFinal){
+                const node = document.createElement("tr");
+                node.classList.add("infoP");
+                WriteTable(elem, tableP, node);
             }
+            } 
          });
     }
     } catch (e) {
@@ -1802,17 +1775,10 @@ function Func11(file) {
 
                     if (roa11.length > 0){
 
-                        console.log(roa11);
-
                         for (const e of roa11) {
                             e.coche = e.__EMPTY_1;
                             e.kms = e.__EMPTY_3;
                             
-                            delete e.__EMPTY;
-                            delete e.__EMPTY_1;
-                            delete e.__EMPTY_2;
-                            delete e.__EMPTY_3;
-                            delete e.__EMPTY_4;
                     }
                      roa11.shift(); 
                     
@@ -1860,7 +1826,9 @@ function Func11(file) {
                         }
                     }
 
-                kms3 = kms3.sort((a, b) => (a.dif < b.dif) ? 1 : -1);
+                kms3 = kms3.sort((a, b) => (parseInt(a.dif) > parseInt(b.dif)) ? -1 : 1);
+
+                console.log(kms3);
                     
 
                 let titleList = ["Coche", "KM Tráfico", "KM Sube", "Diferencia", "Novedad"];
