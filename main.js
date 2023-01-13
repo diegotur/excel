@@ -67,7 +67,7 @@ function Limpiar (a, b){
 function TitleList (info, titleList, table ){
     const nodeP = document.createElement("tr");
     nodeP.classList.add(info);
-               
+            
         for (i=0; i<titleList.length; i++){
             let subNode = document.createElement("th");
             let textnode = document.createTextNode(titleList[i]);
@@ -96,7 +96,7 @@ function upload(source, func) {
 
 let roa;
 
-let tableP = document.getElementById("tableP");
+let tableP = document.getElementsByClassName("tabla");
 
 let choferesPorLegajo = [];
 
@@ -169,11 +169,11 @@ function Func1(file) {
 
             let infoP = document.getElementsByClassName("infoP");
 
-            Limpiar(infoP, tableP);
+            Limpiar(infoP, tableP[0]);
 
             let titleList = ["Interno", "Ramal", "Legajo", "Kms", "Secciones", "Chofer", "Diferencia"];
             
-            TitleList("infoP", titleList, tableP);
+            TitleList("infoP", titleList, tableP[0]);
 
             for(const elem of roaCortos){
                 
@@ -185,17 +185,15 @@ function Func1(file) {
             for (const elem of roaFinal){
                 const node = document.createElement("tr");
                 node.classList.add("infoP");
-                WriteTable(elem, tableP, node);
+                WriteTable(elem, tableP[0], node);
             }
             } 
-         });
+        });
     }
     } catch (e) {
         console.error(e);
     }
 }
-
-let tableP2 = document.getElementById("tableP2");
 
 function Func2(file) {
     try {
@@ -276,7 +274,7 @@ function Func2(file) {
                     function Write(a) {
                         let infoP2 = document.getElementsByClassName("infoP2");
                         
-                        Limpiar(infoP2, tableP2);
+                        Limpiar(infoP2, tableP[1]);
                         
                         let newArray10 = roaBis.filter((elem) => a == elem.FechaInicio);
                         let newPP = newArray10.filter((elem) => a !== elem.FechaFin);
@@ -300,8 +298,8 @@ function Func2(file) {
                     let roaFinal=[];
 
                     let titleList = ["Legajo", "Interno", "FechaInicio", "FechaFin", "HoraInicio", "HoraFin", "Recorrido", "Kms"];
-               
-                    TitleList("infoP2", titleList, tableP2);
+            
+                    TitleList("infoP2", titleList, tableP[1]);
 
                     for(const elem of new6){
                     
@@ -312,7 +310,7 @@ function Func2(file) {
                     for (const elem of roaFinal){
                         const node = document.createElement("tr");
                         node.classList.add("infoP2");
-                        WriteTable(elem, tableP2, node);
+                        WriteTable(elem, tableP[1], node);
                     }
     
                     }
@@ -323,8 +321,6 @@ function Func2(file) {
         console.error(e);
     }
 }
-
-let tableP3 = document.getElementById("tableP3");
 
 function Func3(file) {
     try {
@@ -453,10 +449,14 @@ function Func3(file) {
                 }
                 
                 let roaFinal=[];
+
+                let infoP3 = document.getElementsByClassName("infoP3");
+
+                Limpiar(infoP3, tableP[2]);
                 
                 let titleList = ["Legajo", "Secc. De Corrido"];
                 
-                TitleList("infoP3", titleList, tableP3);
+                TitleList("infoP3", titleList, tableP[2]);
                 
                 for(const elem of finalArr6){
                     
@@ -467,7 +467,7 @@ function Func3(file) {
                 for (const elem of roaFinal){
                     const node = document.createElement("tr");
                     node.classList.add("infoP3");
-                    WriteTable(elem, tableP3, node);
+                    WriteTable(elem, tableP[2], node);
                 }
             }
             });
@@ -476,8 +476,6 @@ function Func3(file) {
         console.error(e);
     }
 }
-
-let tableP4 = document.getElementById("tableP4");
 
 function Func4(file) {
     try {
@@ -524,7 +522,6 @@ function Func4(file) {
                     dropAr2.push("cortadosDrop" + dropIndex2);
                     dropIndex2++;
                 }
-                console.log(dropAr2);
 
                 for (i = 0; i < dropAr2.length; i++) {
                     let j = document.getElementById(dropAr2[i])
@@ -537,7 +534,7 @@ function Func4(file) {
                 function Write2(a) {
                     let infoP4 = document.getElementsByClassName("infoP4");
 
-                    Limpiar(infoP4, tableP4);
+                    Limpiar(infoP4, tableP[3]);
 
                     let soloFecha = temp2.filter((elem) => a == elem.Fecha);
 
@@ -547,7 +544,7 @@ function Func4(file) {
 
                     let titleList = ["Coche", "Legajo", "Apellido", "Hora", "Recorrido", "Motivo De Corte"];
                 
-                    TitleList("infoP4", titleList, tableP4);
+                    TitleList("infoP4", titleList, tableP[3]);
 
                     for(const elem of soloFecha){
                     
@@ -558,10 +555,9 @@ function Func4(file) {
                     for (const elem of soloFechaFinal){
                         const node = document.createElement("tr");
                         node.classList.add("infoP4");
-                        WriteTable(elem, tableP4, node);
+                        WriteTable(elem, tableP[3], node);
                     }
                 }
-
             }
         });
     }
@@ -633,7 +629,6 @@ function Func5(file) {
                 FillArray("BCAS LaV IDA" ,"BCAS SAB IDA" ,"BCAS DOM IDA" ,"BCAS FER IDA", "null", "null");
                 FillArrayVta( "BCAS LaV VTA","BCAS SAB VTA","BCAS DOM VTA","BCAS FER VTA", "null", "null", "null", "null", "null");
 
-                let tableP5 = document.getElementById("tableP5");
                 
                 for (const elem of arrayRec) {
                     const node = document.createElement("tr");
@@ -643,12 +638,9 @@ function Func5(file) {
                     const textnode = document.createTextNode(elem.length);
                     subNode.appendChild(textnode);
                     node.appendChild(subNode);
-                    tableP5.appendChild(node);
-                    
+                    tableP[4].appendChild(node);
                 }
-                
             }
-                
             });
         }
     } catch (e) {
@@ -668,8 +660,6 @@ let tempChoferesSpeed = [];
 let tempChoferesEsperas = [];
 let choferesSpeed = [];
 let choferesEsperas = [];
-
-let tableP6 = document.getElementById("tableP6");
 
 function Func6(file) {
     try {
@@ -900,7 +890,7 @@ function Func6(file) {
 
             let roaFinal = [];
 
-            TitleList("infoP6", titleList, tableP6);
+            TitleList("infoP6", titleList, tableP[5]);
 
                 for(const elem of corridos){
                     
@@ -911,17 +901,14 @@ function Func6(file) {
                 for (const elem of roaFinal){
                     const node = document.createElement("tr");
                     node.classList.add("infoP6");
-                    WriteTable(elem, tableP6, node);
+                    WriteTable(elem, tableP[5], node);
                 }
-
-            
         }
     } catch (e) {
         console.error(e);
     }
 }
 
-let tableP7 = document.getElementById("tableP7");
 let francosMoreTR = document.getElementById("francosDeMas");
 let francosLessTR = document.getElementById("francosDeMenos");
 
@@ -1225,7 +1212,7 @@ function Func7(file) {
                                 const textnode = document.createTextNode(e);
                                 subNode.appendChild(textnode);
                                 node.appendChild(subNode);
-                                tableP7.appendChild(node);
+                                tableP[6].appendChild(node);
                             }
 
                         }
@@ -1246,7 +1233,7 @@ function Func7(file) {
 
                     if (borrarFR2.length > 0) {
                         do {
-                            tableP7.removeChild(borrarFR2[0]);
+                            tableP[6].removeChild(borrarFR2[0]);
 
                         } while (borrarFR2.length != 0);
                     }
@@ -1284,16 +1271,7 @@ function Func7(file) {
                             node.appendChild(subNode);
                             tablaPresentismo.appendChild(node);
                         }
-
                     }
-
-
-                }
-
-
-                if (roa.length > 0) {
-
-                    result[sheetName] = roa;
                 }
             });
         }
@@ -1301,9 +1279,6 @@ function Func7(file) {
         console.error(e);
     }
 }
-
-
-
 let roa8;
 
 let tableP8 = document.getElementById("tableP8");
@@ -1321,16 +1296,13 @@ function Func8(file) {
             workbook.SheetNames.forEach(function(sheetName) {
                 roa8 = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
 
+            if (roa8.length > 0){
 
                 for (const elem of roa8) {
 
                     elem.FECHA = cambioFecha(elem.FECHA, 25568);
                     delete elem.RECA;
                 }
-
-
-
-
                 let fechasDispPL = [];
 
                 for (const elem of roa8) {
@@ -1362,103 +1334,70 @@ function Func8(file) {
                 }
 
 
-                function Write(a) {
-                    let infoP8 = document.getElementsByClassName("infoP8");
+            function Write(a) {
+                let infoP8 = document.getElementsByClassName("infoP8");
 
-                    if (infoP8.length > 0) {
-                        do {
-                            tableP8.removeChild(infoP8[0]);
+                if (infoP8.length > 0) {
+                    do {
+                        tableP8.removeChild(infoP8[0]);
 
-                        } while (infoP8.length != 0);
-                    }
+                    } while (infoP8.length != 0);
+                }
 
-                    let arrayPL = roa8.filter((elem) => a == elem.FECHA);
+                let arrayPL = roa8.filter((elem) => a == elem.FECHA);
 
-                    arrayPL = arrayPL.sort((a, b) => (a.COCHE > b.COCHE) ? 1 : -1);
+                arrayPL = arrayPL.sort((a, b) => (a.COCHE > b.COCHE) ? 1 : -1);
 
-                    let cochesPL = [];
+                let cochesPL = [];
 
-                    for (const el of arrayPL) {
-                        cochesPL.push(el.COCHE);
-                    }
+                for (const el of arrayPL) {
+                cochesPL.push(el.COCHE);
+                }
 
-                    cochesPL = [...new Set(cochesPL)];
+                cochesPL = [...new Set(cochesPL)];
 
-                    let tempPL = [];
+                let tempPL = [];
 
-                    for (const el of cochesPL) {
-                        tx = arrayPL.filter((e) => e.COCHE == el);
-                        tx = tx.sort((a, b) => (a.HSALE > b.HSALE) ? 1 : -1);
-                        tempPL.push(tx);
-                    }
+                for (const el of cochesPL) {
+                    tx = arrayPL.filter((e) => e.COCHE == el);
+                    tx = tx.sort((a, b) => (a.HSALE > b.HSALE) ? 1 : -1);
+                    tempPL.push(tx);
+                }
 
-                    for (i = 0; i < tempPL.length; i++) {
-                        if (i & 1 == true) {
-                            for (const el of tempPL[i]) {
-                                el.COLOR = "red";
-                            }
-                        }
-                    }
-                    finalPL = [];
-
-                    for (i = 0; i < tempPL.length; i++) {
+                for (i = 0; i < tempPL.length; i++) {
+                    if (i & 1 == true) {
                         for (const el of tempPL[i]) {
-                            finalPL.push(el);
+                            el.COLOR = "red";
                         }
                     }
-                    console.log(finalPL);
+                }
+                finalPL = [];
 
-
-
-
-                    for (const elem of finalPL) {
-                        const node = document.createElement("tr");
-                        node.classList.add("infoP8");
-                        const subNode = document.createElement("td");
-                        const subNode1 = document.createElement("td");
-                        const subNode2 = document.createElement("td");
-                        const subNode3 = document.createElement("td");
-                        const subNode4 = document.createElement("td");
-                        const subNode5 = document.createElement("td");
-                        const subNode6 = document.createElement("td");
-
-                        const textnode = document.createTextNode(elem.COCHE);
-                        const textnode1 = document.createTextNode(elem.LEGAJO);
-                        const textnode2 = document.createTextNode(elem.HSALE);
-                        const textnode3 = document.createTextNode(elem.HLLEGA);
-                        const textnode4 = document.createTextNode(elem.HCITA);
-                        const textnode5 = document.createTextNode(elem.KMTS);
-                        const textnode6 = document.createTextNode(elem.COLOR);
-                        subNode.appendChild(textnode);
-                        subNode1.appendChild(textnode1);
-                        subNode2.appendChild(textnode2);
-                        subNode3.appendChild(textnode3);
-                        subNode4.appendChild(textnode4);
-                        subNode5.appendChild(textnode5);
-                        subNode6.appendChild(textnode6);
-                        node.appendChild(subNode);
-                        node.appendChild(subNode1);
-                        node.appendChild(subNode2);
-                        node.appendChild(subNode3);
-                        node.appendChild(subNode4);
-                        node.appendChild(subNode5);
-                        node.appendChild(subNode6);
-                        tableP8.appendChild(node);
-
+                for (i = 0; i < tempPL.length; i++) {
+                    for (const el of tempPL[i]) {
+                        finalPL.push(el);
                     }
                 }
+                let roaFinal= [];
 
-
-
-
-                if (roa8.length > 0) {
-
-                    result[sheetName] = roa8;
+                for(const elem of finalPL){
+                    
+                    let {COCHE, LEGAJO, HSALE, HLLEGA, HCITA, KMTS, COLOR} = elem;
+                    
+                    roaFinal.push([COCHE, LEGAJO, HSALE, HLLEGA, HCITA, KMTS, COLOR]);
                 }
-            })
+
+
+                for (const elem of roaFinal) {
+                    const node = document.createElement("tr");
+                    node.classList.add("infoP8");
+                    WriteTable(elem, tableP8, node);
+
+                }
+            }
         }
-
-
+    })
+}
     } catch (e) {
         console.error(e);
     }
