@@ -925,29 +925,42 @@ function Func7(file) {
             workbook.SheetNames.forEach(function(sheetName) {
                 roa = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
 
-                roa = roa.filter((el) => el.__EMPTY_1 > 0);
+                
+                /* roa = roa.filter((el) => el.__EMPTY_1 > 0);
                 roa.sort((a, b) => (a.__EMPTY_1 > b.__EMPTY_1) ? 1 : -1);
 
-                console.log(roa);
                 
-                let gs = [];
+                let gs = []; */
 
+                console.log(roa);
 
                 for (const elem of roa){
-                    if (choferesPorLegajo.some((x => x.legajo == elem.__EMPTY_1))!=false){
-                        gs.push (elem)
+                    let x = Object.keys(elem).length;
+
+                    for (i=0;i<x;i++){
+                        if (elem[Object.values(i)]!=undefined){
+                            console.log(elem[Object.values(i)]);
+                        }
                     }
+
+                       /*  for (const el of [Object.keys(elem)]){
+                            console.log (el.value);
+                        } */
+                    
+                    //elem.Interno = roa[inter][Object.keys(roa[inter])[0]];   
+                }
+
+                /* for (const elem of roa){
+                    if (choferesPorLegajo.some((x => x.legajo == elem.__EMPTY_1))==false){
+                        delete elem;
                     }
+                }
 
-
-                console.log(gs);
-
-                /* na1 = roa.filter((el) => el.__EMPTY_1 > 0);
 
                 let arrayPresent = roa;
 
 
-                for (const elem of roa) {
+                for (const elem of gs) {
 
                     elem.interno = elem.__EMPTY;
                     elem.legajo = elem.__EMPTY_1;
@@ -1023,23 +1036,16 @@ function Func7(file) {
                     delete elem.interno;
 
                 }
-                na1.sort((a, b) => (a.legajo > b.legajo) ? 1 : -1);
+                gs.sort((a, b) => (a.legajo > b.legajo) ? 1 : -1);
 
-                for (const elem of na1) {
-                    let borrarCaracs = elem.chofer.split(' ');
+         */
+               /*  let francos = [];
 
-                    let x = borrarCaracs.filter((m) => m.length > 2);
-
-                    elem.chofer = x[0];
-                }
- */
-                let francos = [];
-
-                for (i = 0; i < na1.length; i++) {
+                for (i = 0; i < gs.length; i++) {
 
                     let pr = [];
 
-                    Object.entries(na1[i]).forEach(pair => {
+                    c.forEach(pair => {
 
                         let fdf = pair[0].split("");
 
@@ -1095,12 +1101,12 @@ function Func7(file) {
                 }
 
                 arrayPresent = arrayPresent.filter((e) => e.legajo > 1000);
-
+ */
                 let pr2 = [];
                 /* for (const e of arrayPresent){
                     e.xx31 = e.__EMPTY_33;
                 
-                } */
+                }*/
 
                 console.log(arrayPresent);
 
@@ -1144,7 +1150,7 @@ function Func7(file) {
                     j.addEventListener("click", () => {
                         WriteFR(j.textContent)
                     });
-                }
+                } 
 
                 function WriteFR(a) {
 
