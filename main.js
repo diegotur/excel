@@ -925,41 +925,79 @@ function Func7(file) {
             workbook.SheetNames.forEach(function(sheetName) {
                 roa = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
 
-                
-                /* roa = roa.filter((el) => el.__EMPTY_1 > 0);
-                roa.sort((a, b) => (a.__EMPTY_1 > b.__EMPTY_1) ? 1 : -1);
-
-                
-                let gs = []; */
-
-                console.log(roa);
+                let gs = []; 
+                let gs2 = []; 
 
                 for (const elem of roa){
-                    let x = Object.keys(elem).length;
+                    if (choferesPorLegajo.some((x => x.legajo == elem.legajo))!=false){
+                            gs.push(Object.entries(elem)); 
+                }
+            }
 
-                    for (i=0;i<x;i++){
-                        if (elem[Object.values(i)]!=undefined){
-                            console.log(elem[Object.values(i)]);
+             for (const elem of gs){
+                for (i=0;i<elem.length;i++){
+
+                    if (elem[i][1]=="V" || elem[i][1]=="FV" || elem[i][1]==" "){
+                        console.log(elem[i]);
+                        elem[i].shift();
+                        elem[i].shift();
+                    }
+                }
+                for (const el of elem){
+                    if (el == []){
+                        delete el;
+                    }
+                }
+            }
+            
+            console.log(gs);
+            //gs2.push(gs[0].filter((n) => n.length > 0)); 
+
+
+                
+
+               /*  for (const elem of gs){
+
+                    let xx = ["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28"];
+                    
+                    for (i=0;i<xx.length;i++){
+                        if (elem.hasOwnProperty(xx[i]) == true){
+                            let xxx;
+                            xxx = (parseInt(xx[i]));
+                            if (Object.values(xxx) == "V" == true ){
+                                console.log(elem.xx[i]);
+
+                            }
+                            
                         }
                     }
+                    } */
 
-                       /*  for (const el of [Object.keys(elem)]){
-                            console.log (el.value);
-                        } */
+
+
+
+
+
+                   // let x = Object.entries(elem).length;
+
+                  //  console.log(x);
+
                     
-                    //elem.Interno = roa[inter][Object.keys(roa[inter])[0]];   
-                }
+               /*  Object.keys(elem).forEach(i => {
+                    if (Object.keys(elem)[i] == "5"){
+                        let prop = Object.keys(elem)[i];
+                        delete elem[prop];
+                    }})
+                } */
+               // console.log(roa);
 
-                /* for (const elem of roa){
-                    if (choferesPorLegajo.some((x => x.legajo == elem.__EMPTY_1))==false){
-                        delete elem;
-                    }
-                }
+                
 
-
+                console.log(gs2);
+                
                 let arrayPresent = roa;
 
-
+                /*
                 for (const elem of gs) {
 
                     elem.interno = elem.__EMPTY;
