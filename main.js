@@ -925,10 +925,19 @@ function Func7(file) {
             workbook.SheetNames.forEach(function(sheetName) {
                 roa = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
 
+                
+                let roa1 = [];
+                
+                for (const elem of roa){
+                    const {chofer, coche, __EMPTY, ...rest} = elem;
+                    roa1.push(rest);
+                }
+                
                 let gs = []; 
                 let gs2 = []; 
+                let gs3 = [];
 
-                for (const elem of roa){
+                for (const elem of roa1){
                     if (choferesPorLegajo.some((x => x.legajo == elem.legajo))!=false){
                             gs.push(Object.entries(elem)); 
                 }
@@ -937,20 +946,32 @@ function Func7(file) {
              for (const elem of gs){
                 for (i=0;i<elem.length;i++){
 
-                    if (elem[i][1]=="V" || elem[i][1]=="FV" || elem[i][1]==" "){
-                        console.log(elem[i]);
+                    if (elem[i][1]=="FV" || elem[i][1]=="F " || elem[i][1]==" F" || elem[i][1]=="F*" || elem[i][1]=="FV*"){
+                        elem[i][1]="F";
+                    } else if (elem[i][1]=="V" || elem[i][1]==" V" || elem[i][1]==" " || elem[i][1]=="*" || elem[i][1]==" *"){
                         elem[i].shift();
                         elem[i].shift();
-                    }
-                }
-                for (const el of elem){
-                    if (el == []){
-                        delete el;
                     }
                 }
             }
-            
-            console.log(gs);
+            for (const elem of gs){
+
+                gs2.push(elem.filter(n => n.length > 0));
+            }
+           
+           for (const elem of gs2){
+            for (i=0; i<elem.length; i++){
+
+                if (elem[i][1] == "F"){
+                    elem[i].pop()
+                } else if(elem[i][0]=="legajo"){
+                    elem[i].shift();
+                }
+            }
+            }
+           
+
+            console.log(gs2);
             //gs2.push(gs[0].filter((n) => n.length > 0)); 
 
 
