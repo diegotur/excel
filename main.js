@@ -930,20 +930,41 @@ function Func7(file) {
                 
                 for (const elem of roa){
                     const {chofer, coche, __EMPTY, __EMPTY_1, ...rest} = elem;
-                    roa1.push(rest);
+                    
+                    let x = choferesPorLegajo.filter((n)=> n.legajo == elem.legajo);
+                    //console.log(elem,x);
+                    if (x.length>0){
+                        roa1.push({...rest, chofer: x[0].chofer});
+                    } 
                 }
                 
-                let gs = []; 
+                for (i=0; i<choferesPorLegajo.length;i++){
+                    if (roa1.filter((n)=> n.legajo == choferesPorLegajo[i].legajo)== false){
+                        roa1.push(choferesPorLegajo[i]);
+                    }
+                }
+                
+                roa1 = roa1.sort((a, b) => (a.legajo > b.legajo) ? 1 : -1);
+                console.log(roa1);
+               /*  let gs = []; 
                 let gs2 = []; 
 
                 for (const elem of roa1){
-                    console.log(elem);
                     if (choferesPorLegajo.some((x => x.legajo == elem.legajo))!=false){
-                            gs.push(Object.entries(elem)); //hacer todo desde objeto
+                            gs.push(elem); 
                 }
             }
 
-            for (const elem of gs){
+            
+            for (i=0; i<choferesPorLegajo.length;i++){
+                let x = gs.filter((n)=> n.legajo == choferesPorLegajo[i].legajo);
+                let xx = {...choferesPorLegajo[i], ...x}
+                choferesPorLegajo[i] = xx;
+            }
+            
+            console.log(choferesPorLegajo);
+ */
+           /*  for (const elem of gs){
                 for (i=0;i<elem.length;i++){
 
                     if (elem[i][1]=="FV" || elem[i][1]=="F " || elem[i][1]==" F" || elem[i][1]==" F"|| elem[i][1]==" F*"  || elem[i][1]=="F*" || elem[i][1]=="FV*" || elem[i][1]=="f" || elem[i][1]=="F *"){
@@ -991,12 +1012,12 @@ function Func7(file) {
                 }
                 console.log(x);
             }
-
+ */
           /*   for (const elem of choferesPorLegajo){
                 let at = gs2.findIndex((n)=> parseInt(n) == elem.legajo);
                 frFinal.push(at);
             } */
-            console.log(frFinal);
+            //console.log(frFinal);
                 
             /* let arrayPresent = roa;
 
