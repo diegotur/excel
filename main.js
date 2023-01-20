@@ -952,121 +952,46 @@ function Func7(file) {
                     };
                     if (elem[21] == "F" || elem[21] == "F" || elem[21] == "v"|| elem[21] == "f"){
                         elem[21] = "FN";
-                        console.log(elem[21]);
                     };
-                });
-
-
-
-                console.log(roa1);
-               /*  let gs = []; 
-                let gs2 = []; 
-
-                for (const elem of roa1){
-                    if (choferesPorLegajo.some((x => x.legajo == elem.legajo))!=false){
-                            gs.push(elem); 
-                }
-            }
-
-            
-            for (i=0; i<choferesPorLegajo.length;i++){
-                let x = gs.filter((n)=> n.legajo == choferesPorLegajo[i].legajo);
-                let xx = {...choferesPorLegajo[i], ...x}
-                choferesPorLegajo[i] = xx;
-            }
-            
-            console.log(choferesPorLegajo);
- */
-           /*  for (const elem of gs){
-                for (i=0;i<elem.length;i++){
-
-                    if (elem[i][1]=="FV" || elem[i][1]=="F " || elem[i][1]==" F" || elem[i][1]==" F"|| elem[i][1]==" F*"  || elem[i][1]=="F*" || elem[i][1]=="FV*" || elem[i][1]=="f" || elem[i][1]=="F *"){
-                        elem[i][1]="F" ;
-                    } else if (elem[i][1]=="V" || elem[i][1]==" V" || elem[i][1]=="VF"|| elem[i][1]=="  "|| elem[i][1]=="e"|| elem[i][1]=="V "|| elem[i][1]==" " || elem[i][1]=="*" || elem[i][1]==" *" || elem[i][1]=="V*"){
-                        elem[i].shift();
-                        elem[i].shift();
+                    Object.entries(elem).forEach(pair => {
+                        if((pair[1])==" "||(pair[1])=="V"||(pair[1])=="V "||(pair[1])=="v"||(pair[1])=="*"||(pair[1])=="e"||(pair[1])==" V"||(pair[1])=="VF"||(pair[1])==" *"||(pair[1])=="V*"||(pair[1])=="  "){
+                            let x = pair[0];
+                            delete elem[x];
+                        };
+                        if((pair[1])=="F*"||(pair[1])=="f*"||(pair[1])=="F "||(pair[1])==" F*"||(pair[1])=="f"||(pair[1])==" F"||(pair[1])=="FV*"||(pair[1])=="F *"||(pair[1])=="FV"){
+                        let x = pair[0];
+                        elem[x] ="F";
+                        };
+                    });
+                    let x = 0;
+                    Object.entries(elem).forEach(pair => {
+                        if (pair[1]=="F"){
+                            x++;
+                        }
+                        
+                    });
+                    if (x<6 && x>0){
+                        console.log(elem.chofer, elem.legajo);
                     }
-                }
-            }
-            for (const elem of gs){
-
-                gs2
-                .push(elem.filter(n => n.length > 0));
-            }
-
-            for (const elem of gs2){
-            for (i=0; i<elem.length; i++){
-
-                if (elem[i][1] == "F"){
-                    elem[i].pop()
-                } else if(elem[i][0]=="legajo"){
-                    elem[i].shift();
-                }
-                if (elem[i].length>1){
-                    console.log(elem[i]);
-                }
-            }
-            }
-            let frFinal = [];
-
-            for (const elem of gs2){
-                let x;
-                for (i=0;i<elem.length;i++){
-                    x = {...x, [i]:elem[i][0]}
+                    if (x>6){
+                        console.log(elem.legajo,elem.chofer);
                     }
-                    frFinal.push(x);
-                }
-            for (const elem of choferesPorLegajo){
-                const {chofer} = elem;
-                let x;
-                for (i=0;i<frFinal.length;i++){
+                    });
 
-                    x = gs2[i].findIndex((n)=> n === chofer);
-                }
-                console.log(x);
-            }
- */
-          /*   for (const elem of choferesPorLegajo){
-                let at = gs2.findIndex((n)=> parseInt(n) == elem.legajo);
-                frFinal.push(at);
-            } */
-            //console.log(frFinal);
-                
-            /* let arrayPresent = roa;
-
-            
-            let pr2 = [];
-            
-            console.log(arrayPresent);
-
-            arrayPresent.sort((a, b) => (a.legajo > b.legajo) ? 1 : -1);
-
-            for (i = 0; i < arrayPresent.length; i++) {
-
-
-                let pr3 = [];
-                Object.entries(arrayPresent[i]).forEach(pair => {
-                    pr3.push(pair[1]);
-
-                });
-                pr2.push(pr3);
-            }
-
-            for (const e of pr2) {
-                for (i = 0; i < e.length; i++) {
-                    if (e[i] == undefined || e[i] == "V" || e[i] == "V*" || e[i] == "e" || e[i] == "*" || e[i] == " *" || e[i] == "* ") {
-                        e[i] = "";
+                    let roaFinal=[];
+                    let x = [];
+                    for (const elem of roa1){
+                        Object.entries(elem).forEach(pair => {
+                            if (pair[1]=="F"||pair[1]=="FN"){
+                                x.push(pair[0]);
+                            } else if(pair[0]=="legajo"||pair[0]=="chofer"){
+                                x.push(pair[1]);
+                            };
+                        });
+                        roaFinal.push(x);
                     }
-                    if (e[i] == "FV" || e[i] == "F*" || e[i] == "VF" || e[i] == "F *" || e[i] == " F*" || e[i] == "FV*" || e[i] == "F* ") {
-                        e[i] = "F";
-                    }
-
-                }
-            }
-
-
-                       
-
+                   console.log(roaFinal);
+                    /*
                     for (const elem of francosMore) {
                         const node = document.createElement("tr");
                         const subNode = document.createElement("td");
