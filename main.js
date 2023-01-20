@@ -945,6 +945,19 @@ function Func7(file) {
                 }
                 
                 roa1 = roa1.sort((a, b) => (a.legajo > b.legajo) ? 1 : -1);
+
+                roa1.forEach(function(elem) {
+                    if (elem[20] == "F" || elem[20] == "F" || elem[20] == "v"|| elem[20] == "f"){
+                    elem[20] = "FN";
+                    };
+                    if (elem[21] == "F" || elem[21] == "F" || elem[21] == "v"|| elem[21] == "f"){
+                        elem[21] = "FN";
+                        console.log(elem[21]);
+                    };
+                });
+
+
+
                 console.log(roa1);
                /*  let gs = []; 
                 let gs2 = []; 
