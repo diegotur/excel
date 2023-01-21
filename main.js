@@ -978,19 +978,59 @@ function Func7(file) {
                     }
                     });
 
-                    let roaFinal=[];
-                    let x = [];
+                    console.log(roa1); //hacer presentismo
+
+
+                    let roaFinal = [];
+                     
                     for (const elem of roa1){
+                       let x=[];
                         Object.entries(elem).forEach(pair => {
-                            if (pair[1]=="F"||pair[1]=="FN"){
+                            if (pair[0]!="legajo" && pair[0]!="chofer"){
                                 x.push(pair[0]);
-                            } else if(pair[0]=="legajo"||pair[0]=="chofer"){
+                            }
+                            if (pair[1]!="F" && pair[1]!="FN"){
                                 x.push(pair[1]);
-                            };
-                        });
-                        roaFinal.push(x);
-                    }
-                   console.log(roaFinal);
+                            }
+                        })
+                            let f = x.pop();
+                            let ff = x.pop();
+                            x.unshift(f);
+                            x.unshift(ff);
+                            roaFinal.push(x);
+                    
+                };
+                /* for (const elem of roaFinal){
+                    let x = choferesPorLegajo.filter((n)=>n.legajo == elem[0]);
+                    let xx = x[0].chofer;
+                    elem[1] = xx;
+                } */
+                let titleList = ["LEGAJO", "CHOFER", "1", "2", "3", "4", "5", "6","7", "8", "9"];
+
+                TitleList("infoP7", titleList, tableP[6]);
+
+                for (const elem of roaFinal){
+                    const node = document.createElement("tr");
+                    node.classList.add("infoP7");
+                    WriteTable(elem, tableP[6], node);
+                }
+                    /* let roaFinal=[];
+                        for (i=0;i<roa1.length;i++){
+                            let x = [];
+
+                                if (pair[1]=="F"||pair[1]=="FN"){
+                                    x.push(pair[0]);
+                                    
+                                }
+                                if(pair[0]=="legajo"||pair[0]=="chofer"){
+                                    x.push(pair[1]);
+                                };
+                                console.log(x);
+                                roaFinal[i].push(x);
+                            });
+                        }
+                    } */
+                    //console.log(roaFinal);
                     /*
                     for (const elem of francosMore) {
                         const node = document.createElement("tr");
