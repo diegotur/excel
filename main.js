@@ -1,5 +1,9 @@
+
+
 let linkVis = document.getElementsByClassName("linkVis"); 
 let elementsById = document.getElementsByClassName("dropdown-item3"); 
+let tablas = document.getElementsByClassName("tabla");
+
 
 let arrLinks = [];
 
@@ -8,8 +12,12 @@ for (i=0;i<linkVis.length;i++){
 }
 for (const elem of arrLinks){
     elem[0].addEventListener("click", () => {
-        for (ii=0; ii<linkVis.length; ii++)
-        {linkVis[ii].style.visibility = "hidden";}
+        for (ii=0; ii<linkVis.length; ii++){
+            linkVis[ii].style.visibility = "hidden";
+        }
+        for (ii=0; ii<tablas.length; ii++){
+            tablas[ii].style.visibility = "hidden";
+        }
         elem[1].style.visibility = "visible";
     })
     }
@@ -143,7 +151,6 @@ function Func1(file) {
             if (roa.length > 0){
             
             let inter = 0;
-            console.log(choferesPorLegajo);
 
             for (const elem of roa) {
                 elem.Interno = roa[inter][Object.keys(roa[inter])[0]];
@@ -908,10 +915,8 @@ function Func6(file) {
         console.error(e);
     }
 }
-
-let francosMoreTR = document.getElementById("francosDeMas");
-let francosLessTR = document.getElementById("francosDeMenos");
-
+let tableP72 = document.getElementById("tableP72");
+let tableP7 = document.getElementById("tableP7");
 function Func7(file) {
     try {
         var reader = new FileReader();
@@ -925,7 +930,15 @@ function Func7(file) {
             workbook.SheetNames.forEach(function(sheetName) {
                 roa = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
 
-                
+                let cargar = document.getElementById("cargar");
+                cargar.style.visibility = "hidden";
+                let inputFrancos = document.getElementById("inputFrancos");
+                inputFrancos.style.visibility = "hidden";
+                let showPresentismo = document.getElementById("showPresentismo");
+                showPresentismo.style.visibility = "visible";
+                let showFrancos = document.getElementById("showFrancos");
+                showFrancos.style.visibility = "visible";
+
                 let roa1 = [];
                 
                 for (const elem of roa){
@@ -946,12 +959,26 @@ function Func7(file) {
                 
                 roa1 = roa1.sort((a, b) => (a.legajo > b.legajo) ? 1 : -1);
 
+                let cantFer = prompt("Indique cantidad de días feriados");
+
+                
+                let fer = [];
+                for (i=0;i<cantFer; i++){
+                    fer[i] = (prompt("Indique número de día feriado")); 
+                }
+                
+                console.log(fer);
+
+                let sobra = [];
+                let falta = [];
+
+
                 roa1.forEach(function(elem) {
-                    if (elem[20] == "F" || elem[20] == "F" || elem[20] == "v"|| elem[20] == "f"){
-                    elem[20] = "FN";
-                    };
-                    if (elem[21] == "F" || elem[21] == "F" || elem[21] == "v"|| elem[21] == "f"){
-                        elem[21] = "FN";
+                    for (i=0;i<fer.length;i++){
+
+                        if (elem[fer[i]] == "F" || elem[fer[i]] == "F" || elem[fer[i]] == "v"|| elem[fer[i]] == "f"){
+                            elem[fer[i]] = "FN";
+                        };
                     };
                     Object.entries(elem).forEach(pair => {
                         if((pair[1])==" "||(pair[1])=="V"||(pair[1])=="V "||(pair[1])=="v"||(pair[1])=="*"||(pair[1])=="e"||(pair[1])==" V"||(pair[1])=="VF"||(pair[1])==" *"||(pair[1])=="V*"||(pair[1])=="  "){
@@ -971,20 +998,29 @@ function Func7(file) {
                         
                     });
                     if (x<6 && x>0){
-                        console.log(elem.chofer, elem.legajo);
+                        falta.push(elem.legajo);
                     }
                     if (x>6){
-                        console.log(elem.legajo,elem.chofer);
+                        sobra.push(elem.legajo);
                     }
                     });
 
-                    console.log(roa1); //hacer presentismo
-
-
+                    
+                    swal({
+                        icon: "warning",
+                        title: "CHOFERES CON FRANCOS FALTANTES",
+                        text: `${falta}`,
+                    });
                     let roaFinal = [];
-                     
+                    /* swal({
+                        icon: "warning",
+                        title: "CHOFERES CON FRANCOS SOBRANTES",
+                        text: `${sobra}`,
+                    }); */
+
+                    
                     for (const elem of roa1){
-                       let x=[];
+                        let x=[];
                         Object.entries(elem).forEach(pair => {
                             if (pair[0]!="legajo" && pair[0]!="chofer"){
                                 x.push(pair[0]);
@@ -993,6 +1029,7 @@ function Func7(file) {
                                 x.push(pair[1]);
                             }
                         })
+                        
                             let f = x.pop();
                             let ff = x.pop();
                             x.unshift(f);
@@ -1000,166 +1037,99 @@ function Func7(file) {
                             roaFinal.push(x);
                     
                 };
-                /* for (const elem of roaFinal){
-                    let x = choferesPorLegajo.filter((n)=>n.legajo == elem[0]);
-                    let xx = x[0].chofer;
-                    elem[1] = xx;
-                } */
-                let titleList = ["LEGAJO", "CHOFER", "1", "2", "3", "4", "5", "6","7", "8", "9"];
-
-                TitleList("infoP7", titleList, tableP[6]);
-
-                for (const elem of roaFinal){
-                    const node = document.createElement("tr");
-                    node.classList.add("infoP7");
-                    WriteTable(elem, tableP[6], node);
-                }
-                    /* let roaFinal=[];
-                        for (i=0;i<roa1.length;i++){
-                            let x = [];
-
-                                if (pair[1]=="F"||pair[1]=="FN"){
-                                    x.push(pair[0]);
-                                    
-                                }
-                                if(pair[0]=="legajo"||pair[0]=="chofer"){
-                                    x.push(pair[1]);
-                                };
-                                console.log(x);
-                                roaFinal[i].push(x);
-                            });
-                        }
-                    } */
-                    //console.log(roaFinal);
-                    /*
-                    for (const elem of francosMore) {
-                        const node = document.createElement("tr");
-                        const subNode = document.createElement("td");
-                        node.classList.add("detailP7");
-                        const textnode = document.createTextNode(elem[0]);
-                        subNode.appendChild(textnode);
-                        node.appendChild(subNode);
-                        francosMoreTR.appendChild(node);
-
-                    }
-                    for (const elem of francosLess) {
-                        const node = document.createElement("tr");
-                        const subNode = document.createElement("td");
-                        node.classList.add("detail2P7");
-                        const textnode = document.createTextNode(elem[0]);
-                        subNode.appendChild(textnode);
-                        node.appendChild(subNode);
-                        francosLessTR.appendChild(node);
-
-                    }
-
-
-                    let francosMasL = [];
-
-                    for (const e of francos) {
-                        francosMasL.push(e);
-                    }
-
-                    francosMasL.push([1625, "GIMENEZ"]);
-                    francosMasL.push([1677, "SOTO"]);
-                    francosMasL.push([1986, "RODRIGUEZ"]);
-                    francosMasL.push([2079, "ROBERT"]);
-                    francosMasL.push([2443, "DIAZ"]);
-                    francosMasL.push([2448, "BENINATTI"]);
-                    francosMasL.push([2599, "ALIZ"]);
-                    francosMasL.push([2678, "PALACIO"]);
-                    francosMasL.push([2680, "MUNTADA"]);
-                    francosMasL.push([2682, "FAZZARI"]);
-                    francosMasL.push([2752, "OLIVIERI"]);
-                    francosMasL.push([2975, "PERESON"]);
-
-                    for (const el of francosMasL) {
-                        if (el.length < amountFR) {
-                            do {
-                                el.push("");
-                            } while (el.length != amountFR);
-                        }
-                    }
-
-                    console.log(francosMasL);
-
-                    francosMasL.sort((a, b) => (a > b) ? 1 : -1);
-
-
-
-                    if (francos.length > 25) {
-
-                        for (const elem of francosMasL) {
-                            const node = document.createElement("tr");
-                            node.classList.add("infoP7");
-                            for (const e of elem) {
-                                const subNode = document.createElement("td");
-                                const textnode = document.createTextNode(e);
-                                subNode.appendChild(textnode);
-                                node.appendChild(subNode);
-                                tableP[6].appendChild(node);
-                            }
-
-                        }
-                    }
-
-                }
-
-                let presentismo = document.getElementById("presentismo");
-
-                presentismo.addEventListener('click', () => {
-                    upload7Bis()
-                }); */
-
-                function upload7Bis() {
-                    let borrarFR = document.getElementsByClassName("detailP7");
-                    let borrarFR2 = document.getElementsByClassName("infoP7");
-                    let borrarFR1 = document.getElementsByClassName("detail2P7");
-
-                    if (borrarFR2.length > 0) {
+                for (const el of roaFinal){
+                    if (el.length<11){
                         do {
-                            tableP[6].removeChild(borrarFR2[0]);
-
-                        } while (borrarFR2.length != 0);
-                    }
-                    if (borrarFR.length > 0) {
-                        do {
-                            francosMoreTR.removeChild(borrarFR[0]);
-
-                        } while (borrarFR.length != 0);
-                    }
-                    if (borrarFR1.length > 0) {
-                        do {
-                            francosLessTR.removeChild(borrarFR1[0]);
-
-                        } while (borrarFR1.length != 0);
-                    }
-                    let frDM = document.getElementsByClassName("tableCH");
-
-                    for (const el of frDM) {
-                        el.style.visibility = "hidden";
-                    }
-
-                    let tablaPresentismo = document.getElementById("tablaPresentismo");
-
-
-                    tablaPresentismo.style.visibility = "visible";
-
-
-                    for (const elem of pr2) {
-                        const node = document.createElement("tr");
-                        node.classList.add("presentP7");
-                        for (const e of elem) {
-                            const subNode = document.createElement("td");
-                            const textnode = document.createTextNode(e);
-                            subNode.appendChild(textnode);
-                            node.appendChild(subNode);
-                            tablaPresentismo.appendChild(node);
-                        }
+                            el.push("");
+                        } while(el.length<11);
                     }
                 }
-            });
-        }
+                console.log(roaFinal);
+
+                let presentism = [];
+                for (const elem of roa1){
+                    let x = {
+                        ...elem
+                    }
+                    for (i=1;i<32;i++){
+                        let xx = i.toString();
+                        if (x[xx]!="F" && x[xx]!="FN"){
+                            x[xx] = "";
+                        }
+                    }
+                    presentism.push(x);
+                }
+                let roaFinal2 = [];
+                    for (const elem of presentism){
+                        let x  =[];
+                        Object.entries(elem).forEach(pair=>{
+                            x.push([pair[1]]);
+                        })
+                        let f = x.pop();
+                                let ff = x.pop();
+                                x.unshift(f);
+                                x.unshift(ff);
+                                roaFinal2.push(x);
+                    }
+
+
+
+                function funcFr() {
+                    //Limpiar(infoP7, tablep7);
+
+                    let borrarFr = document.getElementsByClassName("infoP7");
+                    let borrarPr = document.getElementsByClassName("infoP72");
+
+                    Limpiar(borrarFr, tableP7);
+                    Limpiar(borrarPr, tableP72); 
+
+                    tableP72.style.visibility = "hidden";
+                    tableP7.style.visibility = "visible";
+
+                    let titleList = ["LEGAJO", "CHOFER", "1", "2", "3", "4", "5", "6","7", "8", "9"];
+
+                    TitleList("infoP7", titleList, tableP[6]);
+
+                    for (const elem of roaFinal){
+                        const node = document.createElement("tr");
+                        node.classList.add("infoP7");
+                        WriteTable(elem, tableP[6], node);
+                    }
+                }
+                function funcPr() {
+
+                    let borrarFr = document.getElementsByClassName("infoP7");
+                    let borrarPr = document.getElementsByClassName("infoP72");
+                    
+                    Limpiar(borrarFr, tableP7);
+                    Limpiar(borrarPr, tableP72);
+
+                    tableP7.style.visibility = "hidden";
+                    tableP72.style.visibility = "visible";
+
+                    let titleList2 = ["LEGAJO", "CHOFER", "1", "2", "3", "4", "5", "6","7", "8", "9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31"];
+
+                    TitleList("infoP72", titleList2, tableP72);
+
+                    for (const elem of roaFinal2){
+                        const node = document.createElement("tr");
+                        node.classList.add("infoP72");
+                        WriteTable(elem, tableP72, node);
+                    }
+                }
+                let presentismo = document.getElementById("showPresentismo");
+
+                    presentismo.addEventListener('click', () => {
+                        funcPr()
+                    });
+                let francos = document.getElementById("showFrancos");
+
+                    francos.addEventListener('click', () => {
+                        funcFr()
+                    });
+
+                });
+            }
     } catch (e) {
         console.error(e);
     }

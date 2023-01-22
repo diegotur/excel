@@ -57,12 +57,33 @@
 }
 #tableP7 th{
     width: fit-content;
+    font-size: 1.2vw;
+    font-weight: 700;
+    border: solid 1px black;
+}
+.infoP7 td{
+    width: 0.3vw;
+    border: solid 1px black;
+
+}
+#tableP72 th{
+    width: fit-content;
     font-size: 1vw;
     font-weight: 700;
+    border: solid 1px black;
 }
-#tableP7 th td{
-    width: min-content;
-    font-size: 0.8vw;
+.infoP72 td{
+    width: 0.3vw;
+    border: solid 1px black;
+
+}
+.tablaPr{
+    position: relative;
+    margin-left: 0.3vw;
+}
+.tablaPr2{
+    position: relative;
+    margin-left: 0.3vw;
 }
 #tableP2{
     width: 70vw;
@@ -104,6 +125,14 @@
 }
 .fechaBT{
     width: 8vw;
+}
+#showPresentismo, #showFrancos{
+    visibility: hidden;
+}
+#tableP7, #tableP72{
+    position: absolute;
+    visibility: hidden;
+    margin-left: 10vw;
 }
 
 
