@@ -2,7 +2,6 @@
 
 let linkVis = document.getElementsByClassName("linkVis"); 
 let elementsById = document.getElementsByClassName("dropdown-item3"); 
-let tablas = document.getElementsByClassName("tabla");
 
 
 let arrLinks = [];
@@ -14,9 +13,6 @@ for (const elem of arrLinks){
     elem[0].addEventListener("click", () => {
         for (ii=0; ii<linkVis.length; ii++){
             linkVis[ii].style.visibility = "hidden";
-        }
-        for (ii=0; ii<tablas.length; ii++){
-            tablas[ii].style.visibility = "hidden";
         }
         elem[1].style.visibility = "visible";
     })
@@ -938,6 +934,7 @@ function Func7(file) {
                 showPresentismo.style.visibility = "visible";
                 let showFrancos = document.getElementById("showFrancos");
                 showFrancos.style.visibility = "visible";
+                frfr.style.visibility = "visible";
 
                 let roa1 = [];
                 
