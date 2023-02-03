@@ -679,6 +679,7 @@ function Func6(file) {
             workbook.SheetNames.forEach(function(sheetName) {
                 roa = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
 
+
                 if (roa.length > 0 ){
 
                     let numberMalUso = roa.findIndex((elem) => elem.props == "CONTROL MAL USO DEL SUBE");
@@ -881,6 +882,15 @@ function Func6(file) {
 
             corridos.sort((a, b) => (a.legajo > b.legajo) ? 1 : -1);
 
+            console.log(choferesPorLegajo);
+            console.log(corridos);
+
+            for (const elem of corridos){
+                let x = choferesPorLegajo.filter((n)=>n.legajo == elem.legajo);
+                elem.chofer = x[0].chofer;
+            }
+
+
             for (i = 0; i < corridos.length; i++) {
                 let x = corridos[i].seccionamiento + corridos[i].cortes + corridos[i].malUso + corridos[i].seccCorridos + corridos[i].velocidad + corridos[i].espera;
                 corridos[i] = {
@@ -889,7 +899,7 @@ function Func6(file) {
                 };
             }
 
-            let titleList = ["Legajo", "Seccionamiento", "Mal Uso Del Sube", "Servicios Cortados", "Secc. Corrido", "Exceso De Velocidad", "Esperas Excesivas", "Total Por Chofer"];
+            let titleList = ["Legajo", "Chofer","Seccionamiento", "Mal Uso Del Sube", "Servicios Cortados", "Secc. Corrido", "Exceso De Velocidad", "Esperas Excesivas", "Total Por Chofer"];
 
             let roaFinal = [];
 
@@ -897,10 +907,12 @@ function Func6(file) {
 
                 for(const elem of corridos){
                     
-                    let {legajo, seccionamiento, malUso, cortes, seccCorridos, velocidad, espera, total} = elem;
+                    let {legajo, chofer, seccionamiento, malUso, cortes, seccCorridos, velocidad, espera, total} = elem;
                     
-                    roaFinal.push([legajo, seccionamiento, malUso, cortes, seccCorridos, velocidad, espera, total]);
+                    roaFinal.push([legajo, chofer, seccionamiento, malUso, cortes, seccCorridos, velocidad, espera, total]);
                 }
+
+                
                 for (const elem of roaFinal){
                     const node = document.createElement("tr");
                     node.classList.add("infoP6");
