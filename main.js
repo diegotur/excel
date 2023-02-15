@@ -1459,14 +1459,15 @@ function Func10(file) {
         var reader = new FileReader();
         reader.readAsBinaryString(file);
         reader.onload = function(e) {
-
+            
             var data = e.target.result;
             var workbook = XLSX.read(data, {
                 type: 'binary'
             });
             workbook.SheetNames.forEach(function(sheetName) {
                 roa10 = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
-
+                
+                if (roa10.length > 0) {
 
                 for (const elem of roa10) {
 
@@ -1501,7 +1502,7 @@ function Func10(file) {
                     dropArKM.push("kmSUbeDrop" + dropIndexKM);
                     dropIndexKM++;
                 }
-
+                
                 for (i = 0; i < fechasDispKM1.length; i++) {
                     let wKM = document.getElementById(dropArKM[i])
                     wKM.addEventListener("click", () => {
@@ -1547,17 +1548,15 @@ function Func10(file) {
                     }
 
                 }
-                if (roa10.length > 0) {
-
-                    result[sheetName] = roa10;
-                }
-            })
-        }
-
-    } catch (e) {
-        console.error(e);
+            }
+        })
     }
+    
+} catch (e) {
+    console.error(e);
 }
+}
+//console.log(arrayKM4);
 
 let roa11;
 
@@ -1681,6 +1680,86 @@ function Func11(file) {
     }
 }
 
+let roa11bis;
+
+let tableP11bis = document.getElementById("tableP11");
+
+function Func11bis(file) {
+    try {
+        var reader = new FileReader();
+        reader.readAsBinaryString(file);
+        reader.onload = function(e) {
+
+            var data = e.target.result;
+            var workbook = XLSX.read(data, {
+                type: 'binary'
+            });
+            workbook.SheetNames.forEach(function(sheetName) {
+                    roa11bis = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
+
+                    if (roa11bis.length > 0){
+
+                  console.log(roa11bis);
+                  console.log(arrayKM4);
+
+                  for (const el of roa11bis){
+                    let x = arrayKM4.filter((n)=> n.coche == el.coche);
+                    if (x.length > 0){
+                        if (x.km !== el.kms == true){
+                            console.log(el.coche);
+                        }
+                    }
+                  }
+
+                    
+                   //let kms2 = arrayKM4;
+                    
+                    
+                 
+
+              /*   let titleList = ["Coche", "KM Tráfico", "KM Sube", "Diferencia", "Novedad"];
+               
+                TitleList("infoP12", titleList, tableP10);
+                
+                for (const elem of kms3) {
+                    const node = document.createElement("tr");
+                    node.classList.add("infoP10");
+                    const subNode = document.createElement("td");
+                    const subNode1 = document.createElement("td");
+                    const subNode2 = document.createElement("td");
+                    const subNode3 = document.createElement("td");
+                    const subNode4 = document.createElement("td");
+                    
+                    const textnode = document.createTextNode(elem.coche);
+                    const textnode1 = document.createTextNode(elem.kms);
+                    const textnode2 = document.createTextNode(elem.kmSube);
+                    const textnode3 = document.createTextNode(elem.dif);
+                    const textnode4 = document.createTextNode(elem.nov);
+                    subNode.appendChild(textnode);
+                    subNode1.appendChild(textnode1);
+                    subNode2.appendChild(textnode2);
+                    subNode3.appendChild(textnode3);
+                    subNode4.appendChild(textnode4);
+                    node.appendChild(subNode);
+                    node.appendChild(subNode1);
+                    node.appendChild(subNode2);
+                    node.appendChild(subNode3);
+                    node.appendChild(subNode4);
+                    tableP10.appendChild(node);
+                    
+                } */
+                   
+                }
+                }
+
+            )
+        };
+
+
+    } catch (e) {
+        console.error(e);
+    }
+}
 let roa12;
 
 let tableP12 = document.getElementById("tableP12");
