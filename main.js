@@ -516,6 +516,7 @@ function Func4(file) {
 
 
                 let drop2 = document.getElementsByClassName("dropdown-item2");
+                console.log(drop2);
                 let dropIndex2 = 0;
                 let dropAr2 = [];
 
