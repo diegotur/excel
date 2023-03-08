@@ -1,26 +1,26 @@
 
 
-let linkVis = document.getElementsByClassName("linkVis"); 
-let elementsById = document.getElementsByClassName("dropdown-item3"); 
+let linkVis = document.getElementsByClassName("linkVis");
+let elementsById = document.getElementsByClassName("dropdown-item3");
 
 
 let arrLinks = [];
 
-for (i=0;i<linkVis.length;i++){
-    arrLinks.push([elementsById[i],linkVis[i]]);
+for (i = 0; i < linkVis.length; i++) {
+    arrLinks.push([elementsById[i], linkVis[i]]);
 }
-for (const elem of arrLinks){
+for (const elem of arrLinks) {
     elem[0].addEventListener("click", () => {
-        for (ii=0; ii<linkVis.length; ii++){
+        for (ii = 0; ii < linkVis.length; ii++) {
             linkVis[ii].style.visibility = "hidden";
         }
         elem[1].style.visibility = "visible";
     })
-    }
+}
 
-function WriteTable (elem, htmlTable, node){
+function WriteTable(elem, htmlTable, node) {
 
-    for(i=0; i<Object.keys(elem).length;i++){
+    for (i = 0; i < Object.keys(elem).length; i++) {
         const subNode = document.createElement("td");
         let textnode;
         textnode = document.createTextNode(elem[i]);
@@ -59,7 +59,7 @@ function cambioHora(excel_date, time = false) {
     return time ? daytime : daytime
 };
 
-function Limpiar (a, b){
+function Limpiar(a, b) {
     if (a.length > 0) {
         do {
             b.removeChild(a[0]);
@@ -68,17 +68,17 @@ function Limpiar (a, b){
     }
 }
 
-function TitleList (info, titleList, table ){
+function TitleList(info, titleList, table) {
     const nodeP = document.createElement("tr");
     nodeP.classList.add(info);
-            
-        for (i=0; i<titleList.length; i++){
-            let subNode = document.createElement("th");
-            let textnode = document.createTextNode(titleList[i]);
-            subNode.appendChild(textnode);
-            nodeP.appendChild(subNode);
-            }
-        table.appendChild(nodeP);
+
+    for (i = 0; i < titleList.length; i++) {
+        let subNode = document.createElement("th");
+        let textnode = document.createTextNode(titleList[i]);
+        subNode.appendChild(textnode);
+        nodeP.appendChild(subNode);
+    }
+    table.appendChild(nodeP);
 }
 
 
@@ -91,7 +91,7 @@ function upload(source, func) {
     }
     var filename = files[0].name;
     var extension = filename.substring(filename.lastIndexOf(".")).toUpperCase();
-    if (extension == '.XLS' || extension == '.XLSX'|| extension == '.TXT') {
+    if (extension == '.XLS' || extension == '.XLSX' || extension == '.TXT') {
         func(files[0]);
     } else {
         alert("No se puede leer el archivo");
@@ -109,22 +109,22 @@ function Func0(file) {
     try {
         var reader = new FileReader();
         reader.readAsBinaryString(file);
-        reader.onload = function(e) {
+        reader.onload = function (e) {
 
             var data = e.target.result;
-            var workbook = XLSX.read(data, {type: 'binary'});
-            workbook.SheetNames.forEach(function(sheetName) {
-            roa = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
+            var workbook = XLSX.read(data, { type: 'binary' });
+            workbook.SheetNames.forEach(function (sheetName) {
+                roa = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
 
-            if (roa.length > 0){
-                for (const elem of roa){
-                    choferesPorLegajo.push({legajo: elem.LEGAJO, chofer: elem.APELLIDO});
-                }
-                console.log(choferesPorLegajo);
-            };
-        })    
+                if (roa.length > 0) {
+                    for (const elem of roa) {
+                        choferesPorLegajo.push({ legajo: elem.LEGAJO, chofer: elem.APELLIDO });
+                    }
+                    console.log(choferesPorLegajo);
+                };
+            })
 
-    }
+        }
     } catch (e) {
         console.error(e);
     }
@@ -135,64 +135,64 @@ function Func1(file) {
     try {
         var reader = new FileReader();
         reader.readAsBinaryString(file);
-        reader.onload = function(e) {
+        reader.onload = function (e) {
 
             var data = e.target.result;
             var workbook = XLSX.read(data, {
                 type: 'binary'
             });
-            workbook.SheetNames.forEach(function(sheetName) {
-            roa = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
+            workbook.SheetNames.forEach(function (sheetName) {
+                roa = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
 
-            if (roa.length > 0){
-            
-            let inter = 0;
+                if (roa.length > 0) {
 
-            for (const elem of roa) {
-                elem.Interno = roa[inter][Object.keys(roa[inter])[0]];
-                elem.Ramal = elem.__EMPTY_2;
-                elem.Legajo = elem.__EMPTY_6;
-                elem.Kms = elem.__EMPTY_9;
-                elem.Secciones = elem.__EMPTY_10;
-                elem.Chofer = elem.__EMPTY_11;
-                elem.Diferencia = elem.__EMPTY_12;
-                inter++;
-            }
+                    let inter = 0;
 
-            let roaCortos = roa.filter((elem) => elem.Secciones < 8 && elem.Kms > 12 && elem.Diferencia > 3);
-            let roaLargos = roa.filter((elem) => elem.Secciones > 8 && elem.Diferencia > 7 && elem.Ramal < 316 && elem.Kms > 30);
+                    for (const elem of roa) {
+                        elem.Interno = roa[inter][Object.keys(roa[inter])[0]];
+                        elem.Ramal = elem.__EMPTY_2;
+                        elem.Legajo = elem.__EMPTY_6;
+                        elem.Kms = elem.__EMPTY_9;
+                        elem.Secciones = elem.__EMPTY_10;
+                        elem.Chofer = elem.__EMPTY_11;
+                        elem.Diferencia = elem.__EMPTY_12;
+                        inter++;
+                    }
 
-            for (const elem of roaLargos) {
-                roaCortos.push(elem);
-            }
+                    let roaCortos = roa.filter((elem) => elem.Secciones < 8 && elem.Kms > 12 && elem.Diferencia > 3);
+                    let roaLargos = roa.filter((elem) => elem.Secciones > 8 && elem.Diferencia > 7 && elem.Ramal < 316 && elem.Kms > 30);
 
-            roaCortos.sort((a, b) => (a.Legajo > b.Legajo) ? 1 : -1);
+                    for (const elem of roaLargos) {
+                        roaCortos.push(elem);
+                    }
 
-            let roaFinal=[];
+                    roaCortos.sort((a, b) => (a.Legajo > b.Legajo) ? 1 : -1);
 
-            let infoP = document.getElementsByClassName("infoP");
+                    let roaFinal = [];
 
-            Limpiar(infoP, tableP[0]);
+                    let infoP = document.getElementsByClassName("infoP");
 
-            let titleList = ["Interno", "Ramal", "Legajo", "Kms", "Secciones", "Chofer", "Diferencia"];
-            
-            TitleList("infoP", titleList, tableP[0]);
+                    Limpiar(infoP, tableP[0]);
 
-            for(const elem of roaCortos){
-                
-                let {Interno, Ramal, Legajo, Kms, Secciones, Chofer, Diferencia} = elem;
-                
-                roaFinal.push([Interno, Ramal, Legajo, Kms, Secciones, Chofer, Diferencia]);
+                    let titleList = ["Interno", "Ramal", "Legajo", "Kms", "Secciones", "Chofer", "Diferencia"];
+
+                    TitleList("infoP", titleList, tableP[0]);
+
+                    for (const elem of roaCortos) {
+
+                        let { Interno, Ramal, Legajo, Kms, Secciones, Chofer, Diferencia } = elem;
+
+                        roaFinal.push([Interno, Ramal, Legajo, Kms, Secciones, Chofer, Diferencia]);
+                    }
+
+                    for (const elem of roaFinal) {
+                        const node = document.createElement("tr");
+                        node.classList.add("infoP");
+                        WriteTable(elem, tableP[0], node);
+                    }
                 }
-                
-            for (const elem of roaFinal){
-                const node = document.createElement("tr");
-                node.classList.add("infoP");
-                WriteTable(elem, tableP[0], node);
-            }
-            } 
-        });
-    }
+            });
+        }
     } catch (e) {
         console.error(e);
     }
@@ -202,21 +202,21 @@ function Func2(file) {
     try {
         var reader = new FileReader();
         reader.readAsBinaryString(file);
-        reader.onload = function(e) {
+        reader.onload = function (e) {
 
             var data = e.target.result;
             var workbook = XLSX.read(data, {
                 type: 'binary'
             });
-            workbook.SheetNames.forEach(function(sheetName) {
+            workbook.SheetNames.forEach(function (sheetName) {
                 roa = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
 
 
-                if (roa.length > 0){
+                if (roa.length > 0) {
 
                     let inter = 0;
 
-    
+
                     for (const elem of roa) {
                         elem.Legajo = roa[inter][Object.keys(roa[inter])[0]];
                         elem.Interno = elem.__EMPTY;
@@ -232,53 +232,53 @@ function Func2(file) {
 
                     roa.shift();
 
-                    
+
                     for (const elem of roa) {
-    
+
                         elem.FechaInicio = cambioFecha(elem.FechaInicio, 25568);
                         elem.FechaFin = cambioFecha(elem.FechaFin, 25568);
                         elem.HoraInicio = cambioHora(elem.HoraInicio);
                         elem.HoraFin = cambioHora(elem.HoraFin);
                     }
-                    
+
                     let fechasDisp = [];
-    
+
                     for (const elem of roa) {
                         fechasDisp.push(elem.FechaInicio);
                     }
-                    
+
                     fechasDisp = [...new Set(fechasDisp)];
-                    
+
                     fechasDisp.sort((a, b) => (a > b) ? 1 : -1);
-                    
+
                     const roaBis = roa;
-                    
-                    
+
+
                     let drop = document.getElementsByClassName("dropdown-item");
                     let dropIndex = 0;
                     let dropAr = [];
-    
+
                     for (const elem of fechasDisp) {
-    
+
                         drop[dropIndex].innerText = elem;
                         dropAr.push("drop" + dropIndex);
                         dropIndex++;
                     }
-    
-    
+
+
                     for (i = 0; i < fechasDisp.length; i++) {
                         let w = document.getElementById(dropAr[i])
                         w.addEventListener("click", () => {
                             Write(w.textContent);
                         });
                     }
-    
-                    
+
+
                     function Write(a) {
                         let infoP2 = document.getElementsByClassName("infoP2");
-                        
+
                         Limpiar(infoP2, tableP[1]);
-                        
+
                         let newArray10 = roaBis.filter((elem) => a == elem.FechaInicio);
                         let newPP = newArray10.filter((elem) => a !== elem.FechaFin);
                         let newPPP = newPP.filter((elem) => elem.HoraFin > "02:00:00");
@@ -289,37 +289,37 @@ function Func2(file) {
                         let pcoRapMasde48 = newArray20.filter((elem) => elem.Kms > "48" && elem.Recorrido == "PCO RAP");
                         let fonMasde54 = newArray20.filter((elem) => elem.Kms > "54" && elem.Recorrido == "FON COM");
                         let fonRapMasde54 = newArray20.filter((elem) => elem.Kms > "54" && elem.Recorrido == "FON RAP");
-    
+
                         let new2 = newArray11.concat(kmDeMas63);
                         let new3 = new2.concat(pcoMasde48);
                         let new4 = new3.concat(pcoRapMasde48);
                         let new5 = new4.concat(fonMasde54);
                         let new6 = new5.concat(fonRapMasde54);
-    
+
                         new6.sort((a, b) => (a.Legajo > b.Legajo) ? 1 : -1);
 
-                    let roaFinal=[];
+                        let roaFinal = [];
 
-                    let titleList = ["Legajo", "Interno", "FechaInicio", "FechaFin", "HoraInicio", "HoraFin", "Recorrido", "Kms"];
-            
-                    TitleList("infoP2", titleList, tableP[1]);
+                        let titleList = ["Legajo", "Interno", "FechaInicio", "FechaFin", "HoraInicio", "HoraFin", "Recorrido", "Kms"];
 
-                    for(const elem of new6){
-                    
-                        let {Legajo, Interno, FechaInicio, FechaFin, HoraInicio, HoraFin, Recorrido, Kms} = elem;
-                    
-                        roaFinal.push([Legajo, Interno, FechaInicio, FechaFin, HoraInicio, HoraFin, Recorrido, Kms]);
-                    }
-                    for (const elem of roaFinal){
-                        const node = document.createElement("tr");
-                        node.classList.add("infoP2");
-                        WriteTable(elem, tableP[1], node);
-                    }
-    
+                        TitleList("infoP2", titleList, tableP[1]);
+
+                        for (const elem of new6) {
+
+                            let { Legajo, Interno, FechaInicio, FechaFin, HoraInicio, HoraFin, Recorrido, Kms } = elem;
+
+                            roaFinal.push([Legajo, Interno, FechaInicio, FechaFin, HoraInicio, HoraFin, Recorrido, Kms]);
+                        }
+                        for (const elem of roaFinal) {
+                            const node = document.createElement("tr");
+                            node.classList.add("infoP2");
+                            WriteTable(elem, tableP[1], node);
+                        }
+
                     }
                 }
-        });
-    }
+            });
+        }
     } catch (e) {
         console.error(e);
     }
@@ -329,16 +329,16 @@ function Func3(file) {
     try {
         var reader = new FileReader();
         reader.readAsBinaryString(file);
-        reader.onload = function(e) {
+        reader.onload = function (e) {
 
             var data = e.target.result;
             var workbook = XLSX.read(data, {
                 type: 'binary'
             });
-            workbook.SheetNames.forEach(function(sheetName) {
+            workbook.SheetNames.forEach(function (sheetName) {
                 roa = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
 
-                if (roa.length > 0){
+                if (roa.length > 0) {
 
                     for (const elem of roa) {
                         elem.interno = elem.__EMPTY;
@@ -350,129 +350,129 @@ function Func3(file) {
                         elem.seccion = elem.__EMPTY_7;
                         elem.legajo = elem.__EMPTY_8;
                         elem.tipoDeMarca = elem.__EMPTY_9;
-                }
-                
-                
-                let soloCambio = roa.filter((elem) => elem.tipoDeMarca == "Cambio Seccion");
-                let soloCambio2 = soloCambio.filter((elem) => elem.legajo != "0");
-                let porInterno = [];
-                
-                
-                for (const elem of soloCambio2) {
-                    elem.fechaInicio = cambioFecha(elem.fechaInicio, 25568);
-                    elem.horaInicio = cambioHora(elem.horaInicio, 25568);
-                    let e = elem.horaInicio.split(':');
-                    elem.horaSinSec = (`${e[0]}:${e[1]}`);
-                    
-                    if (porInterno.some((n) => n == elem.interno) == false) {
-                        porInterno.push(elem.interno);
                     }
-                }
-                
-                let x2 = [];
-                let x3 = [];
-                let x4 = [];
-                let intArr = [];
-                
-                for (const elem of porInterno) {
-                    let x = soloCambio2.filter((elem2) => elem2.interno == elem);
-                    x2.push(x);
-                }
-                
 
-                for (i = 0; i < porInterno.length; i++) {
-                    x3[i] = soloCambio2.filter((elem) => elem.interno == porInterno[i]);
-                }
-                
-                x4 = [...x3];
-                for (i = 0; i < x4.length; i++) {
-                    for (ii = 0; ii < x4[i].length; ii++) {
-                        let m = x4[i][ii].horaSinSec;
-                        intArr[i] = x4[i][ii].interno;
-                        x4[i][ii] = m;
-                    }
-                }
-                for (f = 0; f < 3; f++) {
-                    for (i = 0; i < x4.length; i++) {
-                        const dup = x4[i].filter((item, index) => x4[i].indexOf(item) !== index);
-                        x4[i] = dup;
-                    }
-                }
-                
-                for (i = 0; i < x4.length; i++) {
-                    let dup = x4[i].filter((item, index) => x4[i].indexOf(item) == index);
-                    x4[i] = dup;
-                }
-                
-                let finalArr2 = [];
-                
-                
-                for (i = 0; i < x4.length; i++) {
-                    for (ii = 0; ii < x4[i].length; ii++) {
-                        let x = soloCambio2.filter((elem) => elem.interno == intArr[i] && elem.horaSinSec == x4[i][ii]);
-                        for (const elem of x) {
-                            finalArr2.push(elem);
+
+                    let soloCambio = roa.filter((elem) => elem.tipoDeMarca == "Cambio Seccion");
+                    let soloCambio2 = soloCambio.filter((elem) => elem.legajo != "0");
+                    let porInterno = [];
+
+
+                    for (const elem of soloCambio2) {
+                        elem.fechaInicio = cambioFecha(elem.fechaInicio, 25568);
+                        elem.horaInicio = cambioHora(elem.horaInicio, 25568);
+                        let e = elem.horaInicio.split(':');
+                        elem.horaSinSec = (`${e[0]}:${e[1]}`);
+
+                        if (porInterno.some((n) => n == elem.interno) == false) {
+                            porInterno.push(elem.interno);
                         }
                     }
-                }
-                
-                finalArr2.sort((a, b) => (a.legajo > b.legajo) ? 1 : -1);
-                
-                let finalArr3 = [];
-                let finalArr4 = [];
-                
-                
-                for (const s of finalArr2) {
-                    finalArr3.push(s.legajo);
-                    finalArr4.push(s.horaSinSec);
-                    
-                }
-                
-                function Duplicados(a) {
-                    return [...new Set(a)];
-                }
-                
-                let finalArr5 = Duplicados(finalArr3);
-                
-                let finalArr6 = [];
-                for (const e of finalArr5) {
-                    let x = finalArr2.filter((el) => el.legajo === e);
-                    
-                    h = [];
-                    for (const e of x) {
-                        h.push(e.horaSinSec);
+
+                    let x2 = [];
+                    let x3 = [];
+                    let x4 = [];
+                    let intArr = [];
+
+                    for (const elem of porInterno) {
+                        let x = soloCambio2.filter((elem2) => elem2.interno == elem);
+                        x2.push(x);
                     }
-                    
-                    let xx = Duplicados(h);
-                    
-                    finalArr6.push({
-                        legajo: e,
-                        cantCorridos: xx.length
-                    })
-                }
-                
-                let roaFinal=[];
 
-                let infoP3 = document.getElementsByClassName("infoP3");
 
-                Limpiar(infoP3, tableP[2]);
-                
-                let titleList = ["Legajo", "Secc. De Corrido"];
-                
-                TitleList("infoP3", titleList, tableP[2]);
-                
-                for(const elem of finalArr6){
-                    
-                    let {legajo, cantCorridos} = elem;
-                    
-                    roaFinal.push([legajo, cantCorridos]);
+                    for (i = 0; i < porInterno.length; i++) {
+                        x3[i] = soloCambio2.filter((elem) => elem.interno == porInterno[i]);
+                    }
+
+                    x4 = [...x3];
+                    for (i = 0; i < x4.length; i++) {
+                        for (ii = 0; ii < x4[i].length; ii++) {
+                            let m = x4[i][ii].horaSinSec;
+                            intArr[i] = x4[i][ii].interno;
+                            x4[i][ii] = m;
+                        }
+                    }
+                    for (f = 0; f < 3; f++) {
+                        for (i = 0; i < x4.length; i++) {
+                            const dup = x4[i].filter((item, index) => x4[i].indexOf(item) !== index);
+                            x4[i] = dup;
+                        }
+                    }
+
+                    for (i = 0; i < x4.length; i++) {
+                        let dup = x4[i].filter((item, index) => x4[i].indexOf(item) == index);
+                        x4[i] = dup;
+                    }
+
+                    let finalArr2 = [];
+
+
+                    for (i = 0; i < x4.length; i++) {
+                        for (ii = 0; ii < x4[i].length; ii++) {
+                            let x = soloCambio2.filter((elem) => elem.interno == intArr[i] && elem.horaSinSec == x4[i][ii]);
+                            for (const elem of x) {
+                                finalArr2.push(elem);
+                            }
+                        }
+                    }
+
+                    finalArr2.sort((a, b) => (a.legajo > b.legajo) ? 1 : -1);
+
+                    let finalArr3 = [];
+                    let finalArr4 = [];
+
+
+                    for (const s of finalArr2) {
+                        finalArr3.push(s.legajo);
+                        finalArr4.push(s.horaSinSec);
+
+                    }
+
+                    function Duplicados(a) {
+                        return [...new Set(a)];
+                    }
+
+                    let finalArr5 = Duplicados(finalArr3);
+
+                    let finalArr6 = [];
+                    for (const e of finalArr5) {
+                        let x = finalArr2.filter((el) => el.legajo === e);
+
+                        h = [];
+                        for (const e of x) {
+                            h.push(e.horaSinSec);
+                        }
+
+                        let xx = Duplicados(h);
+
+                        finalArr6.push({
+                            legajo: e,
+                            cantCorridos: xx.length
+                        })
+                    }
+
+                    let roaFinal = [];
+
+                    let infoP3 = document.getElementsByClassName("infoP3");
+
+                    Limpiar(infoP3, tableP[2]);
+
+                    let titleList = ["Legajo", "Secc. De Corrido"];
+
+                    TitleList("infoP3", titleList, tableP[2]);
+
+                    for (const elem of finalArr6) {
+
+                        let { legajo, cantCorridos } = elem;
+
+                        roaFinal.push([legajo, cantCorridos]);
+                    }
+                    for (const elem of roaFinal) {
+                        const node = document.createElement("tr");
+                        node.classList.add("infoP3");
+                        WriteTable(elem, tableP[2], node);
+                    }
                 }
-                for (const elem of roaFinal){
-                    const node = document.createElement("tr");
-                    node.classList.add("infoP3");
-                    WriteTable(elem, tableP[2], node);
-                }
-            }
             });
         }
     } catch (e) {
@@ -484,87 +484,87 @@ function Func4(file) {
     try {
         var reader = new FileReader();
         reader.readAsBinaryString(file);
-        reader.onload = function(e) {
+        reader.onload = function (e) {
 
             var data = e.target.result;
             var workbook = XLSX.read(data, {
                 type: 'binary'
             });
-            workbook.SheetNames.forEach(function(sheetName) {
+            workbook.SheetNames.forEach(function (sheetName) {
                 roa = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
 
-                if (roa.length > 0){
+                if (roa.length > 0) {
 
-                for (const elem of roa) {
+                    for (const elem of roa) {
 
-                    elem.Fecha = cambioFecha(elem.Fecha, 25568);
-                    elem.Hora = cambioHora(elem.Hora);
-                }
-                let temp1 = roa.filter((elem) => elem.Cabecera != "Estación Benavidez");
-                let temp2 = temp1.filter((elem) => elem.MotivoCorte != "VUELTA ANULADA");
+                        elem.Fecha = cambioFecha(elem.Fecha, 25568);
+                        elem.Hora = cambioHora(elem.Hora);
+                    }
+                    let temp1 = roa.filter((elem) => elem.Cabecera != "Estación Benavidez");
+                    let temp2 = temp1.filter((elem) => elem.MotivoCorte != "VUELTA ANULADA");
 
-                let fechasDisp2 = [];
+                    let fechasDisp2 = [];
 
-                for (const elem of temp2) {
-                    if (fechasDisp2.some((n) => n == elem.Fecha) == false) {
-                        fechasDisp2.push(elem.Fecha);
+                    for (const elem of temp2) {
+                        if (fechasDisp2.some((n) => n == elem.Fecha) == false) {
+                            fechasDisp2.push(elem.Fecha);
+                        }
+                    }
+
+                    fechasDisp2.sort((a, b) => (a > b) ? 1 : -1);
+                    console.log(fechasDisp2);
+
+
+                    let drop2 = document.getElementsByClassName("dropdown-item2");
+                    console.log(drop2);
+                    let dropIndex2 = 0;
+                    let dropAr2 = [];
+
+                    for (const elem of fechasDisp2) {
+
+                        drop2[dropIndex2].innerText = elem;
+                        dropAr2.push("cortadosDrop" + dropIndex2);
+                        dropIndex2++;
+                    }
+
+                    for (i = 0; i < dropAr2.length; i++) {
+                        let j = document.getElementById(dropAr2[i])
+                        j.addEventListener("click", () => {
+                            Write2(j.textContent)
+                        });
+                    }
+
+
+                    function Write2(a) {
+                        let infoP4 = document.getElementsByClassName("infoP4");
+
+                        Limpiar(infoP4, tableP[3]);
+
+                        let soloFecha = temp2.filter((elem) => a == elem.Fecha);
+
+                        soloFecha.sort((a, b) => (a.Legajo > b.Legajo) ? 1 : -1);
+
+                        let soloFechaFinal = [];
+
+                        let titleList = ["Coche", "Legajo", "Apellido", "Hora", "Recorrido", "Motivo De Corte"];
+
+                        TitleList("infoP4", titleList, tableP[3]);
+
+                        for (const elem of soloFecha) {
+
+                            let { Coche, Legajo, Apellido, Hora, Recorrido, MotivoCorte } = elem;
+
+                            soloFechaFinal.push([Coche, Legajo, Apellido, Hora, Recorrido, MotivoCorte]);
+                        }
+                        for (const elem of soloFechaFinal) {
+                            const node = document.createElement("tr");
+                            node.classList.add("infoP4");
+                            WriteTable(elem, tableP[3], node);
+                        }
                     }
                 }
-
-                fechasDisp2.sort((a, b) => (a > b) ? 1 : -1);
-                console.log(fechasDisp2);
-
-
-                let drop2 = document.getElementsByClassName("dropdown-item2");
-                console.log(drop2);
-                let dropIndex2 = 0;
-                let dropAr2 = [];
-
-                for (const elem of fechasDisp2) {
-
-                    drop2[dropIndex2].innerText = elem;
-                    dropAr2.push("cortadosDrop" + dropIndex2);
-                    dropIndex2++;
-                }
-
-                for (i = 0; i < dropAr2.length; i++) {
-                    let j = document.getElementById(dropAr2[i])
-                    j.addEventListener("click", () => {
-                        Write2(j.textContent)
-                    });
-                }
-                
-
-                function Write2(a) {
-                    let infoP4 = document.getElementsByClassName("infoP4");
-
-                    Limpiar(infoP4, tableP[3]);
-
-                    let soloFecha = temp2.filter((elem) => a == elem.Fecha);
-
-                    soloFecha.sort((a, b) => (a.Legajo > b.Legajo) ? 1 : -1);
-
-                    let soloFechaFinal = [];
-
-                    let titleList = ["Coche", "Legajo", "Apellido", "Hora", "Recorrido", "Motivo De Corte"];
-                
-                    TitleList("infoP4", titleList, tableP[3]);
-
-                    for(const elem of soloFecha){
-                    
-                    let {Coche, Legajo, Apellido, Hora, Recorrido, MotivoCorte} = elem;
-                    
-                    soloFechaFinal.push([Coche, Legajo, Apellido, Hora, Recorrido, MotivoCorte]);
-                    }
-                    for (const elem of soloFechaFinal){
-                        const node = document.createElement("tr");
-                        node.classList.add("infoP4");
-                        WriteTable(elem, tableP[3], node);
-                    }
-                }
-            }
-        });
-    }
+            });
+        }
     } catch (e) {
         console.error(e);
     }
@@ -574,77 +574,77 @@ function Func5(file) {
     try {
         var reader = new FileReader();
         reader.readAsBinaryString(file);
-        reader.onload = function(e) {
+        reader.onload = function (e) {
 
             var data = e.target.result;
             var workbook = XLSX.read(data, {
                 type: 'binary'
             });
-            workbook.SheetNames.forEach(function(sheetName) {
+            workbook.SheetNames.forEach(function (sheetName) {
                 roa = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
 
-                if (roa.length>0){
+                if (roa.length > 0) {
 
                     for (const elem of roa) {
                         let x = elem.RecIda.split("");
                         x.shift();
-                    elem.RecIda = x.join("");
-                    if (elem.RecVuelta != undefined) {
-                        let xx = elem.RecVuelta.split("");
-                        xx.shift();
-                        elem.RecVuelta = xx.join("");
+                        elem.RecIda = x.join("");
+                        if (elem.RecVuelta != undefined) {
+                            let xx = elem.RecVuelta.split("");
+                            xx.shift();
+                            elem.RecVuelta = xx.join("");
+                        }
+                    }
+
+                    let temp4 = roa.filter((elem) => elem.Cabecera != "Estación Benavidez " && elem.Tipo != "C " && elem.Tipo != "CE " && elem.Legajo != "2743");
+
+
+                    let arrayRec = [];
+
+                    function FillArray(var1, var2, var3, var4, var5, var6) {
+                        arrayRec.push(temp4.filter((elem) => elem.RecIda === var1 || elem.RecIda === var2 || elem.RecIda === var3 || elem.RecIda === var4 || elem.RecIda === var5 || elem.RecIda === var6));
+                    }
+
+                    function FillArrayVta(var1, var2, var3, var4, var5, var6, var7, var8, var9) {
+                        arrayRec.push(temp4.filter((elem) => elem.RecVuelta === var1 || elem.RecVuelta === var2 || elem.RecVuelta === var3 || elem.RecVuelta === var4 || elem.RecVuelta === var5 || elem.RecVuelta === var6 || elem.RecVuelta === var7 || elem.RecVuelta === var8 || elem.RecVuelta === var9));
+                    }
+
+                    FillArray("BEN LaV COM IDA", "BEN SAB COM IDA", "BEN DOM IDA", "BEN FER IDA", "BEN LaV RAP IDA", "BEN SAB RAP IDA");
+                    FillArrayVta("BEN LaV COM VTA", "BEN SAB COM VTA", "BEN DOM VTA", "BEN FER VTA", "BEN LaV RAP VTA", "BEN SAB RAP VTA", "BEN SAB R S/202 VTA", "BEN LaV R DIR VTA", "BEN LaV R S/202 VTA");
+                    FillArray("BEN LaV REL COM IDA", "BEN SAB REL COM IDA", "BEN DOM REL IDA", "BEN FER REL IDA", "BEN LaV REL RAP IDA", "BEN SAB REL RAP IDA");
+                    FillArray("TALAR A BEN IDA 2", "TALAR A BEN IDA", "null", "null", "null", "null");
+                    FillArrayVta("BEN A TALAR VTA", "null", "null", "null", "null", "null", "null", "null", "null");
+                    FillArray("PCO LaV COM IDA", "PCO SAB COM IDA", "PCO DOM IDA", "PCO FER IDA", "PCO LaV RAP IDA", "PCO SAB RAP IDA");
+                    FillArrayVta("PCO LaV COM VTA", "PCO SAB COM VTA", "PCO DOM VTA", "PCO FER VTA", "PCO LaV RAP VTA", "PCO SAB RAP VTA", "PCO LaV R S/202 VTA", "null", "null");
+                    FillArray("PCO LaV REL COM IDA", "PCO SAB REL COM IDA", "PCO DOM REL IDA", "PCO FER REL IDA", "PCO LaV REL RAP IDA", "PCO SAB REL RAP IDA");
+                    FillArray("TALAR A PCO IDA 2", "null", "null", "null", "null", "null");
+                    FillArrayVta("PCO A TALAR VTA", "null", "null", "null", "null", "null", "null", "null", "null");
+                    FillArray("FON LaV COM IDA", "FON SAB COM IDA", "FON DOM IDA", "FON FER IDA", "FON LaV RAP IDA", "FON SAB RAP IDA");
+                    FillArrayVta("FON LaV COM VTA", "FON SAB COM VTA", "FON DOM VTA", "FON FER VTA", "FON LaV RAP VTA", "FON SAB RAP VTA", "null", "null", "null");
+                    FillArray("FON LaV REL COM IDA", "FON SAB REL COM IDA", "FON DOM REL IDA", "FON FER REL IDA", "FON LaV REL RAP IDA", "FON SAB REL RAP IDA");
+                    FillArray("TALAR A FON IDA 2", "TALAR A FON IDA", "null", "null", "null", "null");
+                    FillArrayVta("FON A TALAR VTA", "null", "null", "null", "null", "null", "null", "null", "null");
+                    FillArray("197 LaV COM IDA", "197 SAB COM IDA", "197 DOM IDA", "197 FER IDA", "197 LaV RAP IDA", "197 SAB RAP IDA");
+                    FillArrayVta("197 LaV COM VTA", "197 SAB COM VTA", "197 DOM VTA", "197 FER VTA", "197 LaV RAP VTA", "197 SAB RAP VTA", "197 LaV R S/202 VTA", "null", "null");
+                    FillArray("202 LaV COM IDA", "202 SAB COM IDA", "202 DOM IDA", "202 FER IDA", "202 LaV RAP IDA", "202 SAB RAP IDA");
+                    FillArrayVta("202 LaV COM VTA", "202 SAB COM VTA", "202 DOM VTA", "202 FER VTA", "202 LaV RAP VTA", "202 SAB RAP VTA", "null", "null", "null");
+                    FillArray("RIV LaV IDA", "RIV SAB IDA", "RIV DOM IDA", "RIV FER IDA", "null", "null");
+                    FillArrayVta("RIV LaV VTA", "RIV SAB VTA", "RIV DOM VTA", "RIV FER VTA", "null", "null", "null", "null", "null");
+                    FillArray("BCAS LaV IDA", "BCAS SAB IDA", "BCAS DOM IDA", "BCAS FER IDA", "null", "null");
+                    FillArrayVta("BCAS LaV VTA", "BCAS SAB VTA", "BCAS DOM VTA", "BCAS FER VTA", "null", "null", "null", "null", "null");
+
+
+                    for (const elem of arrayRec) {
+                        const node = document.createElement("tr");
+                        node.classList.add("infoP5");
+                        const subNode = document.createElement("td");
+
+                        const textnode = document.createTextNode(elem.length);
+                        subNode.appendChild(textnode);
+                        node.appendChild(subNode);
+                        tableP[4].appendChild(node);
                     }
                 }
-                
-                let temp4 = roa.filter((elem) => elem.Cabecera != "Estación Benavidez " && elem.Tipo != "C " && elem.Tipo != "CE " && elem.Legajo != "2743");
-
-                
-                let arrayRec = [];
-
-                function FillArray(var1, var2, var3, var4, var5, var6){
-                    arrayRec.push(temp4.filter((elem) => elem.RecIda === var1 || elem.RecIda === var2 || elem.RecIda === var3 || elem.RecIda === var4 || elem.RecIda === var5 || elem.RecIda === var6));
-                }
-                
-                function FillArrayVta(var1, var2, var3, var4, var5, var6, var7, var8, var9){
-                    arrayRec.push(temp4.filter((elem) => elem.RecVuelta === var1 || elem.RecVuelta === var2 || elem.RecVuelta === var3 || elem.RecVuelta === var4 || elem.RecVuelta === var5 || elem.RecVuelta === var6 || elem.RecVuelta === var7 || elem.RecVuelta === var8 || elem.RecVuelta === var9));
-                }
-
-                FillArray("BEN LaV COM IDA", "BEN SAB COM IDA", "BEN DOM IDA", "BEN FER IDA", "BEN LaV RAP IDA", "BEN SAB RAP IDA");
-                FillArrayVta("BEN LaV COM VTA","BEN SAB COM VTA","BEN DOM VTA","BEN FER VTA","BEN LaV RAP VTA","BEN SAB RAP VTA","BEN SAB R S/202 VTA","BEN LaV R DIR VTA","BEN LaV R S/202 VTA");
-                FillArray("BEN LaV REL COM IDA","BEN SAB REL COM IDA","BEN DOM REL IDA","BEN FER REL IDA","BEN LaV REL RAP IDA","BEN SAB REL RAP IDA");
-                FillArray("TALAR A BEN IDA 2","TALAR A BEN IDA", "null", "null", "null", "null");
-                FillArrayVta( "BEN A TALAR VTA", "null", "null", "null", "null", "null", "null", "null", "null");
-                FillArray("PCO LaV COM IDA" ,"PCO SAB COM IDA" ,"PCO DOM IDA" ,"PCO FER IDA" ,"PCO LaV RAP IDA" ,"PCO SAB RAP IDA");
-                FillArrayVta("PCO LaV COM VTA","PCO SAB COM VTA","PCO DOM VTA","PCO FER VTA","PCO LaV RAP VTA","PCO SAB RAP VTA","PCO LaV R S/202 VTA", "null", "null");
-                FillArray("PCO LaV REL COM IDA","PCO SAB REL COM IDA","PCO DOM REL IDA","PCO FER REL IDA","PCO LaV REL RAP IDA","PCO SAB REL RAP IDA");
-                FillArray("TALAR A PCO IDA 2", "null", "null", "null", "null", "null");
-                FillArrayVta( "PCO A TALAR VTA", "null","null","null","null","null","null","null","null");
-                FillArray("FON LaV COM IDA" ,"FON SAB COM IDA" ,"FON DOM IDA" ,"FON FER IDA" ,"FON LaV RAP IDA" ,"FON SAB RAP IDA");
-                FillArrayVta("FON LaV COM VTA" ,"FON SAB COM VTA" ,"FON DOM VTA" ,"FON FER VTA" ,"FON LaV RAP VTA" ,"FON SAB RAP VTA", "null", "null", "null");
-                FillArray("FON LaV REL COM IDA","FON SAB REL COM IDA","FON DOM REL IDA","FON FER REL IDA","FON LaV REL RAP IDA","FON SAB REL RAP IDA");
-                FillArray("TALAR A FON IDA 2","TALAR A FON IDA", "null", "null", "null", "null");
-                FillArrayVta( "FON A TALAR VTA", "null", "null", "null", "null", "null", "null", "null", "null");
-                FillArray("197 LaV COM IDA" ,"197 SAB COM IDA" ,"197 DOM IDA" ,"197 FER IDA" ,"197 LaV RAP IDA" ,"197 SAB RAP IDA");
-                FillArrayVta( "197 LaV COM VTA" ,"197 SAB COM VTA" ,"197 DOM VTA" ,"197 FER VTA" ,"197 LaV RAP VTA" ,"197 SAB RAP VTA" ,"197 LaV R S/202 VTA", "null", "null");
-                FillArray("202 LaV COM IDA" ,"202 SAB COM IDA" ,"202 DOM IDA" ,"202 FER IDA" ,"202 LaV RAP IDA" ,"202 SAB RAP IDA");
-                FillArrayVta( "202 LaV COM VTA" ,"202 SAB COM VTA" ,"202 DOM VTA" ,"202 FER VTA" ,"202 LaV RAP VTA" ,"202 SAB RAP VTA", "null", "null", "null");
-                FillArray("RIV LaV IDA" ,"RIV SAB IDA" ,"RIV DOM IDA" ,"RIV FER IDA", "null", "null");
-                FillArrayVta( "RIV LaV VTA","RIV SAB VTA","RIV DOM VTA","RIV FER VTA", "null", "null", "null", "null", "null");
-                FillArray("BCAS LaV IDA" ,"BCAS SAB IDA" ,"BCAS DOM IDA" ,"BCAS FER IDA", "null", "null");
-                FillArrayVta( "BCAS LaV VTA","BCAS SAB VTA","BCAS DOM VTA","BCAS FER VTA", "null", "null", "null", "null", "null");
-
-                
-                for (const elem of arrayRec) {
-                    const node = document.createElement("tr");
-                    node.classList.add("infoP5");
-                    const subNode = document.createElement("td");
-                    
-                    const textnode = document.createTextNode(elem.length);
-                    subNode.appendChild(textnode);
-                    node.appendChild(subNode);
-                    tableP[4].appendChild(node);
-                }
-            }
             });
         }
     } catch (e) {
@@ -669,7 +669,7 @@ function Func6(file) {
     try {
         var reader = new FileReader();
         reader.readAsBinaryString(file);
-        reader.onload = function(e) {
+        reader.onload = function (e) {
 
             var data = e.target.result;
             var workbook = XLSX.read(data, {
@@ -677,27 +677,27 @@ function Func6(file) {
             });
 
 
-            workbook.SheetNames.forEach(function(sheetName) {
+            workbook.SheetNames.forEach(function (sheetName) {
                 roa = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
 
 
-                if (roa.length > 0 ){
+                if (roa.length > 0) {
 
                     let numberMalUso = roa.findIndex((elem) => elem.props == "CONTROL MAL USO DEL SUBE");
                     let numberCortados = roa.findIndex((elem) => elem.props == "SERVICIOS CORTADOS");
                     let numberSecCorridos = roa.findIndex((elem) => elem.props == "CONTROL SECCIONAMIENTO CORRIDO");
                     let numberSpeed = roa.findIndex((elem) => elem.props == "CONTROL EXCESO DE VELOCIDAD");
                     let numberEsperas = roa.findIndex((elem) => elem.props == "ESPERAS EXCESIVAS");
-                    
-                    
+
+
                     let arraySeccionamiento = [];
                     let arrayMalUso = [];
                     let arrayCortados = [];
                     let arrayCorridos = [];
                     let arraySpeed = [];
                     let arrayEsperas = [];
-                    
-                    
+
+
                     for (i = 2; i < numberMalUso; i++) {
                         arraySeccionamiento.push(roa[i]);
                     }
@@ -717,60 +717,60 @@ function Func6(file) {
                         arrayEsperas.push(roa[i]);
                     }
                     for (const elem of arraySeccionamiento) {
-                        tempChoferesSeccionamiento.push({legajo: elem.__EMPTY_1});
+                        tempChoferesSeccionamiento.push({ legajo: elem.__EMPTY_1 });
                     }
                     for (const elem of arrayMalUso) {
-                        tempChoferesMalUso.push({legajo: elem.props});
+                        tempChoferesMalUso.push({ legajo: elem.props });
                     }
                     for (const elem of arrayCortados) {
-                        tempChoferesCortados.push({legajo: elem.__EMPTY});
+                        tempChoferesCortados.push({ legajo: elem.__EMPTY });
                     }
                     for (const elem of arrayCorridos) {
-                        tempCorridos.push({leg: elem.props, xx: elem.__EMPTY});
+                        tempCorridos.push({ leg: elem.props, xx: elem.__EMPTY });
                     }
                     for (const elem of arraySpeed) {
-                        tempChoferesSpeed.push({legajo: elem.__EMPTY_3});
+                        tempChoferesSpeed.push({ legajo: elem.__EMPTY_3 });
                     }
                     for (const elem of arrayEsperas) {
-                        tempChoferesEsperas.push({legajo: parseInt(elem.__EMPTY)});
+                        tempChoferesEsperas.push({ legajo: parseInt(elem.__EMPTY) });
                     }
                 }
             });
-            
-            
+
+
             let corr = [];
             let corr3 = [];
-            
-            
+
+
             for (const el of tempCorridos) {
                 corr.push(el.leg);
             }
-            
+
             const corr2 = [...new Set(corr)];
-            
+
             for (const el of corr2) {
                 let x = tempCorridos.filter((e) => e.leg == el);
 
                 let initialValue = 0
-                
-                let ff = x.reduce(function(accumulator, curValue) {
-                    
+
+                let ff = x.reduce(function (accumulator, curValue) {
+
                     return accumulator + curValue.xx
-                    
+
                 }, initialValue);
-                
+
                 corr3.push({
                     legajo: el,
                     seccCorridos: ff
                 });
-                
+
             }
             corr3.sort((a, b) => (a.legajo > b.legajo) ? 1 : -1);
-            
-            function FilterArr (var1, var2, var3){
+
+            function FilterArr(var1, var2, var3) {
                 for (const elem of var1) {
-                let x = var1.filter((el) => el.legajo == elem.legajo);
-                var2.push({legajo: elem.legajo, [var3]: x.length});
+                    let x = var1.filter((el) => el.legajo == elem.legajo);
+                    var2.push({ legajo: elem.legajo, [var3]: x.length });
                 }
             }
 
@@ -781,7 +781,7 @@ function Func6(file) {
             FilterArr(tempChoferesCortados, choferesCortados, "cortes");
 
             corridos = corr3.filter((e) => e.seccCorridos > 0);
-            
+
             function Deal(var1, var2, var3) {
                 let deal1 = [];
                 let deal2 = [];
@@ -790,10 +790,10 @@ function Func6(file) {
                     deal1.push(var1[i].legajo);
                 }
                 deal1 = [...new Set(deal1)];
-                
+
                 for (const elem of deal1) {
                     x = var2.filter((el) => el.legajo == elem);
-                    deal2.push({legajo: elem,[var3]: x.length});
+                    deal2.push({ legajo: elem, [var3]: x.length });
                 }
                 a = deal2;
             }
@@ -804,7 +804,7 @@ function Func6(file) {
             Deal(choferesEsperas, tempChoferesEsperas, "espera");
             Deal(choferesCortados, tempChoferesCortados, "cortes");
 
-            function FillCorridos(var1, var2){
+            function FillCorridos(var1, var2) {
                 for (const e of corridos) {
                     x = var1.filter((n) => n.legajo == e.legajo);
                     if (x.length > 0 == true) {
@@ -814,7 +814,7 @@ function Func6(file) {
                     }
                 }
             }
-            
+
             FillCorridos(choferesSeccionamiento, "seccionamiento");
 
             for (const e of choferesSeccionamiento) {
@@ -827,7 +827,7 @@ function Func6(file) {
                 }
             }
             FillCorridos(choferesMalUso, "malUso");
-            
+
             for (const e of choferesMalUso) {
                 x = corridos.filter((n) => n.legajo == e.legajo);
                 if (x.length < 1 == true) {
@@ -886,8 +886,8 @@ function Func6(file) {
             console.log(choferesPorLegajo);
             console.log(corridos);
 
-            for (const elem of corridos){
-                let x = choferesPorLegajo.filter((n)=>n.legajo == elem.legajo);
+            for (const elem of corridos) {
+                let x = choferesPorLegajo.filter((n) => n.legajo == elem.legajo);
                 elem.chofer = x[0].chofer;
             }
 
@@ -900,25 +900,25 @@ function Func6(file) {
                 };
             }
 
-            let titleList = ["Legajo", "Chofer","Seccionamiento", "Mal Uso Del Sube", "Servicios Cortados", "Secc. Corrido", "Exceso De Velocidad", "Esperas Excesivas", "Total Por Chofer"];
+            let titleList = ["Legajo", "Chofer", "Seccionamiento", "Mal Uso Del Sube", "Servicios Cortados", "Secc. Corrido", "Exceso De Velocidad", "Esperas Excesivas", "Total Por Chofer"];
 
             let roaFinal = [];
 
             TitleList("infoP6", titleList, tableP[5]);
 
-                for(const elem of corridos){
-                    
-                    let {legajo, chofer, seccionamiento, malUso, cortes, seccCorridos, velocidad, espera, total} = elem;
-                    
-                    roaFinal.push([legajo, chofer, seccionamiento, malUso, cortes, seccCorridos, velocidad, espera, total]);
-                }
+            for (const elem of corridos) {
 
-                
-                for (const elem of roaFinal){
-                    const node = document.createElement("tr");
-                    node.classList.add("infoP6");
-                    WriteTable(elem, tableP[5], node);
-                }
+                let { legajo, chofer, seccionamiento, malUso, cortes, seccCorridos, velocidad, espera, total } = elem;
+
+                roaFinal.push([legajo, chofer, seccionamiento, malUso, cortes, seccCorridos, velocidad, espera, total]);
+            }
+
+
+            for (const elem of roaFinal) {
+                const node = document.createElement("tr");
+                node.classList.add("infoP6");
+                WriteTable(elem, tableP[5], node);
+            }
         }
     } catch (e) {
         console.error(e);
@@ -930,13 +930,13 @@ function Func7(file) {
     try {
         var reader = new FileReader();
         reader.readAsBinaryString(file);
-        reader.onload = function(e) {
+        reader.onload = function (e) {
 
             var data = e.target.result;
             var workbook = XLSX.read(data, {
                 type: 'binary'
             });
-            workbook.SheetNames.forEach(function(sheetName) {
+            workbook.SheetNames.forEach(function (sheetName) {
                 roa = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
 
                 let cargar = document.getElementById("cargar");
@@ -950,137 +950,137 @@ function Func7(file) {
                 frfr.style.visibility = "visible";
 
                 let roa1 = [];
-                
-                for (const elem of roa){
-                    const {chofer, coche, __EMPTY, __EMPTY_1, ...rest} = elem;
-                    
-                    let x = choferesPorLegajo.filter((n)=> n.legajo == elem.legajo);
+
+                for (const elem of roa) {
+                    const { chofer, coche, __EMPTY, __EMPTY_1, ...rest } = elem;
+
+                    let x = choferesPorLegajo.filter((n) => n.legajo == elem.legajo);
                     //console.log(elem,x);
-                    if (x.length>0){
-                        roa1.push({...rest, chofer: x[0].chofer});
-                    } 
+                    if (x.length > 0) {
+                        roa1.push({ ...rest, chofer: x[0].chofer });
+                    }
                 }
-                
-                for (i=0; i<choferesPorLegajo.length;i++){
-                    if (roa1.filter((n)=> n.legajo == choferesPorLegajo[i].legajo)== false){
+
+                for (i = 0; i < choferesPorLegajo.length; i++) {
+                    if (roa1.filter((n) => n.legajo == choferesPorLegajo[i].legajo) == false) {
                         roa1.push(choferesPorLegajo[i]);
                     }
                 }
-                
+
                 roa1 = roa1.sort((a, b) => (a.legajo > b.legajo) ? 1 : -1);
 
                 let cantFer = prompt("Indique cantidad de días feriados");
 
-                
+
                 let fer = [];
-                for (i=0;i<cantFer; i++){
-                    fer[i] = (prompt("Indique número de día feriado")); 
+                for (i = 0; i < cantFer; i++) {
+                    fer[i] = (prompt("Indique número de día feriado"));
                 }
-                
+
                 console.log(fer);
 
                 let sobra = [];
                 let falta = [];
 
 
-                roa1.forEach(function(elem) {
-                    for (i=0;i<fer.length;i++){
+                roa1.forEach(function (elem) {
+                    for (i = 0; i < fer.length; i++) {
 
-                        if (elem[fer[i]] == "F" || elem[fer[i]] == "F" || elem[fer[i]] == "v"|| elem[fer[i]] == "f"){
+                        if (elem[fer[i]] == "F" || elem[fer[i]] == "F" || elem[fer[i]] == "v" || elem[fer[i]] == "f") {
                             elem[fer[i]] = "FN";
                         };
                     };
                     Object.entries(elem).forEach(pair => {
-                        if((pair[1])==" "||(pair[1])=="V"||(pair[1])=="V "||(pair[1])=="v"||(pair[1])=="*"||(pair[1])=="e"||(pair[1])==" V"||(pair[1])=="VF"||(pair[1])==" *"||(pair[1])=="V*"||(pair[1])=="  "){
+                        if ((pair[1]) == " " || (pair[1]) == "V" || (pair[1]) == "V " || (pair[1]) == "v" || (pair[1]) == "*" || (pair[1]) == "e" || (pair[1]) == " V" || (pair[1]) == "VF" || (pair[1]) == " *" || (pair[1]) == "V*" || (pair[1]) == "  ") {
                             let x = pair[0];
                             delete elem[x];
                         };
-                        if((pair[1])=="F*"||(pair[1])=="f*"||(pair[1])=="F "||(pair[1])==" F*"||(pair[1])=="f"||(pair[1])==" F"||(pair[1])=="FV*"||(pair[1])=="F *"||(pair[1])=="FV"){
-                        let x = pair[0];
-                        elem[x] ="F";
+                        if ((pair[1]) == "F*" || (pair[1]) == "f*" || (pair[1]) == "F " || (pair[1]) == " F*" || (pair[1]) == "f" || (pair[1]) == " F" || (pair[1]) == "FV*" || (pair[1]) == "F *" || (pair[1]) == "FV") {
+                            let x = pair[0];
+                            elem[x] = "F";
                         };
                     });
                     let x = 0;
                     Object.entries(elem).forEach(pair => {
-                        if (pair[1]=="F"){
+                        if (pair[1] == "F") {
                             x++;
                         }
-                        
+
                     });
-                    if (x<6 && x>0){
+                    if (x < 6 && x > 0) {
                         falta.push(elem.legajo);
                     }
-                    if (x>6){
+                    if (x > 6) {
                         sobra.push(elem.legajo);
                     }
-                    });
+                });
 
-                    
-                    swal({
-                        icon: "warning",
-                        title: "CHOFERES CON FRANCOS FALTANTES",
-                        text: `${falta}`,
-                    });
-                    let roaFinal = [];
-                    /* swal({
-                        icon: "warning",
-                        title: "CHOFERES CON FRANCOS SOBRANTES",
-                        text: `${sobra}`,
-                    }); */
 
-                    
-                    for (const elem of roa1){
-                        let x=[];
-                        Object.entries(elem).forEach(pair => {
-                            if (pair[0]!="legajo" && pair[0]!="chofer"){
-                                x.push(pair[0]);
-                            }
-                            if (pair[1]!="F" && pair[1]!="FN"){
-                                x.push(pair[1]);
-                            }
-                        })
-                        
-                            let f = x.pop();
-                            let ff = x.pop();
-                            x.unshift(f);
-                            x.unshift(ff);
-                            roaFinal.push(x);
-                    
+                swal({
+                    icon: "warning",
+                    title: "CHOFERES CON FRANCOS FALTANTES",
+                    text: `${falta}`,
+                });
+                let roaFinal = [];
+                /* swal({
+                    icon: "warning",
+                    title: "CHOFERES CON FRANCOS SOBRANTES",
+                    text: `${sobra}`,
+                }); */
+
+
+                for (const elem of roa1) {
+                    let x = [];
+                    Object.entries(elem).forEach(pair => {
+                        if (pair[0] != "legajo" && pair[0] != "chofer") {
+                            x.push(pair[0]);
+                        }
+                        if (pair[1] != "F" && pair[1] != "FN") {
+                            x.push(pair[1]);
+                        }
+                    })
+
+                    let f = x.pop();
+                    let ff = x.pop();
+                    x.unshift(f);
+                    x.unshift(ff);
+                    roaFinal.push(x);
+
                 };
-                for (const el of roaFinal){
-                    if (el.length<11){
+                for (const el of roaFinal) {
+                    if (el.length < 11) {
                         do {
                             el.push("");
-                        } while(el.length<11);
+                        } while (el.length < 11);
                     }
                 }
                 console.log(roaFinal);
 
                 let presentism = [];
-                for (const elem of roa1){
+                for (const elem of roa1) {
                     let x = {
                         ...elem
                     }
-                    for (i=1;i<32;i++){
+                    for (i = 1; i < 32; i++) {
                         let xx = i.toString();
-                        if (x[xx]!="F" && x[xx]!="FN"){
+                        if (x[xx] != "F" && x[xx] != "FN") {
                             x[xx] = "";
                         }
                     }
                     presentism.push(x);
                 }
                 let roaFinal2 = [];
-                    for (const elem of presentism){
-                        let x  =[];
-                        Object.entries(elem).forEach(pair=>{
-                            x.push([pair[1]]);
-                        })
-                        let f = x.pop();
-                                let ff = x.pop();
-                                x.unshift(f);
-                                x.unshift(ff);
-                                roaFinal2.push(x);
-                    }
+                for (const elem of presentism) {
+                    let x = [];
+                    Object.entries(elem).forEach(pair => {
+                        x.push([pair[1]]);
+                    })
+                    let f = x.pop();
+                    let ff = x.pop();
+                    x.unshift(f);
+                    x.unshift(ff);
+                    roaFinal2.push(x);
+                }
 
 
 
@@ -1091,16 +1091,16 @@ function Func7(file) {
                     let borrarPr = document.getElementsByClassName("infoP72");
 
                     Limpiar(borrarFr, tableP7);
-                    Limpiar(borrarPr, tableP72); 
+                    Limpiar(borrarPr, tableP72);
 
                     tableP72.style.visibility = "hidden";
                     tableP7.style.visibility = "visible";
 
-                    let titleList = ["LEGAJO", "CHOFER", "1", "2", "3", "4", "5", "6","7", "8", "9"];
+                    let titleList = ["LEGAJO", "CHOFER", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
 
                     TitleList("infoP7", titleList, tableP[6]);
 
-                    for (const elem of roaFinal){
+                    for (const elem of roaFinal) {
                         const node = document.createElement("tr");
                         node.classList.add("infoP7");
                         WriteTable(elem, tableP[6], node);
@@ -1110,18 +1110,18 @@ function Func7(file) {
 
                     let borrarFr = document.getElementsByClassName("infoP7");
                     let borrarPr = document.getElementsByClassName("infoP72");
-                    
+
                     Limpiar(borrarFr, tableP7);
                     Limpiar(borrarPr, tableP72);
 
                     tableP7.style.visibility = "hidden";
                     tableP72.style.visibility = "visible";
 
-                    let titleList2 = ["LEGAJO", "CHOFER", "1", "2", "3", "4", "5", "6","7", "8", "9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31"];
+                    let titleList2 = ["LEGAJO", "CHOFER", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31"];
 
                     TitleList("infoP72", titleList2, tableP72);
 
-                    for (const elem of roaFinal2){
+                    for (const elem of roaFinal2) {
                         const node = document.createElement("tr");
                         node.classList.add("infoP72");
                         WriteTable(elem, tableP72, node);
@@ -1129,17 +1129,17 @@ function Func7(file) {
                 }
                 let presentismo = document.getElementById("showPresentismo");
 
-                    presentismo.addEventListener('click', () => {
-                        funcPr()
-                    });
+                presentismo.addEventListener('click', () => {
+                    funcPr()
+                });
                 let francos = document.getElementById("showFrancos");
 
-                    francos.addEventListener('click', () => {
-                        funcFr()
-                    });
-
+                francos.addEventListener('click', () => {
+                    funcFr()
                 });
-            }
+
+            });
+        }
     } catch (e) {
         console.error(e);
     }
@@ -1152,117 +1152,117 @@ function Func8(file) {
     try {
         var reader = new FileReader();
         reader.readAsBinaryString(file);
-        reader.onload = function(e) {
+        reader.onload = function (e) {
 
             var data = e.target.result;
             var workbook = XLSX.read(data, {
                 type: 'binary'
             });
-            workbook.SheetNames.forEach(function(sheetName) {
+            workbook.SheetNames.forEach(function (sheetName) {
                 roa8 = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
 
-            if (roa8.length > 0){
+                if (roa8.length > 0) {
 
-                for (const elem of roa8) {
+                    for (const elem of roa8) {
 
-                    elem.FECHA = cambioFecha(elem.FECHA, 25568);
-                    delete elem.RECA;
-                }
-                let fechasDispPL = [];
+                        elem.FECHA = cambioFecha(elem.FECHA, 25568);
+                        delete elem.RECA;
+                    }
+                    let fechasDispPL = [];
 
-                for (const elem of roa8) {
-                    fechasDispPL.push(elem.FECHA);
-                }
+                    for (const elem of roa8) {
+                        fechasDispPL.push(elem.FECHA);
+                    }
 
-                const fechasDispPL1 = [...new Set(fechasDispPL)];
-
-
-                fechasDispPL1.sort((a, b) => (a > b) ? 1 : -1);
-
-                let dropPL = document.getElementsByClassName("dropdown-itemPL");
-                let dropIndexPL = 0;
-                let dropArPL = [];
-
-                for (const elem of fechasDispPL1) {
-
-                    dropPL[dropIndexPL].innerText = elem;
-                    dropArPL.push("planillasDrop" + dropIndexPL);
-                    dropIndexPL++;
-                }
-
-                for (i = 0; i < fechasDispPL1.length; i++) {
-                    let wPL = document.getElementById(dropArPL[i])
-                    console.log(dropArPL[i]);
-                    wPL.addEventListener("click", () => {
-                        Write(wPL.textContent);
-                    });
-                }
+                    const fechasDispPL1 = [...new Set(fechasDispPL)];
 
 
-            function Write(a) {
-                let infoP8 = document.getElementsByClassName("infoP8");
+                    fechasDispPL1.sort((a, b) => (a > b) ? 1 : -1);
 
-                if (infoP8.length > 0) {
-                    do {
-                        tableP8.removeChild(infoP8[0]);
+                    let dropPL = document.getElementsByClassName("dropdown-itemPL");
+                    let dropIndexPL = 0;
+                    let dropArPL = [];
 
-                    } while (infoP8.length != 0);
-                }
+                    for (const elem of fechasDispPL1) {
 
-                let arrayPL = roa8.filter((elem) => a == elem.FECHA);
+                        dropPL[dropIndexPL].innerText = elem;
+                        dropArPL.push("planillasDrop" + dropIndexPL);
+                        dropIndexPL++;
+                    }
 
-                arrayPL = arrayPL.sort((a, b) => (a.COCHE > b.COCHE) ? 1 : -1);
+                    for (i = 0; i < fechasDispPL1.length; i++) {
+                        let wPL = document.getElementById(dropArPL[i])
+                        console.log(dropArPL[i]);
+                        wPL.addEventListener("click", () => {
+                            Write(wPL.textContent);
+                        });
+                    }
 
-                let cochesPL = [];
 
-                for (const el of arrayPL) {
-                cochesPL.push(el.COCHE);
-                }
+                    function Write(a) {
+                        let infoP8 = document.getElementsByClassName("infoP8");
 
-                cochesPL = [...new Set(cochesPL)];
+                        if (infoP8.length > 0) {
+                            do {
+                                tableP8.removeChild(infoP8[0]);
 
-                let tempPL = [];
+                            } while (infoP8.length != 0);
+                        }
 
-                for (const el of cochesPL) {
-                    tx = arrayPL.filter((e) => e.COCHE == el);
-                    tx = tx.sort((a, b) => (a.HSALE > b.HSALE) ? 1 : -1);
-                    tempPL.push(tx);
-                }
+                        let arrayPL = roa8.filter((elem) => a == elem.FECHA);
 
-                for (i = 0; i < tempPL.length; i++) {
-                    if (i & 1 == true) {
-                        for (const el of tempPL[i]) {
-                            el.COLOR = "red";
+                        arrayPL = arrayPL.sort((a, b) => (a.COCHE > b.COCHE) ? 1 : -1);
+
+                        let cochesPL = [];
+
+                        for (const el of arrayPL) {
+                            cochesPL.push(el.COCHE);
+                        }
+
+                        cochesPL = [...new Set(cochesPL)];
+
+                        let tempPL = [];
+
+                        for (const el of cochesPL) {
+                            tx = arrayPL.filter((e) => e.COCHE == el);
+                            tx = tx.sort((a, b) => (a.HSALE > b.HSALE) ? 1 : -1);
+                            tempPL.push(tx);
+                        }
+
+                        for (i = 0; i < tempPL.length; i++) {
+                            if (i & 1 == true) {
+                                for (const el of tempPL[i]) {
+                                    el.COLOR = "red";
+                                }
+                            }
+                        }
+                        finalPL = [];
+
+                        for (i = 0; i < tempPL.length; i++) {
+                            for (const el of tempPL[i]) {
+                                finalPL.push(el);
+                            }
+                        }
+                        let roaFinal = [];
+
+                        for (const elem of finalPL) {
+
+                            let { COCHE, LEGAJO, HSALE, HLLEGA, HCITA, KMTS, COLOR } = elem;
+
+                            roaFinal.push([COCHE, LEGAJO, HSALE, HLLEGA, HCITA, KMTS, COLOR]);
+                        }
+
+
+                        for (const elem of roaFinal) {
+                            const node = document.createElement("tr");
+                            node.classList.add("infoP8");
+                            WriteTable(elem, tableP8, node);
+
                         }
                     }
                 }
-                finalPL = [];
-
-                for (i = 0; i < tempPL.length; i++) {
-                    for (const el of tempPL[i]) {
-                        finalPL.push(el);
-                    }
-                }
-                let roaFinal= [];
-
-                for(const elem of finalPL){
-                    
-                    let {COCHE, LEGAJO, HSALE, HLLEGA, HCITA, KMTS, COLOR} = elem;
-                    
-                    roaFinal.push([COCHE, LEGAJO, HSALE, HLLEGA, HCITA, KMTS, COLOR]);
-                }
-
-
-                for (const elem of roaFinal) {
-                    const node = document.createElement("tr");
-                    node.classList.add("infoP8");
-                    WriteTable(elem, tableP8, node);
-
-                }
-            }
+            })
         }
-    })
-}
     } catch (e) {
         console.error(e);
     }
@@ -1275,13 +1275,13 @@ function Func9(file) {
     try {
         var reader = new FileReader();
         reader.readAsBinaryString(file);
-        reader.onload = function(e) {
+        reader.onload = function (e) {
 
             var data = e.target.result;
             var workbook = XLSX.read(data, {
                 type: 'binary'
             });
-            workbook.SheetNames.forEach(function(sheetName) {
+            workbook.SheetNames.forEach(function (sheetName) {
                 roa9 = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
 
 
@@ -1453,109 +1453,113 @@ let roa10;
 
 let tableP10 = document.getElementById("tableP10");
 
-let arrayKM4=[];
+let arrayKM4 = [];
+
+let fechaSelected;
 
 function Func10(file) {
     try {
         var reader = new FileReader();
         reader.readAsBinaryString(file);
-        reader.onload = function(e) {
+        reader.onload = function (e) {
             
             var data = e.target.result;
             var workbook = XLSX.read(data, {
                 type: 'binary'
             });
-            workbook.SheetNames.forEach(function(sheetName) {
+            workbook.SheetNames.forEach(function (sheetName) {
                 roa10 = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
+                
                 
                 if (roa10.length > 0) {
 
-                for (const elem of roa10) {
+                    for (const elem of roa10) {
 
-                    elem.FECHA = cambioFecha(elem.FECHA, 25568);
-                    delete elem.HSALE;
-                    delete elem.HLLEGA;
-                    delete elem.HCITA;
-                    delete elem.LEGAJO;
-                    delete elem.RECA;
-                }
-
-                let fechasDispKM = [];
-
-                for (const elem of roa10) {
-                    fechasDispKM.push(elem.FECHA);
-                }
-
-                const fechasDispKM1 = [...new Set(fechasDispKM)];
-
-
-                fechasDispKM1.sort((a, b) => (a > b) ? 1 : -1);
-
-
-
-                let dropKM = document.getElementsByClassName("dropdown-itemKM");
-                let dropIndexKM = 0;
-                let dropArKM = [];
-
-                for (const elem of fechasDispKM1) {
-
-                    dropKM[dropIndexKM].innerText = elem;
-                    dropArKM.push("kmSUbeDrop" + dropIndexKM);
-                    dropIndexKM++;
-                }
-                
-                for (i = 0; i < fechasDispKM1.length; i++) {
-                    let wKM = document.getElementById(dropArKM[i])
-                    wKM.addEventListener("click", () => {
-                        Write(wKM.textContent);
-                    });
-                }
-
-
-                function Write(a) {
-                    let infoP10 = document.getElementsByClassName("infoP10");
-
-                    if (infoP10.length > 0) {
-                        do {
-                            tableP10.removeChild(infoP10[0]);
-
-                        } while (infoP10.length != 0);
+                        elem.FECHA = cambioFecha(elem.FECHA, 25568);
+                        delete elem.HSALE;
+                        delete elem.HLLEGA;
+                        delete elem.HCITA;
+                        delete elem.LEGAJO;
+                        delete elem.RECA;
                     }
 
-                    let arrayKM = roa10.filter((elem) => a == elem.FECHA);
+                    let fechasDispKM = [];
 
-                    let arrayKM2 = [];
+                    for (const elem of roa10) {
+                        fechasDispKM.push(elem.FECHA);
+                    }
 
-                    for (const e of arrayKM) {
-                        arrayKM2.push(e.COCHE);
+                    const fechasDispKM1 = [...new Set(fechasDispKM)];
+
+
+                    fechasDispKM1.sort((a, b) => (a > b) ? 1 : -1);
+
+
+
+                    let dropKM = document.getElementsByClassName("dropdown-itemKM");
+                    let dropIndexKM = 0;
+                    let dropArKM = [];
+
+                    for (const elem of fechasDispKM1) {
+
+                        dropKM[dropIndexKM].innerText = elem;
+                        dropArKM.push("kmSUbeDrop" + dropIndexKM);
+                        dropIndexKM++;
+                    }
+
+                    for (i = 0; i < fechasDispKM1.length; i++) {
+                        let wKM = document.getElementById(dropArKM[i])
+                        wKM.addEventListener("click", () => {
+                            Write(wKM.textContent);
+                            fechaSelected = wKM.textContent;
+                        });
                     }
 
 
-                    arrayKM2 = [...new Set(arrayKM2)];
+                    function Write(a) {
+                        let infoP10 = document.getElementsByClassName("infoP10");
 
-                    let arrayKM3 = arrayKM2.sort((a, b) => (a > b) ? 1 : -1);
+                        if (infoP10.length > 0) {
+                            do {
+                                tableP10.removeChild(infoP10[0]);
 
-                    
+                            } while (infoP10.length != 0);
+                        }
 
-                    for (const e of arrayKM3) {
-                        x = arrayKM.filter((el) => el.COCHE == e);
-                        iv = 0;
-                        xx = x.reduce((elem, value) => elem + value.KMTS, iv);
-                        arrayKM4.push({
-                            coche: e,
-                            kms: xx
-                        })
+                        let arrayKM = roa10.filter((elem) => a == elem.FECHA);
+
+                        let arrayKM2 = [];
+
+                        for (const e of arrayKM) {
+                            arrayKM2.push(e.COCHE);
+                        }
+
+
+                        arrayKM2 = [...new Set(arrayKM2)];
+
+                        let arrayKM3 = arrayKM2.sort((a, b) => (a > b) ? 1 : -1);
+
+
+
+                        for (const e of arrayKM3) {
+                            x = arrayKM.filter((el) => el.COCHE == e);
+                            iv = 0;
+                            xx = x.reduce((elem, value) => elem + value.KMTS, iv);
+                            arrayKM4.push({
+                                coche: e,
+                                kms: xx
+                            })
+
+                        }
 
                     }
-
                 }
-            }
-        })
+            })
+        }
+
+    } catch (e) {
+        console.error(e);
     }
-    
-} catch (e) {
-    console.error(e);
-}
 }
 //console.log(arrayKM4);
 
@@ -1567,29 +1571,29 @@ function Func11(file) {
     try {
         var reader = new FileReader();
         reader.readAsBinaryString(file);
-        reader.onload = function(e) {
+        reader.onload = function (e) {
 
             var data = e.target.result;
             var workbook = XLSX.read(data, {
                 type: 'binary'
             });
-            workbook.SheetNames.forEach(function(sheetName) {
-                    roa11 = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
+            workbook.SheetNames.forEach(function (sheetName) {
+                roa11 = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
 
-                    if (roa11.length > 0){
+                if (roa11.length > 0) {
 
-                        for (const e of roa11) {
-                            e.coche = e.__EMPTY_1;
-                            e.kms = e.__EMPTY_3;
-                            
+                    for (const e of roa11) {
+                        e.coche = e.__EMPTY_1;
+                        e.kms = e.__EMPTY_3;
+
                     }
-                     roa11.shift(); 
-                    
-                    
+                    roa11.shift();
+
+
                     let kms2 = arrayKM4;
-                    
-                    
-                    
+
+
+
                     for (const e of kms2) {
                         x = roa11.filter((el) => el.coche == e.coche);
                         if (x.length > 0) {
@@ -1611,12 +1615,12 @@ function Func11(file) {
                             });
                         }
                     }
-                    
+
                     for (const e of kms2) {
                         x = e.kms - e.kmSube;
-                        if (x < 10 && x >-10){
+                        if (x < 10 && x > -10) {
                             delete e;
-                        } else{
+                        } else {
                             e.dif = x.toFixed(2);
                         }
                     }
@@ -1624,53 +1628,53 @@ function Func11(file) {
                     let kms3 = [];
 
                     for (const e of kms2) {
-                        if (e.dif != undefined){
+                        if (e.dif != undefined) {
                             kms3.push(e);
                         }
                     }
 
-                kms3 = kms3.sort((a, b) => (parseInt(a.dif) > parseInt(b.dif)) ? -1 : 1);
+                    kms3 = kms3.sort((a, b) => (parseInt(a.dif) > parseInt(b.dif)) ? -1 : 1);
 
-                console.log(kms3);
-                    
+                    console.log(kms3);
 
-                let titleList = ["Coche", "KM Tráfico", "KM Sube", "Diferencia", "Novedad"];
-               
-                TitleList("infoP12", titleList, tableP10);
-                
-                for (const elem of kms3) {
-                    const node = document.createElement("tr");
-                    node.classList.add("infoP10");
-                    const subNode = document.createElement("td");
-                    const subNode1 = document.createElement("td");
-                    const subNode2 = document.createElement("td");
-                    const subNode3 = document.createElement("td");
-                    const subNode4 = document.createElement("td");
-                    
-                    const textnode = document.createTextNode(elem.coche);
-                    const textnode1 = document.createTextNode(elem.kms);
-                    const textnode2 = document.createTextNode(elem.kmSube);
-                    const textnode3 = document.createTextNode(elem.dif);
-                    const textnode4 = document.createTextNode(elem.nov);
-                    subNode.appendChild(textnode);
-                    subNode1.appendChild(textnode1);
-                    subNode2.appendChild(textnode2);
-                    subNode3.appendChild(textnode3);
-                    subNode4.appendChild(textnode4);
-                    node.appendChild(subNode);
-                    node.appendChild(subNode1);
-                    node.appendChild(subNode2);
-                    node.appendChild(subNode3);
-                    node.appendChild(subNode4);
-                    tableP10.appendChild(node);
-                    
-                }
+
+                    let titleList = ["Coche", "KM Tráfico", "KM Sube", "Diferencia", "Novedad"];
+
+                    TitleList("infoP12", titleList, tableP10);
+
+                    for (const elem of kms3) {
+                        const node = document.createElement("tr");
+                        node.classList.add("infoP10");
+                        const subNode = document.createElement("td");
+                        const subNode1 = document.createElement("td");
+                        const subNode2 = document.createElement("td");
+                        const subNode3 = document.createElement("td");
+                        const subNode4 = document.createElement("td");
+
+                        const textnode = document.createTextNode(elem.coche);
+                        const textnode1 = document.createTextNode(elem.kms);
+                        const textnode2 = document.createTextNode(elem.kmSube);
+                        const textnode3 = document.createTextNode(elem.dif);
+                        const textnode4 = document.createTextNode(elem.nov);
+                        subNode.appendChild(textnode);
+                        subNode1.appendChild(textnode1);
+                        subNode2.appendChild(textnode2);
+                        subNode3.appendChild(textnode3);
+                        subNode4.appendChild(textnode4);
+                        node.appendChild(subNode);
+                        node.appendChild(subNode1);
+                        node.appendChild(subNode2);
+                        node.appendChild(subNode3);
+                        node.appendChild(subNode4);
+                        tableP10.appendChild(node);
+
+                    }
                     if (roa11.length > 0) {
 
                         result[sheetName] = roa11;
                     }
                 }
-                }
+            }
 
             )
         };
@@ -1683,75 +1687,106 @@ function Func11(file) {
 
 let roa11bis;
 
+let fechaComp = [];
+
 let tableP11bis = document.getElementById("tableP11");
 
 function Func11bis(file) {
     try {
         var reader = new FileReader();
         reader.readAsBinaryString(file);
-        reader.onload = function(e) {
+        reader.onload = function (e) {
 
             var data = e.target.result;
             var workbook = XLSX.read(data, {
                 type: 'binary'
             });
-            workbook.SheetNames.forEach(function(sheetName) {
-                    roa11bis = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
+            workbook.SheetNames.forEach(function (sheetName) {
+                roa11bis = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
 
-                    if (roa11bis.length > 0){
+                
+                for (const elem of roa11bis){
+                    elem.Fecha = cambioFecha(elem.Fecha, 25568);
+                    elem.kms = parseFloat(elem.kms).toFixed(2);
+                }
 
-                  console.log(roa11bis);
-                  console.log(arrayKM4);
+                for (const elem of arrayKM4){
+                    elem.kms = parseFloat(elem.kms).toFixed(2);
+                }
+                
+                if (roa11bis.length > 0 && roa11bis[1].Fecha === fechaSelected) {
 
-                  for (const el of roa11bis){
-                    let x = arrayKM4.filter((n)=> n.coche == el.coche);
-                    if (x.length > 0){
-                        if (x.km !== el.kms == true){
-                            console.log(el.coche);
+                    fechaComp = roa11bis;
+
+                    for (const elem of arrayKM4){
+                        let x = fechaComp.filter((n) => n.Coche === elem.coche);
+                        if (x.length > 0){
+                            if (x[0].kms !== elem.kms){
+                                console.log(x[0].Coche, x[0].kms, elem.coche, elem.kms);
+                            } 
+                        }
+                            if(x.length < 1){
+                                console.log(elem.coche)
+                            }
+                    }
+
+                    for (const elem of fechaComp){
+                        let x = arrayKM4.filter((n) => n.coche === elem.Coche);
+                        if(x.length < 1){
+                            console.log(elem.Coche)
                         }
                     }
-                  }
+                    /*  console.log(arrayKM4);
 
-                    
-                   //let kms2 = arrayKM4;
-                    
-                    
-                 
+                    for (const el of roa11bis) {
+                        let x = arrayKM4.filter((n) => n.coche == el.coche);
+                        if (x.length > 0) {
+                            if (x.km !== el.kms == true) {
+                                console.log(el.coche);
+                            }
+                        }
+                    } */
 
-              /*   let titleList = ["Coche", "KM Tráfico", "KM Sube", "Diferencia", "Novedad"];
-               
-                TitleList("infoP12", titleList, tableP10);
-                
-                for (const elem of kms3) {
-                    const node = document.createElement("tr");
-                    node.classList.add("infoP10");
-                    const subNode = document.createElement("td");
-                    const subNode1 = document.createElement("td");
-                    const subNode2 = document.createElement("td");
-                    const subNode3 = document.createElement("td");
-                    const subNode4 = document.createElement("td");
-                    
-                    const textnode = document.createTextNode(elem.coche);
-                    const textnode1 = document.createTextNode(elem.kms);
-                    const textnode2 = document.createTextNode(elem.kmSube);
-                    const textnode3 = document.createTextNode(elem.dif);
-                    const textnode4 = document.createTextNode(elem.nov);
-                    subNode.appendChild(textnode);
-                    subNode1.appendChild(textnode1);
-                    subNode2.appendChild(textnode2);
-                    subNode3.appendChild(textnode3);
-                    subNode4.appendChild(textnode4);
-                    node.appendChild(subNode);
-                    node.appendChild(subNode1);
-                    node.appendChild(subNode2);
-                    node.appendChild(subNode3);
-                    node.appendChild(subNode4);
-                    tableP10.appendChild(node);
-                    
-                } */
-                   
+
+                    //let kms2 = arrayKM4;
+
+
+
+
+                    /*   let titleList = ["Coche", "KM Tráfico", "KM Sube", "Diferencia", "Novedad"];
+                     
+                      TitleList("infoP12", titleList, tableP10);
+                      
+                      for (const elem of kms3) {
+                          const node = document.createElement("tr");
+                          node.classList.add("infoP10");
+                          const subNode = document.createElement("td");
+                          const subNode1 = document.createElement("td");
+                          const subNode2 = document.createElement("td");
+                          const subNode3 = document.createElement("td");
+                          const subNode4 = document.createElement("td");
+                          
+                          const textnode = document.createTextNode(elem.coche);
+                          const textnode1 = document.createTextNode(elem.kms);
+                          const textnode2 = document.createTextNode(elem.kmSube);
+                          const textnode3 = document.createTextNode(elem.dif);
+                          const textnode4 = document.createTextNode(elem.nov);
+                          subNode.appendChild(textnode);
+                          subNode1.appendChild(textnode1);
+                          subNode2.appendChild(textnode2);
+                          subNode3.appendChild(textnode3);
+                          subNode4.appendChild(textnode4);
+                          node.appendChild(subNode);
+                          node.appendChild(subNode1);
+                          node.appendChild(subNode2);
+                          node.appendChild(subNode3);
+                          node.appendChild(subNode4);
+                          tableP10.appendChild(node);
+                          
+                      } */
+
                 }
-                }
+            }
 
             )
         };
@@ -1769,22 +1804,22 @@ function Func12(file) {
     try {
         var reader = new FileReader();
         reader.readAsBinaryString(file);
-        reader.onload = function(e) {
+        reader.onload = function (e) {
 
             var data = e.target.result;
             var workbook = XLSX.read(data, {
                 type: 'binary'
             });
-            workbook.SheetNames.forEach(function(sheetName) {
+            workbook.SheetNames.forEach(function (sheetName) {
                 roa12 = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
 
-                if (roa12.length>0){
+                if (roa12.length > 0) {
 
-                console.log(roa12);
+                    console.log(roa12);
 
                     for (const elem of roa12) {
-                        
-                        
+
+
                         elem.coche = elem.ESPERAS;
                         elem.legajo = elem.__EMPTY;
                         elem.chofer = elem.__EMPTY_1;
@@ -1794,7 +1829,7 @@ function Func12(file) {
                         elem.fechaEntrada = cambioFecha(elem.__EMPTY_3, 25569);
                         elem.horaSalida = cambioHora(elem.__EMPTY_7);
                         elem.fechaSalida = cambioFecha(elem.__EMPTY_7, 25569);
-                        
+
                         delete elem.ESPERAS;
                         delete elem.__EMPTY;
                         delete elem.__EMPTY_1;
@@ -1811,103 +1846,103 @@ function Func12(file) {
 
                     let serv = [];
 
-                    for (const elem of roa12){
+                    for (const elem of roa12) {
                         let x = elem.espera.split(":");
-                        if (x[0]<1 && x[1]<10){
+                        if (x[0] < 1 && x[1] < 10) {
                             delete elem.espera;
                         }
                     }
-                    for (const elem of roa12){
-                        
-                        if (elem.espera!=undefined){
+                    for (const elem of roa12) {
+
+                        if (elem.espera != undefined) {
                             serv.push(elem);
                         }
                     }
 
                     let servBcas = serv.filter((elem) => elem.recorrido == "BARRANCAS");
                     let servRiv = serv.filter((elem) => elem.recorrido == "EST. RIVADAVIA");
-                    let servResto = serv.filter((elem) => elem.recorrido != "EST. RIVADAVIA" && elem.recorrido !="BARRANCAS");
-                   
+                    let servResto = serv.filter((elem) => elem.recorrido != "EST. RIVADAVIA" && elem.recorrido != "BARRANCAS");
 
-                    for (const elem of servResto){
+
+                    for (const elem of servResto) {
                         let x = elem.espera.split(":");
-                        if (x[0]<1 && x[1]<26){
+                        if (x[0] < 1 && x[1] < 26) {
                             delete elem.espera;
                         }
                     }
 
                     let servTotal = [];
-                    for (const elem of servResto){
-                        
-                        if (elem.espera!=undefined){
+                    for (const elem of servResto) {
+
+                        if (elem.espera != undefined) {
                             servTotal.push(elem);
                         }
                     }
-                    for (const elem of servBcas){
+                    for (const elem of servBcas) {
                         servTotal.push(elem);
                     }
-                    for (const elem of servRiv){
+                    for (const elem of servRiv) {
                         servTotal.push(elem);
                     }
                     console.log(servTotal);
 
-                    
+
 
                     let titleList = ["Coche", "Legajo", "Chofer", "Fecha", "Entrada", "Salida", "Ramal", "Espera"];
 
                     const nodeP = document.createElement("tr");
                     nodeP.classList.add("infoP12");
 
-                    for (i=0; i<titleList.length; i++){
+                    for (i = 0; i < titleList.length; i++) {
                         let subNode = document.createElement("th");
                         let textnode = document.createTextNode(titleList[i]);
                         subNode.appendChild(textnode);
                         nodeP.appendChild(subNode);
                     }
-                    
+
                     tableP12.appendChild(nodeP);
 
 
-                for (const elem of servTotal) {
-                    const node = document.createElement("tr");
-                    node.classList.add("infoP12");
-                    const subNode = document.createElement("td");
-                    const subNode1 = document.createElement("td");
-                    const subNode2 = document.createElement("td");
-                    const subNode3 = document.createElement("td");
-                    const subNode4 = document.createElement("td");
-                    const subNode6 = document.createElement("td");
-                    const subNode7 = document.createElement("td");
-                    const subNode8 = document.createElement("td");
-                    
-                    const textnode = document.createTextNode(elem.coche);
-                    const textnode1 = document.createTextNode(elem.legajo);
-                    const textnode2 = document.createTextNode(elem.chofer);
-                    const textnode3 = document.createTextNode(elem.fechaEntrada);
-                    const textnode4 = document.createTextNode(elem.horaEntrada);
-                    const textnode6 = document.createTextNode(elem.horaSalida);
-                    const textnode7 = document.createTextNode(elem.recorrido);
-                    const textnode8 = document.createTextNode(elem.espera);
-                    subNode.appendChild(textnode);
-                    subNode1.appendChild(textnode1);
-                    subNode2.appendChild(textnode2);
-                    subNode3.appendChild(textnode3);
-                    subNode4.appendChild(textnode4);
-                    subNode6.appendChild(textnode6);
-                    subNode7.appendChild(textnode7);
-                    subNode8.appendChild(textnode8);
-                    node.appendChild(subNode);
-                    node.appendChild(subNode1);
-                    node.appendChild(subNode2);
-                    node.appendChild(subNode3);
-                    node.appendChild(subNode4);
-                    node.appendChild(subNode6);
-                    node.appendChild(subNode7);
-                    node.appendChild(subNode8);
-                    tableP12.appendChild(node);
-            } 
-            
-        }
+                    for (const elem of servTotal) {
+                        const node = document.createElement("tr");
+                        node.classList.add("infoP12");
+                        const subNode = document.createElement("td");
+                        const subNode1 = document.createElement("td");
+                        const subNode2 = document.createElement("td");
+                        const subNode3 = document.createElement("td");
+                        const subNode4 = document.createElement("td");
+                        const subNode6 = document.createElement("td");
+                        const subNode7 = document.createElement("td");
+                        const subNode8 = document.createElement("td");
+
+                        const textnode = document.createTextNode(elem.coche);
+                        const textnode1 = document.createTextNode(elem.legajo);
+                        const textnode2 = document.createTextNode(elem.chofer);
+                        const textnode3 = document.createTextNode(elem.fechaEntrada);
+                        const textnode4 = document.createTextNode(elem.horaEntrada);
+                        const textnode6 = document.createTextNode(elem.horaSalida);
+                        const textnode7 = document.createTextNode(elem.recorrido);
+                        const textnode8 = document.createTextNode(elem.espera);
+                        subNode.appendChild(textnode);
+                        subNode1.appendChild(textnode1);
+                        subNode2.appendChild(textnode2);
+                        subNode3.appendChild(textnode3);
+                        subNode4.appendChild(textnode4);
+                        subNode6.appendChild(textnode6);
+                        subNode7.appendChild(textnode7);
+                        subNode8.appendChild(textnode8);
+                        node.appendChild(subNode);
+                        node.appendChild(subNode1);
+                        node.appendChild(subNode2);
+                        node.appendChild(subNode3);
+                        node.appendChild(subNode4);
+                        node.appendChild(subNode6);
+                        node.appendChild(subNode7);
+                        node.appendChild(subNode8);
+                        tableP12.appendChild(node);
+                    }
+
+                }
 
                 if (roa12.length > 0) {
 
