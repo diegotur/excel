@@ -1462,15 +1462,15 @@ function Func10(file) {
         var reader = new FileReader();
         reader.readAsBinaryString(file);
         reader.onload = function (e) {
-            
+
             var data = e.target.result;
             var workbook = XLSX.read(data, {
                 type: 'binary'
             });
             workbook.SheetNames.forEach(function (sheetName) {
                 roa10 = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
-                
-                
+
+
                 if (roa10.length > 0) {
 
                     for (const elem of roa10) {
@@ -1689,7 +1689,9 @@ let roa11bis;
 
 let fechaComp = [];
 
-let tableP11bis = document.getElementById("tableP11");
+let diferencias = [];
+
+let tableP11bis = document.getElementById("tableP11bis");
 
 function Func11bis(file) {
     try {
@@ -1704,86 +1706,62 @@ function Func11bis(file) {
             workbook.SheetNames.forEach(function (sheetName) {
                 roa11bis = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
 
-                
-                for (const elem of roa11bis){
+                roa11bis = roa11bis.filter((n) => parseInt(n.kms) < 5000);
+
+
+                for (const elem of roa11bis) {
                     elem.Fecha = cambioFecha(elem.Fecha, 25568);
                     elem.kms = parseFloat(elem.kms).toFixed(2);
                 }
 
-                for (const elem of arrayKM4){
+                for (const elem of arrayKM4) {
                     elem.kms = parseFloat(elem.kms).toFixed(2);
                 }
-                
+
                 if (roa11bis.length > 0 && roa11bis[1].Fecha === fechaSelected) {
 
                     fechaComp = roa11bis;
 
-                    for (const elem of arrayKM4){
+                    for (const elem of arrayKM4) {
+
+
                         let x = fechaComp.filter((n) => n.Coche === elem.coche);
-                        if (x.length > 0){
-                            if (x[0].kms !== elem.kms){
-                                console.log(x[0].Coche, x[0].kms, elem.coche, elem.kms);
-                            } 
-                        }
-                            if(x.length < 1){
-                                console.log(elem.coche)
-                            }
-                    }
-
-                    for (const elem of fechaComp){
-                        let x = arrayKM4.filter((n) => n.coche === elem.Coche);
-                        if(x.length < 1){
-                            console.log(elem.Coche)
-                        }
-                    }
-                    /*  console.log(arrayKM4);
-
-                    for (const el of roa11bis) {
-                        let x = arrayKM4.filter((n) => n.coche == el.coche);
                         if (x.length > 0) {
-                            if (x.km !== el.kms == true) {
-                                console.log(el.coche);
+                            if (x[0].kms !== elem.kms) {
+                                diferencias.push({ coche: elem.coche, kmNico: x[0].kms, kmTrafico: elem.kms })
                             }
                         }
-                    } */
+                        if (x.length < 1 && elem.kms > 0) {
+                            diferencias.push({ coche: elem.coche, kmNico: 0, kmTrafico: elem.kms })
+                        }
+                    }
 
+                    for (const elem of fechaComp) {
+                        let x = arrayKM4.filter((n) => n.coche === elem.Coche);
+                        if (x.length < 1) {
+                            diferencias.push({ coche: elem.Coche, kmNico: elem.kms, kmTrafico: 0 })
+                        }
+                    }
 
-                    //let kms2 = arrayKM4;
+                    console.log(diferencias)
 
+                    let titleList = ["Coche", "KM Nico", "KM Tráfico"];
 
+                    TitleList("infoP11bis", titleList, tableP[10]);
 
+                    let roaFinal = [];
 
-                    /*   let titleList = ["Coche", "KM Tráfico", "KM Sube", "Diferencia", "Novedad"];
-                     
-                      TitleList("infoP12", titleList, tableP10);
-                      
-                      for (const elem of kms3) {
-                          const node = document.createElement("tr");
-                          node.classList.add("infoP10");
-                          const subNode = document.createElement("td");
-                          const subNode1 = document.createElement("td");
-                          const subNode2 = document.createElement("td");
-                          const subNode3 = document.createElement("td");
-                          const subNode4 = document.createElement("td");
-                          
-                          const textnode = document.createTextNode(elem.coche);
-                          const textnode1 = document.createTextNode(elem.kms);
-                          const textnode2 = document.createTextNode(elem.kmSube);
-                          const textnode3 = document.createTextNode(elem.dif);
-                          const textnode4 = document.createTextNode(elem.nov);
-                          subNode.appendChild(textnode);
-                          subNode1.appendChild(textnode1);
-                          subNode2.appendChild(textnode2);
-                          subNode3.appendChild(textnode3);
-                          subNode4.appendChild(textnode4);
-                          node.appendChild(subNode);
-                          node.appendChild(subNode1);
-                          node.appendChild(subNode2);
-                          node.appendChild(subNode3);
-                          node.appendChild(subNode4);
-                          tableP10.appendChild(node);
-                          
-                      } */
+                    for (const elem of diferencias) {
+
+                        let { coche, kmNico, kmTrafico } = elem;
+
+                        roaFinal.push([coche, kmNico, kmTrafico]);
+                    }
+                    for (const elem of roaFinal) {
+                        const node = document.createElement("tr");
+                        node.classList.add("infoP11bis");
+                        WriteTable(elem, tableP[10], node);
+                    }
 
                 }
             }

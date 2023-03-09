@@ -5,11 +5,14 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
     <script defer src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.5/xlsx.min.js"></script>
     <script defer src="main.js"></script>
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
-    <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8"
+        crossorigin="anonymous"></script>
     <title>Document</title>
     <link rel="stylesheet" href="style.css">
 </head>
@@ -19,19 +22,19 @@
     <header>
 
         <nav class="navbar sm-8 navbar-expand-md navbar-dark bg-dark">
-            <button id="controlSeccionamiento"class="dropdown-item3" href="#">Seccionamiento</button>
-            <button id="controlMalUsoDelSube"class="dropdown-item3" href="#">Mal Uso Del Sube</button>
-            <button id="controlSeccCorrido"class="dropdown-item3" href="#">Seccionamiento Corrido</button>
-            <button id="controlCortados"class="dropdown-item3" href="#">Servicios Cortados</button>
-            <button id="controlKmPorRamal"class="dropdown-item3" href="#">Km Por Ramal Mensual</button>
-            <button id="controlMensual"class="dropdown-item3" href="#">Control Mensual</button>
-            <button id="controlFrancos"class="dropdown-item3" href="#">Control Francos</button>
-            <button id="controlPlanillas"class="dropdown-item3" href="#">Control Planillas</button>
-            <button id="controlKMSube"class="dropdown-item3" href="#">Control Km Sube</button>
-            <button id="controlEsperas"class="dropdown-item3" href="#">Control Esperas</button>
+            <button id="controlSeccionamiento" class="dropdown-item3" href="#">Seccionamiento</button>
+            <button id="controlMalUsoDelSube" class="dropdown-item3" href="#">Mal Uso Del Sube</button>
+            <button id="controlSeccCorrido" class="dropdown-item3" href="#">Seccionamiento Corrido</button>
+            <button id="controlCortados" class="dropdown-item3" href="#">Servicios Cortados</button>
+            <button id="controlKmPorRamal" class="dropdown-item3" href="#">Km Por Ramal Mensual</button>
+            <button id="controlMensual" class="dropdown-item3" href="#">Control Mensual</button>
+            <button id="controlFrancos" class="dropdown-item3" href="#">Control Francos</button>
+            <button id="controlPlanillas" class="dropdown-item3" href="#">Control Planillas</button>
+            <button id="controlKMSube" class="dropdown-item3" href="#">Control Km Sube</button>
+            <button id="controlEsperas" class="dropdown-item3" href="#">Control Esperas</button>
         </nav>
     </header>
-    
+
     <input type="file" id="inputChoferes" />
     <button onclick="upload('inputChoferes', Func0)">Cargar</button>
 
@@ -53,47 +56,48 @@
         <div class="inputsBT">
             <h1>Control de Uso del SUBE</h1>
             <input type="file" id="inputMalUso" />
-        <button onclick="upload('inputMalUso', Func2)">Cargar</button>
-        <div class="dropdown">
-            <button class="btn fechaBT btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Fecha</button>
-            <ul id="drop" class="dropdown-menu">
-                <li><a class="dropdown-item" id="drop0" href="#"></a></li>
-                <li><a class="dropdown-item" id="drop1" href="#"></a></li>
-                <li><a class="dropdown-item" id="drop2" href="#"></a></li>
-                <li><a class="dropdown-item" id="drop3" href="#"></a></li>
-                <li><a class="dropdown-item" id="drop4" href="#"></a></li>
-                <li><a class="dropdown-item" id="drop5" href="#"></a></li>
-                <li><a class="dropdown-item" id="drop6" href="#"></a></li>
-                <li><a class="dropdown-item" id="drop7" href="#"></a></li>
-                <li><a class="dropdown-item" id="drop8" href="#"></a></li>
-                <li><a class="dropdown-item" id="drop9" href="#"></a></li>
-                <li><a class="dropdown-item" id="drop10" href="#"></a></li>
-                <li><a class="dropdown-item" id="drop11" href="#"></a></li>
-                <li><a class="dropdown-item" id="drop12" href="#"></a></li>
-                <li><a class="dropdown-item" id="drop13" href="#"></a></li>
-                <li><a class="dropdown-item" id="drop14" href="#"></a></li>
-                <li><a class="dropdown-item" id="drop15" href="#"></a></li>
-                <li><a class="dropdown-item" id="drop16" href="#"></a></li>
-                <li><a class="dropdown-item" id="drop17" href="#"></a></li>
-                <li><a class="dropdown-item" id="drop18" href="#"></a></li>
-                <li><a class="dropdown-item" id="drop19" href="#"></a></li>
-                <li><a class="dropdown-item" id="drop20" href="#"></a></li>
-                <li><a class="dropdown-item" id="drop21" href="#"></a></li>
-                <li><a class="dropdown-item" id="drop22" href="#"></a></li>
-                <li><a class="dropdown-item" id="drop23" href="#"></a></li>
-                <li><a class="dropdown-item" id="drop24" href="#"></a></li>
-                <li><a class="dropdown-item" id="drop25" href="#"></a></li>
-                <li><a class="dropdown-item" id="drop26" href="#"></a></li>
-                <li><a class="dropdown-item" id="drop27" href="#"></a></li>
-                <li><a class="dropdown-item" id="drop28" href="#"></a></li>
-                <li><a class="dropdown-item" id="drop29" href="#"></a></li>
-                <li><a class="dropdown-item" id="drop30" href="#"></a></li>
-            </ul>
+            <button onclick="upload('inputMalUso', Func2)">Cargar</button>
+            <div class="dropdown">
+                <button class="btn fechaBT btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                    aria-expanded="false">Fecha</button>
+                <ul id="drop" class="dropdown-menu">
+                    <li><a class="dropdown-item" id="drop0" href="#"></a></li>
+                    <li><a class="dropdown-item" id="drop1" href="#"></a></li>
+                    <li><a class="dropdown-item" id="drop2" href="#"></a></li>
+                    <li><a class="dropdown-item" id="drop3" href="#"></a></li>
+                    <li><a class="dropdown-item" id="drop4" href="#"></a></li>
+                    <li><a class="dropdown-item" id="drop5" href="#"></a></li>
+                    <li><a class="dropdown-item" id="drop6" href="#"></a></li>
+                    <li><a class="dropdown-item" id="drop7" href="#"></a></li>
+                    <li><a class="dropdown-item" id="drop8" href="#"></a></li>
+                    <li><a class="dropdown-item" id="drop9" href="#"></a></li>
+                    <li><a class="dropdown-item" id="drop10" href="#"></a></li>
+                    <li><a class="dropdown-item" id="drop11" href="#"></a></li>
+                    <li><a class="dropdown-item" id="drop12" href="#"></a></li>
+                    <li><a class="dropdown-item" id="drop13" href="#"></a></li>
+                    <li><a class="dropdown-item" id="drop14" href="#"></a></li>
+                    <li><a class="dropdown-item" id="drop15" href="#"></a></li>
+                    <li><a class="dropdown-item" id="drop16" href="#"></a></li>
+                    <li><a class="dropdown-item" id="drop17" href="#"></a></li>
+                    <li><a class="dropdown-item" id="drop18" href="#"></a></li>
+                    <li><a class="dropdown-item" id="drop19" href="#"></a></li>
+                    <li><a class="dropdown-item" id="drop20" href="#"></a></li>
+                    <li><a class="dropdown-item" id="drop21" href="#"></a></li>
+                    <li><a class="dropdown-item" id="drop22" href="#"></a></li>
+                    <li><a class="dropdown-item" id="drop23" href="#"></a></li>
+                    <li><a class="dropdown-item" id="drop24" href="#"></a></li>
+                    <li><a class="dropdown-item" id="drop25" href="#"></a></li>
+                    <li><a class="dropdown-item" id="drop26" href="#"></a></li>
+                    <li><a class="dropdown-item" id="drop27" href="#"></a></li>
+                    <li><a class="dropdown-item" id="drop28" href="#"></a></li>
+                    <li><a class="dropdown-item" id="drop29" href="#"></a></li>
+                    <li><a class="dropdown-item" id="drop30" href="#"></a></li>
+                </ul>
+            </div>
         </div>
-    </div>
-        
+
         <br><br>
-        
+
 
 
         <div>
@@ -107,9 +111,9 @@
     <div id="controlSeccCorridoH1" class="linkVis">
 
         <div class="inputsBT">
-        <h1>Control de Seccionamiento Corrido</h1>
-        <input type="file" id="inputSeccCorrido" />
-        <button onclick="upload('inputSeccCorrido', Func3)">Upload</button>
+            <h1>Control de Seccionamiento Corrido</h1>
+            <input type="file" id="inputSeccCorrido" />
+            <button onclick="upload('inputSeccCorrido', Func3)">Upload</button>
         </div>
 
         <br><br>
@@ -128,9 +132,10 @@
             <h1>Control Cortados </h1>
             <input type="file" id="inputCortados" />
             <button onclick="upload('inputCortados', Func4)">Upload</button>
-            
+
             <div class="dropdown">
-                <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Fecha</button>
+                <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                    aria-expanded="false">Fecha</button>
                 <ul id="drop2" class="dropdown-menu">
                     <li><a class="dropdown-item2" id="cortadosDrop0" href="#"></a></li>
                     <li><a class="dropdown-item2" id="cortadosDrop1" href="#"></a></li>
@@ -163,18 +168,18 @@
                     <li><a class="dropdown-item2" id="cortadosDrop28" href="#"></a></li>
                     <li><a class="dropdown-item2" id="cortadosDrop29" href="#"></a></li>
                     <li><a class="dropdown-item2" id="cortadosDrop30" href="#"></a></li>
-                    
-                    
+
+
                 </ul>
-                
+
             </div>
         </div>
 
-            <br><br>
+        <br><br>
 
-            <div>
-                <table class="tabla"></table>
-            </div>
+        <div>
+            <table class="tabla"></table>
+        </div>
     </div>
 
     <div id="controlKmPorRamalH1" class="linkVis">
@@ -191,7 +196,7 @@
         <div>
             <table class="tabla">
                 <tr>
-                    
+
                 </tr>
 
             </table>
@@ -225,9 +230,9 @@
 
             <h1>Control Francos</h1>
             <input type="file" id="inputFrancos" />
-            <button id= "cargar" onclick="upload('inputFrancos', Func7)">CARGAR</button>
-            <button id= "showFrancos">FRANCOS</button>
-            <button id= "showPresentismo">PRESENTISMO</button>
+            <button id="cargar" onclick="upload('inputFrancos', Func7)">CARGAR</button>
+            <button id="showFrancos">FRANCOS</button>
+            <button id="showPresentismo">PRESENTISMO</button>
         </div>
         <div>
             <table class="tabla tablaPr" id="tableP7">
@@ -249,51 +254,52 @@
             <input type="file" id="inputPlanillas2" />
             <button onclick="upload('inputPlanillas1', Func8)">Upload</button>
             <button onclick="upload('inputPlanillas2', Func9)">Upload</button>
-            
+
             <div class="dropdown">
-                <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Fecha</button>
+                <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                    aria-expanded="false">Fecha</button>
                 <ul id="drop" class="dropdown-menu">
-                <li><a class="dropdown-itemPL" id="planillasDrop0" href="#"></a></li>
-                <li><a class="dropdown-itemPL" id="planillasDrop1" href="#"></a></li>
-                <li><a class="dropdown-itemPL" id="planillasDrop2" href="#"></a></li>
-                <li><a class="dropdown-itemPL" id="planillasDrop3" href="#"></a></li>
-                <li><a class="dropdown-itemPL" id="planillasDrop4" href="#"></a></li>
-                <li><a class="dropdown-itemPL" id="planillasDrop5" href="#"></a></li>
-                <li><a class="dropdown-itemPL" id="planillasDrop6" href="#"></a></li>
-                <li><a class="dropdown-itemPL" id="planillasDrop7" href="#"></a></li>
-                <li><a class="dropdown-itemPL" id="planillasDrop8" href="#"></a></li>
-                <li><a class="dropdown-itemPL" id="planillasDrop9" href="#"></a></li>
-                <li><a class="dropdown-itemPL" id="planillasDrop10" href="#"></a></li>
-                <li><a class="dropdown-itemPL" id="planillasDrop11" href="#"></a></li>
-                <li><a class="dropdown-itemPL" id="planillasDrop12" href="#"></a></li>
-                <li><a class="dropdown-itemPL" id="planillasDrop13" href="#"></a></li>
-                <li><a class="dropdown-itemPL" id="planillasDrop14" href="#"></a></li>
-                <li><a class="dropdown-itemPL" id="planillasDrop15" href="#"></a></li>
-                <li><a class="dropdown-itemPL" id="planillasDrop16" href="#"></a></li>
-                <li><a class="dropdown-itemPL" id="planillasDrop17" href="#"></a></li>
-                <li><a class="dropdown-itemPL" id="planillasDrop18" href="#"></a></li>
-                <li><a class="dropdown-itemPL" id="planillasDrop19" href="#"></a></li>
-                <li><a class="dropdown-itemPL" id="planillasDrop20" href="#"></a></li>
-                <li><a class="dropdown-itemPL" id="planillasDrop21" href="#"></a></li>
-                <li><a class="dropdown-itemPL" id="planillasDrop22" href="#"></a></li>
-                <li><a class="dropdown-itemPL" id="planillasDrop23" href="#"></a></li>
-                <li><a class="dropdown-itemPL" id="planillasDrop24" href="#"></a></li>
-                <li><a class="dropdown-itemPL" id="planillasDrop25" href="#"></a></li>
-                <li><a class="dropdown-itemPL" id="planillasDrop26" href="#"></a></li>
-                <li><a class="dropdown-itemPL" id="planillasDrop27" href="#"></a></li>
-                <li><a class="dropdown-itemPL" id="planillasDrop28" href="#"></a></li>
-                <li><a class="dropdown-itemPL" id="planillasDrop29" href="#"></a></li>
-                <li><a class="dropdown-itemPL" id="planillasDrop30" href="#"></a></li>
-                <li><a class="dropdown-itemPL" id="planillasDrop31" href="#"></a></li>
-                
-            </ul>
+                    <li><a class="dropdown-itemPL" id="planillasDrop0" href="#"></a></li>
+                    <li><a class="dropdown-itemPL" id="planillasDrop1" href="#"></a></li>
+                    <li><a class="dropdown-itemPL" id="planillasDrop2" href="#"></a></li>
+                    <li><a class="dropdown-itemPL" id="planillasDrop3" href="#"></a></li>
+                    <li><a class="dropdown-itemPL" id="planillasDrop4" href="#"></a></li>
+                    <li><a class="dropdown-itemPL" id="planillasDrop5" href="#"></a></li>
+                    <li><a class="dropdown-itemPL" id="planillasDrop6" href="#"></a></li>
+                    <li><a class="dropdown-itemPL" id="planillasDrop7" href="#"></a></li>
+                    <li><a class="dropdown-itemPL" id="planillasDrop8" href="#"></a></li>
+                    <li><a class="dropdown-itemPL" id="planillasDrop9" href="#"></a></li>
+                    <li><a class="dropdown-itemPL" id="planillasDrop10" href="#"></a></li>
+                    <li><a class="dropdown-itemPL" id="planillasDrop11" href="#"></a></li>
+                    <li><a class="dropdown-itemPL" id="planillasDrop12" href="#"></a></li>
+                    <li><a class="dropdown-itemPL" id="planillasDrop13" href="#"></a></li>
+                    <li><a class="dropdown-itemPL" id="planillasDrop14" href="#"></a></li>
+                    <li><a class="dropdown-itemPL" id="planillasDrop15" href="#"></a></li>
+                    <li><a class="dropdown-itemPL" id="planillasDrop16" href="#"></a></li>
+                    <li><a class="dropdown-itemPL" id="planillasDrop17" href="#"></a></li>
+                    <li><a class="dropdown-itemPL" id="planillasDrop18" href="#"></a></li>
+                    <li><a class="dropdown-itemPL" id="planillasDrop19" href="#"></a></li>
+                    <li><a class="dropdown-itemPL" id="planillasDrop20" href="#"></a></li>
+                    <li><a class="dropdown-itemPL" id="planillasDrop21" href="#"></a></li>
+                    <li><a class="dropdown-itemPL" id="planillasDrop22" href="#"></a></li>
+                    <li><a class="dropdown-itemPL" id="planillasDrop23" href="#"></a></li>
+                    <li><a class="dropdown-itemPL" id="planillasDrop24" href="#"></a></li>
+                    <li><a class="dropdown-itemPL" id="planillasDrop25" href="#"></a></li>
+                    <li><a class="dropdown-itemPL" id="planillasDrop26" href="#"></a></li>
+                    <li><a class="dropdown-itemPL" id="planillasDrop27" href="#"></a></li>
+                    <li><a class="dropdown-itemPL" id="planillasDrop28" href="#"></a></li>
+                    <li><a class="dropdown-itemPL" id="planillasDrop29" href="#"></a></li>
+                    <li><a class="dropdown-itemPL" id="planillasDrop30" href="#"></a></li>
+                    <li><a class="dropdown-itemPL" id="planillasDrop31" href="#"></a></li>
+
+                </ul>
+            </div>
         </div>
-    </div>
 
         <br><br>
 
         <div>
-            <table class="tabla"id="tableP8">
+            <table class="tabla" id="tableP8">
                 <tr>
                     <th>COCHE</th>
                     <th>LEGAJO</th>
@@ -319,9 +325,10 @@
             <button onclick="upload('inputKmSube1', Func10)">Upload</button>
             <button onclick="upload('inputKmSube2', Func11)">Upload</button>
             <button onclick="upload('inputKmSube3', Func11bis)">Upload</button>
-            
+
             <div class="dropdown">
-                <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Fecha</button>
+                <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                    aria-expanded="false">Fecha</button>
                 <ul id="drop" class="dropdown-menu">
                     <li><a class="dropdown-itemKM" id="kmSUbeDrop0" href="#"></a></li>
                     <li><a class="dropdown-itemKM" id="kmSUbeDrop1" href="#"></a></li>
@@ -355,27 +362,30 @@
                     <li><a class="dropdown-itemKM" id="kmSUbeDrop29" href="#"></a></li>
                     <li><a class="dropdown-itemKM" id="kmSUbeDrop30" href="#"></a></li>
                     <li><a class="dropdown-itemKM" id="kmSUbeDrop31" href="#"></a></li>
-                    
+
                 </ul>
-                
+
             </div>
         </div>
-            
-            <br><br>
-            
-            <div>
-                <table class="tabla" id="tableP10"></table>
-            </div>
 
         <br><br>
+
+        <div>
+            <table class="tabla" id="tableP10"></table>
+        </div>
+
+        <br><br>
+        <div>
+            <table class="tabla" id="tableP11bis"></table>
+        </div>
     </div>
 
     <div id="controlEsperasH1" class="linkVis">
 
         <div class="inputsBT">
-        <h1>Control de Esperas</h1>
-        <input type="file" id="inputEsperas" />
-        <button onclick="upload('inputEsperas', Func12)">Upload</button>
+            <h1>Control de Esperas</h1>
+            <input type="file" id="inputEsperas" />
+            <button onclick="upload('inputEsperas', Func12)">Upload</button>
         </div>
 
         <br><br>
@@ -396,4 +406,3 @@
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 </html>
-
