@@ -947,7 +947,7 @@ function Func7(file) {
                 showPresentismo.style.visibility = "visible";
                 let showFrancos = document.getElementById("showFrancos");
                 showFrancos.style.visibility = "visible";
-                frfr.style.visibility = "visible";
+                //frfr.style.visibility = "visible";
 
                 let roa1 = [];
 
@@ -1561,7 +1561,6 @@ function Func10(file) {
         console.error(e);
     }
 }
-//console.log(arrayKM4);
 
 let roa11;
 
@@ -1687,9 +1686,8 @@ function Func11(file) {
 
 let roa11bis;
 
-let fechaComp = [];
-
 let diferencias = [];
+
 
 let tableP11bis = document.getElementById("tableP11bis");
 
@@ -1706,6 +1704,7 @@ function Func11bis(file) {
             workbook.SheetNames.forEach(function (sheetName) {
                 roa11bis = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
 
+
                 roa11bis = roa11bis.filter((n) => parseInt(n.kms) < 5000);
 
 
@@ -1714,66 +1713,103 @@ function Func11bis(file) {
                     elem.kms = parseFloat(elem.kms).toFixed(2);
                 }
 
-                for (const elem of arrayKM4) {
-                    elem.kms = parseFloat(elem.kms).toFixed(2);
+                for (const elem of roa10) {
+                    elem.kms = parseFloat(elem.KMTS).toFixed(2);
                 }
 
-                if (roa11bis.length > 0 && roa11bis[1].Fecha === fechaSelected) {
+                let fechaSelected = [];
+                let fechaSelected2 = [];
+                let fechaSelected3 = [];
 
-                    fechaComp = roa11bis;
+                if (roa11bis.length > 0) {
 
-                    for (const elem of arrayKM4) {
-
-
-                        let x = fechaComp.filter((n) => n.Coche === elem.coche);
-                        if (x.length > 0) {
-                            if (x[0].kms !== elem.kms) {
-                                diferencias.push({ coche: elem.coche, kmNico: x[0].kms, kmTrafico: elem.kms })
-                            }
-                        }
-                        if (x.length < 1 && elem.kms > 0) {
-                            diferencias.push({ coche: elem.coche, kmNico: 0, kmTrafico: elem.kms })
-                        }
-                    }
-
-                    for (const elem of fechaComp) {
-                        let x = arrayKM4.filter((n) => n.coche === elem.Coche);
-                        if (x.length < 1) {
-                            diferencias.push({ coche: elem.Coche, kmNico: elem.kms, kmTrafico: 0 })
-                        }
-                    }
-
-                    console.log(diferencias)
-
-                    let titleList = ["Coche", "KM Nico", "KM Tráfico"];
-
-                    TitleList("infoP11bis", titleList, tableP[10]);
-
-                    let roaFinal = [];
-
-                    for (const elem of diferencias) {
-
-                        let { coche, kmNico, kmTrafico } = elem;
-
-                        roaFinal.push([coche, kmNico, kmTrafico]);
-                    }
-                    for (const elem of roaFinal) {
-                        const node = document.createElement("tr");
-                        node.classList.add("infoP11bis");
-                        WriteTable(elem, tableP[10], node);
-                    }
+                    fechaSelected = roa10.filter((n) => n.FECHA === roa11bis[0].Fecha)
 
                 }
+
+                for (const e of fechaSelected) {
+                    fechaSelected2.push(e.COCHE);
+                }
+
+
+                fechaSelected2 = [...new Set(fechaSelected2)];
+
+                fechaSelected2 = fechaSelected2.sort((a, b) => (a > b) ? 1 : -1);
+
+
+
+                for (const e of fechaSelected2) {
+                    x = fechaSelected.filter((el) => el.COCHE == e);
+                    iv = 0;
+                    xx = x.reduce((elem, value) => elem + value.KMTS, iv);
+                    fechaSelected3.push({
+                        coche: e,
+                        kms: parseFloat(xx).toFixed(2),
+                        fecha: fechaSelected[0].FECHA
+                    })
+                }
+
+                for (const elem of fechaSelected3) {
+
+
+                    let x = roa11bis.filter((n) => n.Coche === elem.coche);
+                    if (x.length > 0) {
+                        if (x[0].kms !== elem.kms) {
+                            diferencias.push({ Fecha: elem.fecha, coche: elem.coche, kmNico: x[0].kms, kmTrafico: elem.kms })
+                        }
+                    }
+                    if (x.length < 1 && elem.kms > 0) {
+                        diferencias.push({ fecha: elem.fecha, coche: elem.coche, kmNico: 0, kmTrafico: elem.kms })
+                    }
+                }
+
+                for (const elem of roa11bis) {
+                    let x = fechaSelected.filter((n) => n.COCHE === elem.Coche);
+                    if (x.length < 1) {
+                        diferencias.push({ fecha: elem.Fecha, coche: elem.Coche, kmNico: elem.kms, kmTrafico: 0 })
+                    }
+                }
+
+
+
             }
-
             )
         };
+
 
 
     } catch (e) {
         console.error(e);
     }
 }
+    console.log(diferencias)
+
+
+
+    function Difere() {
+
+
+            let titleList20 = ["Fecha", "Coche", "KM Nico", "KM Tráfico"];
+
+            TitleList("infoP11bis", titleList20, tableP[10]);
+
+            let roaFinal20 = [];
+
+            for (const elem of diferencias) {
+
+                let { fecha, coche, kmNico, kmTrafico } = elem;
+
+                roaFinal20.push([fecha, coche, kmNico, kmTrafico]);
+            }
+            for (const elem of roaFinal20) {
+                const node = document.createElement("tr");
+                node.classList.add("infoP11bis");
+                WriteTable(elem, tableP[10], node);
+            }
+        }
+
+document.getElementById("calcular").addEventListener("click", Difere());
+
 let roa12;
 
 let tableP12 = document.getElementById("tableP12");
