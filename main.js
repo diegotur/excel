@@ -1755,7 +1755,7 @@ function Func11bis(file) {
                     let x = roa11bis.filter((n) => n.Coche === elem.coche);
                     if (x.length > 0) {
                         if (x[0].kms !== elem.kms) {
-                            diferencias.push({ Fecha: elem.fecha, coche: elem.coche, kmNico: x[0].kms, kmTrafico: elem.kms })
+                            diferencias.push({ fecha: elem.fecha, coche: elem.coche, kmNico: x[0].kms, kmTrafico: elem.kms })
                         }
                     }
                     if (x.length < 1 && elem.kms > 0) {
@@ -1808,7 +1808,7 @@ function Func11bis(file) {
             }
         }
 
-document.getElementById("calcular").addEventListener("click", Difere());
+
 
 let roa12;
 
