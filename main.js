@@ -943,200 +943,113 @@ function Func7(file) {
                 cargar.style.visibility = "hidden";
                 let inputFrancos = document.getElementById("inputFrancos");
                 inputFrancos.style.visibility = "hidden";
-                let showPresentismo = document.getElementById("showPresentismo");
-                showPresentismo.style.visibility = "visible";
-                let showFrancos = document.getElementById("showFrancos");
-                showFrancos.style.visibility = "visible";
-                //frfr.style.visibility = "visible";
+                
+                let above20;
+                let benArr;
+                let pcoArr;
+                let fonArr;
+                let benRapArr;
+                let pcoRapArr;
+                let fonRapArr;
+                
+                if (roa.length > 0) {
 
-                let roa1 = [];
 
-                for (const elem of roa) {
-                    const { chofer, coche, __EMPTY, __EMPTY_1, ...rest } = elem;
-
-                    let x = choferesPorLegajo.filter((n) => n.legajo == elem.legajo);
-                    //console.log(elem,x);
-                    if (x.length > 0) {
-                        roa1.push({ ...rest, chofer: x[0].chofer });
+                    for (const elem of roa) {
+                        elem.interno = elem.__EMPTY;
+                        elem.legajo = elem.Servicios;
+                        elem.fechaInicio = elem.__EMPTY_2;
+                        elem.horaInicio = elem.__EMPTY_3;
+                        elem.fechaFin = elem.__EMPTY_4;
+                        elem.horaFin = elem.__EMPTY_5;
+                        elem.recorrido = elem.__EMPTY_8;
+                        elem.kms = elem.__EMPTY_9;
+                        elem.reca = elem.__EMPTY_10;
+                        elem.trans = elem.__EMPTY_11;
+                        
+                        delete elem.__EMPTY_1;
+                        delete elem.__EMPTY;
+                        delete elem.Servicios;
+                        delete elem.__EMPTY_2;
+                        delete elem.__EMPTY_3;
+                        delete elem.__EMPTY_4;
+                        delete elem.__EMPTY_5;
+                        delete elem.__EMPTY_6;
+                        delete elem.__EMPTY_7;
+                        delete elem.__EMPTY_8;
+                        delete elem.__EMPTY_9;
+                        delete elem.__EMPTY_10;
+                        delete elem.__EMPTY_11;
                     }
-                }
 
-                for (i = 0; i < choferesPorLegajo.length; i++) {
-                    if (roa1.filter((n) => n.legajo == choferesPorLegajo[i].legajo) == false) {
-                        roa1.push(choferesPorLegajo[i]);
+                    console.log(roa);
+
+                    for (const elem of roa) {
+                        elem.fechaInicio = cambioFecha(elem.fechaInicio, 25568);
+                        elem.fechaFin = cambioFecha(elem.fechaFin, 25568);
+                        elem.horaInicio = cambioHora(elem.horaInicio);
+                        elem.horaFin = cambioHora(elem.horaFin);
                     }
-                }
+                    above20 = roa.filter((elem) => elem.trans < 21 ==true);
 
-                roa1 = roa1.sort((a, b) => (a.legajo > b.legajo) ? 1 : -1);
+                    above20 = above20.filter((elem) => elem.trans != 0 && elem.reca != 0);
 
-                let cantFer = prompt("Indique cantidad de días feriados");
+                    above20 = above20.filter((elem) => elem.kms > 14);
 
+                    benArr = above20.filter((elem) => elem.recorrido == "BEN COM" && elem.kms > 35);
+                    pcoArr = above20.filter((elem) => elem.recorrido == "PCO COM" && elem.kms > 35);
+                    fonArr = above20.filter((elem) => elem.recorrido == "FON COM" && elem.kms > 35);
+                    benRapArr = above20.filter((elem) => elem.recorrido == "BEN RAP" && elem.kms > 35);
+                    pcoRapArr = above20.filter((elem) => elem.recorrido == "PCO RAP" && elem.kms > 35);
+                    fonRapArr = above20.filter((elem) => elem.recorrido == "FON RAP" && elem.kms > 35);
 
-                let fer = [];
-                for (i = 0; i < cantFer; i++) {
-                    fer[i] = (prompt("Indique número de día feriado"));
-                }
+                    above20 = above20.filter((elem) => elem.recorrido != "BEN COM");
+                    above20 = above20.filter((elem) => elem.recorrido != "PCO COM");
+                    above20 = above20.filter((elem) => elem.recorrido != "FON COM");
+                    above20 = above20.filter((elem) => elem.recorrido != "BEN RAP");
+                    above20 = above20.filter((elem) => elem.recorrido != "PCO RAP");
+                    above20 = above20.filter((elem) => elem.recorrido != "FON RAP");
 
-                console.log(fer);
+                    for (const elem of benArr){
+                        above20.push(elem)
+                    }
+                    for (const elem of pcoArr){
+                        above20.push(elem)
+                    }
+                    for (const elem of fonArr){
+                        above20.push(elem)
+                    }
+                    for (const elem of benRapArr){
+                        above20.push(elem)
+                    }
+                    for (const elem of pcoRapArr){
+                        above20.push(elem)
+                    }
+                    for (const elem of fonRapArr){
+                        above20.push(elem)
+                    }
 
-                let sobra = [];
-                let falta = [];
+                    above20.sort((a, b) => (a.fechaInicio > b.fechaInicio) ? 1 : -1);
 
+                    console.log(above20);
 
-                roa1.forEach(function (elem) {
-                    for (i = 0; i < fer.length; i++) {
+                   /*  let roaFinal = [];
 
-                        if (elem[fer[i]] == "F" || elem[fer[i]] == "F" || elem[fer[i]] == "v" || elem[fer[i]] == "f") {
-                            elem[fer[i]] = "FN";
-                        };
-                    };
-                    Object.entries(elem).forEach(pair => {
-                        if ((pair[1]) == " " || (pair[1]) == "V" || (pair[1]) == "V " || (pair[1]) == "v" || (pair[1]) == "*" || (pair[1]) == "e" || (pair[1]) == " V" || (pair[1]) == "VF" || (pair[1]) == " *" || (pair[1]) == "V*" || (pair[1]) == "  ") {
-                            let x = pair[0];
-                            delete elem[x];
-                        };
-                        if ((pair[1]) == "F*" || (pair[1]) == "f*" || (pair[1]) == "F " || (pair[1]) == " F*" || (pair[1]) == "f" || (pair[1]) == " F" || (pair[1]) == "FV*" || (pair[1]) == "F *" || (pair[1]) == "FV") {
-                            let x = pair[0];
-                            elem[x] = "F";
-                        };
-                    });
-                    let x = 0;
-                    Object.entries(elem).forEach(pair => {
-                        if (pair[1] == "F") {
-                            x++;
+                        for (const elem of above20) {
+
+                            let { legajo, fechaInicio, horaInicio,  } = elem;
+
+                            roaFinal.push([COCHE, LEGAJO, HSALE, HLLEGA, HCITA, KMTS, COLOR]);
                         }
 
-                    });
-                    if (x < 6 && x > 0) {
-                        falta.push(elem.legajo);
-                    }
-                    if (x > 6) {
-                        sobra.push(elem.legajo);
-                    }
-                });
 
+                        for (const elem of roaFinal) {
+                            const node = document.createElement("tr");
+                            node.classList.add("infoP8");
+                            WriteTable(elem, tableP8, node);
 
-                swal({
-                    icon: "warning",
-                    title: "CHOFERES CON FRANCOS FALTANTES",
-                    text: `${falta}`,
-                });
-                let roaFinal = [];
-                /* swal({
-                    icon: "warning",
-                    title: "CHOFERES CON FRANCOS SOBRANTES",
-                    text: `${sobra}`,
-                }); */
-
-
-                for (const elem of roa1) {
-                    let x = [];
-                    Object.entries(elem).forEach(pair => {
-                        if (pair[0] != "legajo" && pair[0] != "chofer") {
-                            x.push(pair[0]);
-                        }
-                        if (pair[1] != "F" && pair[1] != "FN") {
-                            x.push(pair[1]);
-                        }
-                    })
-
-                    let f = x.pop();
-                    let ff = x.pop();
-                    x.unshift(f);
-                    x.unshift(ff);
-                    roaFinal.push(x);
-
-                };
-                for (const el of roaFinal) {
-                    if (el.length < 11) {
-                        do {
-                            el.push("");
-                        } while (el.length < 11);
-                    }
+                        } */
                 }
-                console.log(roaFinal);
-
-                let presentism = [];
-                for (const elem of roa1) {
-                    let x = {
-                        ...elem
-                    }
-                    for (i = 1; i < 32; i++) {
-                        let xx = i.toString();
-                        if (x[xx] != "F" && x[xx] != "FN") {
-                            x[xx] = "";
-                        }
-                    }
-                    presentism.push(x);
-                }
-                let roaFinal2 = [];
-                for (const elem of presentism) {
-                    let x = [];
-                    Object.entries(elem).forEach(pair => {
-                        x.push([pair[1]]);
-                    })
-                    let f = x.pop();
-                    let ff = x.pop();
-                    x.unshift(f);
-                    x.unshift(ff);
-                    roaFinal2.push(x);
-                }
-
-
-
-                function funcFr() {
-                    //Limpiar(infoP7, tablep7);
-
-                    let borrarFr = document.getElementsByClassName("infoP7");
-                    let borrarPr = document.getElementsByClassName("infoP72");
-
-                    Limpiar(borrarFr, tableP7);
-                    Limpiar(borrarPr, tableP72);
-
-                    tableP72.style.visibility = "hidden";
-                    tableP7.style.visibility = "visible";
-
-                    let titleList = ["LEGAJO", "CHOFER", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
-
-                    TitleList("infoP7", titleList, tableP[6]);
-
-                    for (const elem of roaFinal) {
-                        const node = document.createElement("tr");
-                        node.classList.add("infoP7");
-                        WriteTable(elem, tableP[6], node);
-                    }
-                }
-                function funcPr() {
-
-                    let borrarFr = document.getElementsByClassName("infoP7");
-                    let borrarPr = document.getElementsByClassName("infoP72");
-
-                    Limpiar(borrarFr, tableP7);
-                    Limpiar(borrarPr, tableP72);
-
-                    tableP7.style.visibility = "hidden";
-                    tableP72.style.visibility = "visible";
-
-                    let titleList2 = ["LEGAJO", "CHOFER", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31"];
-
-                    TitleList("infoP72", titleList2, tableP72);
-
-                    for (const elem of roaFinal2) {
-                        const node = document.createElement("tr");
-                        node.classList.add("infoP72");
-                        WriteTable(elem, tableP72, node);
-                    }
-                }
-                let presentismo = document.getElementById("showPresentismo");
-
-                presentismo.addEventListener('click', () => {
-                    funcPr()
-                });
-                let francos = document.getElementById("showFrancos");
-
-                francos.addEventListener('click', () => {
-                    funcFr()
-                });
 
             });
         }
