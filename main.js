@@ -102,6 +102,8 @@ let roa;
 
 let tableP = document.getElementsByClassName("tabla");
 
+let conchaputa = document.getElementById("conchaputa");
+
 let choferesPorLegajo = [];
 
 
@@ -924,7 +926,6 @@ function Func6(file) {
         console.error(e);
     }
 }
-let tableP72 = document.getElementById("tableP72");
 let tableP7 = document.getElementById("tableP7");
 function Func7(file) {
     try {
@@ -939,10 +940,7 @@ function Func7(file) {
             workbook.SheetNames.forEach(function (sheetName) {
                 roa = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
 
-                let cargar = document.getElementById("cargar");
-                cargar.style.visibility = "hidden";
-                let inputFrancos = document.getElementById("inputFrancos");
-                inputFrancos.style.visibility = "hidden";
+                
                 
                 let above20;
                 let benArr;
@@ -1031,24 +1029,29 @@ function Func7(file) {
 
                     above20.sort((a, b) => (a.fechaInicio > b.fechaInicio) ? 1 : -1);
 
-                    console.log(above20);
+                    
+                    let titleList = ["Legajo", "Interno", "Fecha", "Hora","Ramal", "Kms", "Recaudación", "Boletos"];
 
-                   /*  let roaFinal = [];
-
-                        for (const elem of above20) {
-
-                            let { legajo, fechaInicio, horaInicio,  } = elem;
-
-                            roaFinal.push([COCHE, LEGAJO, HSALE, HLLEGA, HCITA, KMTS, COLOR]);
-                        }
-
-
-                        for (const elem of roaFinal) {
-                            const node = document.createElement("tr");
-                            node.classList.add("infoP8");
-                            WriteTable(elem, tableP8, node);
-
-                        } */
+                    let roaFinal = [];
+                    
+                    TitleList("infoP7", titleList, tableP[6]);
+                    
+                    for (const elem of above20) {
+                        
+                        let { legajo, interno, fechaInicio, horaInicio, recorrido, kms, reca, trans} = elem;
+                        
+                        roaFinal.push([legajo, interno, fechaInicio, horaInicio, recorrido, kms, reca, trans]);
+                    }
+                    
+                    
+                    console.log(roaFinal);
+        
+        
+                    for (const elem of roaFinal) {
+                        const node = document.createElement("tr");
+                        node.classList.add("infoP7");
+                        WriteTable(elem, tableP[6], node);
+                    }
                 }
 
             });
@@ -1164,7 +1167,7 @@ function Func8(file) {
 
                             roaFinal.push([COCHE, LEGAJO, HSALE, HLLEGA, HCITA, KMTS, COLOR]);
                         }
-
+                        
 
                         for (const elem of roaFinal) {
                             const node = document.createElement("tr");
